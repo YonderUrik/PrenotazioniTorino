@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+            android:id="@+id/my_account"
+            android:icon="@drawable/ic_account"
+            android:title="@string/account"/>
+    <item
+            android:id="@+id/my_courses"
+            android:icon="@drawable/ic_courses"
+            android:title="@string/i_miei_corsi"/>
+    <item
+            android:id="@+id/search"
+            android:icon="@drawable/ic_search"
+            android:title="@string/cerca_corsi"/>
+
+</menu>

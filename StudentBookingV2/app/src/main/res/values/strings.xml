@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">StudentBooking</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="nome">Nome</string>
+    <string name="cognome">Cognome</string>
+    <string name="registrati">Registrati</string>
+    <string name="hai_gi_un_account_accedi">Hai giá un account? <u>Accedi</u></string>
+    <string name="non_hai_ancora_un_account_registrati">Non hai ancora un account? <u>Registrati</u></string>
+    <string name="accedi">Accedi</string>
+    <string name="account">Account</string>
+    <string name="i_miei_corsi">I miei Corsi</string>
+    <string name="cerca_corsi">Cerca Corsi</string>
+    <string name="logout">Logout</string>
+    <string name="benvenuto">Benvenuto</string>
+    <string name="ciao">Ciao</string>
+</resources>
