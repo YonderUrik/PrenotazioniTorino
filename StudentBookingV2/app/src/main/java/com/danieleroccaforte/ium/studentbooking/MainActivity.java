@@ -1,55 +1,111 @@
 package com.danieleroccaforte.ium.studentbooking;
 
-import android.annotation.SuppressLint;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
-import com.danieleroccaforte.ium.studentbooking.fragments.AccountFragment;
-import com.danieleroccaforte.ium.studentbooking.fragments.CoursesFragment;
-import com.danieleroccaforte.ium.studentbooking.fragments.SearchFragment;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    BottomNavigationView bottomNavigationView;
-    @SuppressLint("NonConstantResourceId")
+import cz.msebera.android.httpclient.Header;
+import entry.path;
+
+public class MainActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AccountFragment()).commit();
+        final EditText EmailTextBox = findViewById(R.id.login_email);
+        final EditText PasswordTextBox = findViewById(R.id.login_password);
 
-        bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
-            Fragment fragment = null;
-            switch (item.getItemId()){
-                case R.id.my_account:
-                    fragment = new AccountFragment();
-                    break;
-                case R.id.my_courses:
-                    fragment = new CoursesFragment();
-                    break;
-                case R.id.search:
-                    fragment = new SearchFragment();
-                    break;
+        Button logInButton = findViewById(R.id.login_button);
+        logInButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                try {
+
+                    RequestParams user = new RequestParams();
+                    user.add("urldiprevenienza","android");
+
+                    JSONObject object = new JSONObject();
+                    try {
+                        object.put("username", EmailTextBox.getText().toString() );
+                        object.put("password", PasswordTextBox.getText().toString() );
+
+                        user.put("file", object);
+
+                        String paginaURL = path.GET() + "/IUM_server/login"; //VEDERE
+
+                        new AsyncHttpClient().post(paginaURL, user, new JsonHttpResponseHandler() {
+
+                            @Override
+                            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                                super.onSuccess(statusCode, headers, response);
+                                JSONObject JsonObj = response;
+
+                                try {
+                                    JSONObject reply = (JSONObject) JsonObj.get("reply");
+
+                                    if ( reply.get("state").equals("Match") ) {
+                                        Toast.makeText(MainActivity.this,"LogIn Success "+EmailTextBox.getText().toString(), Toast.LENGTH_SHORT).show();
+
+                                        Intent intent = new Intent(MainActivity.this, Courses.class);
+
+                                        intent.putExtra("EXTRA_SESSION_user", EmailTextBox.getText().toString());
+                                        startActivity(intent);
+                                    } else {
+                                        Toast.makeText(MainActivity.this,"User not found\n Controll username e password", Toast.LENGTH_SHORT).show();
+                                    }
+
+                                } catch (JSONException e) { e.printStackTrace(); }
+                            }
+
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                                super.onFailure(statusCode, headers, responseString, throwable);
+                                Toast.makeText(MainActivity.this,"server Error", Toast.LENGTH_SHORT).show();
+                            }
+
+                        });
+
+                    } catch (Exception e) {
+                        Toast.makeText(MainActivity.this,"Error1", Toast.LENGTH_SHORT).show();
+                    }
+
+
+                } catch (Exception e) {
+                    Toast.makeText(MainActivity.this,"Error2", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+
             }
-            assert fragment != null;
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
-            return true;
-        });
-    }
 
-    @SuppressLint("NonConstantResourceId")
-    @Override
-    public void onClick(View view) {
-        if (view.getId() == R.id.logout_button) {
-            Intent intent = new Intent(getApplicationContext(), Login.class);
-            startActivity(intent);
-            finish();
-        }
+        });
+
+
+        Button newUserButton = findViewById(R.id.signup_button);
+        newUserButton.setOnClickListener( new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SignUp.class);
+                startActivity(intent);
+            }
+
+        });
+
     }
 }

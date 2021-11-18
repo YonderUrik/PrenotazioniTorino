@@ -14,4 +14,14 @@
     <string name="logout">Logout</string>
     <string name="benvenuto">Benvenuto</string>
     <string name="ciao">Ciao</string>
+    <string name="prenota">Prenota</string>
+    <string name="prenotazioni_recenti">Prenotazioni Recenti:</string>
+    <string name="nessuna_prenotazione">Nessuna Prenotazione</string>
+    <string name="fatto">Fatto</string>
+    <string name="immagine">Immagine</string>
+    <string name="imageofprof">imageOfProf</string>
+    <string name="titlerow">titlerow</string>
+    <string name="titleRow">titleRow</string>
+    <string name="booking">booking</string>
+    <string name="maggiore">maggiore</string>
 </resources>

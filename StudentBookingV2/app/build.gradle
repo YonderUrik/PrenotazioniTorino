@@ -37,6 +37,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'com.github.VishnuSivadasVS:Advanced-HttpURLConnection:1.2'
+    implementation 'com.loopj.android:android-async-http:1.4.9'
     implementation files('mysql-connector-java-5.1.44-bin')
     implementation files('libs/mysql-connector-java-5.1.44-bin.jar')
     testImplementation 'junit:junit:4.13.2'
