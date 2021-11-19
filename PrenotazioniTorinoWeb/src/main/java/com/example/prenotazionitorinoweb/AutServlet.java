@@ -44,26 +44,26 @@ public class AutServlet extends HttpServlet {
         System.out.println("password ricevuta:" + password);
 
         if (email == null) {
+            System.out.println("null");
             //BISOGNA INSERIRE UNA MAIL VALIDA
-        }
-        if (Objects.equals(email, "guest") && sessionID!=null && jsessionID.equals(sessionID)){
+        }else if (Objects.equals(email, "guest") && sessionID!=null && jsessionID.equals(sessionID)){
             //AVVIO LA SESSIONE PER GUEST
             String role = "guest";
             s.setAttribute("email",email);
             s.setAttribute("ruolo", role);
+            System.out.println("guest");
             //CAMBIO
-        }
-        if (sessionID!=null && jsessionID.equals(sessionID)) {
+        }else if (sessionID!=null && jsessionID.equals(sessionID)) {
             //VERIFICO L'UTENTE
             ArrayList<utente> utente= DAO.getUtente(email,password);
             if(utente.get(0).getEmail().equals(email) && utente.get(0).getPassword().equals(password)){
                 String role = utente.get(0).getRuolo();
                 s.setAttribute("email", email);
                 s.setAttribute("ruolo", role);
+                System.out.println("utente");
                 //CAMBIO
             }
-
-        } else {
+        }else{
             //SI E' VERIFICATO UN ERRORE ANOMALO, RIPROVA
         }
 

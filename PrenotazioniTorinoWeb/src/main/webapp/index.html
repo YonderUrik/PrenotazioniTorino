@@ -26,8 +26,8 @@
     </div>
 
 <script>
-    var app= new Vue({
-        el: '#login',
+    var login = new Vue({
+        el:'#login',
         data:{
             sessione:'sessione inseistente',
             email:'guest',
@@ -42,7 +42,7 @@
                     self.sessione=data;
                 });
                 else
-                    $.post(this.link,{utente:this.email, password: this.password,sessione:this.sessione},
+                    $.post(this.link,{utente:this.email, password: this.password, sessione:this.sessione},
                     function (data){});
 
             }
