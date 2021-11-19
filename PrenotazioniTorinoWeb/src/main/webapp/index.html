@@ -38,7 +38,7 @@
             login:function(){
                 var self=this;
                 if(self.sessione === 'sessione inseistente')
-                    $.post(this.link, {utente: this.email}, function (data){
+                    $.post(this.link, {utente: this.email, password: this.password}, function (data){
                     self.sessione=data;
                 });
                 else
