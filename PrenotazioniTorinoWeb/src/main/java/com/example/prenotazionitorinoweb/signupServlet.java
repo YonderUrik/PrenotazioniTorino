@@ -12,8 +12,8 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
 
-@WebServlet(name = "autservlet", value = "/aut-servlet")
-public class AutServlet extends HttpServlet {
+@WebServlet(name = "signupservlet", value = "/signup-servlet")
+public class signupServlet extends HttpServlet {
     public void init() {
         DAO.registerDriver();
     }
@@ -34,42 +34,22 @@ public class AutServlet extends HttpServlet {
         ServletContext ctx = getServletContext();
         RequestDispatcher rd = ctx.getRequestDispatcher("/index.html");
 
-        String email = request.getParameter("utente");
+        String nome = request.getParameter("nome");
+        String cognome = request.getParameter("cognome");
+        String email = request.getParameter("email");
         String password = request.getParameter("password");
-        String sessionID = request.getParameter("sessione");
-        HttpSession s = request.getSession(); //estraggo il session ID
-        String jsessionID = s.getId();
-        sessionID=jsessionID;
-        System.out.println("JSessionID:" + jsessionID);
-        System.out.println("sessionID ricevuto:" + sessionID);
+        System.out.println("nome ricevuto:" + nome);
+        System.out.println("cognome ricevuto:" + cognome);
         System.out.println("email ricevuto:" + email);
         System.out.println("password ricevuta:" + password);
-
-        if (email == null) {
-            System.out.println("null");
-            //BISOGNA INSERIRE UNA MAIL VALIDA
-        }else if (Objects.equals(email, "guest") && sessionID!=null && jsessionID.equals(sessionID)){
-            //AVVIO LA SESSIONE PER GUEST
-            String role = "guest";
-            s.setAttribute("email",email);
-            s.setAttribute("ruolo", role);
-            System.out.println("guest");
-            //CAMBIO
-        }else if (sessionID!=null && jsessionID.equals(sessionID)) {
-            //VERIFICO L'UTENTE
-            ArrayList<utente> utente= DAO.getUtente(email,password);
-            if(utente.get(0).getEmail().equals(email) && utente.get(0).getPassword().equals(password)){
-                String role = utente.get(0).getRuolo();
-                s.setAttribute("email", email);
-                s.setAttribute("ruolo", role);
-                System.out.println(s.getAttribute("ruolo"));
-                //CAMBIO
+        if(!nome.equals("") && !cognome.equals("") && !email.equals("") && !password.equals("")){
+            if(!DAO.emailGetted(email)){
+                DAO.setUtente(email,nome,cognome,password);
             }else{
-                System.out.println("Utente errato");
+
             }
-        }else{
-            //SI E' VERIFICATO UN ERRORE ANOMALO, RIPROVA
         }
+
 
     }
 
@@ -92,3 +72,4 @@ public class AutServlet extends HttpServlet {
     }
 
 }
+

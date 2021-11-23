@@ -10,20 +10,25 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" integrity="sha512-NmLkDIU1C/C88wi324HBc+S2kLhi08PN5GDeUVVVC/BVt/9Izdsc9SVeVfA1UZbY3sHUlDSyRXhCzHfr6hmPPw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-         <link rel="stylesheet" href="style.css" type="text/css"> -->
+
 
 </head>
 <body>
-
-
-<!-- <div class="logo" >
-        <img src="img/logo_large.png" alt="" width="90%" class="mt-15per">
-    </div> -->
-<div id="login" >
+<!--Login Form-->
+<div id="login" v-show = "show">
     <p>Email <input v-model="email" type="text"/></p>
     <p>Password: <input v-model="password" type="password"/></p>
     <button type="button" v-on:click="this.login">Login</button>
+    <p><button type="button" v-on:click="this.passtosignup"> Registrati</button></p>
+</div>
+
+<!--Signup Form-->
+<div id="sign-up" v-show = "this.show">
+    <p>Nome: <input v-model="nome" type="text"/></p>
+    <p>Cognome: <input v-model="cognome" type="text"/></p>
+    <p>Email: <input v-model="email" type="text"/></p>
+    <p>Password: <input v-model="password" type="password"></p>
+    <button type="button" v-on:click="this.signup">Registrati</button>
 </div>
 
 <script>
@@ -33,7 +38,9 @@
             sessione:'sessione inesistente',
             email:'guest',
             password:'',
-            link: 'aut-servlet'
+            link: 'aut-servlet',
+            show: true
+
         },
         mounted: function () {
             console.log("MOUNTED")
@@ -50,34 +57,40 @@
                         function (data){
 
                         });
-
+            },
+            passtosignup:function (){
+                this.show = !this;
+                signup.show = !signup.show;
             }
         }
     })
 
+    var signup = new Vue({
+        el:'#sign-up',
+        data:{
+            nome:'',
+            cognome:'',
+            email:'',
+            password:'',
+            link: 'signup-servlet',
+            show: false
+        },
+        methods:{
+            signup:function (){
+                $.post(this.link,{nome: this.nome, cognome: this.cognome, email: this.email, password:this.password},function(data){
 
+                });
+                this.show = !this;
+                login.show = !login.show;
+            }
+        }
 
-
-
-
-
-
+    })
 </script>
 
 
+<!--  -->
 
-<!--  <div class="regist " >
-    <h1>Benvenuto su Ripetizioni Torino</h1>
-    <h2>LOGIN</h2>
-    <form action="login-controller" method="post" >
-        <p><input type="text" name="username" size="30" placeholder="Username" class="mt-1"></p>
-        <p><input type="password" name="password" size="30" placeholder="Password" class="mt-1"></p>
-        <p><input type="submit" name="button" value="Accedi" class="mt-1"></p>
-    </form>
-<p>Non hai un account? <a href="registrazione.html"> Registrati</a></p>
-
-
-</div> -->
 
 
 </body>

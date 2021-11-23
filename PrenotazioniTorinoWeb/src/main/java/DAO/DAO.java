@@ -46,4 +46,54 @@ public class DAO {
         return out;
 
     }
+
+
+    public static void setUtente(String email,String nome,String cognome, String u_password){
+        Connection conn1 = null;
+        try {
+            conn1 = DriverManager.getConnection(url1, user, password);
+            Statement st = conn1.createStatement();
+            st.executeUpdate("INSERT INTO utente (id,email,nome,cognome,password,ruolo) VALUES (0,'"+email+"','"+nome+"','"+cognome+"','"+u_password+"','')");
+            st.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        finally {
+            if (conn1 != null) {
+                try {
+                    conn1.close();
+                } catch (SQLException e2) {
+                    System.out.println(e2.getMessage());
+                }
+            }
+        }
+
+    }
+
+    public static boolean emailGetted(String email){
+        Connection conn1 = null;
+        boolean out = true;
+        try {
+            conn1 = DriverManager.getConnection(url1, user, password);
+            Statement st1 = conn1.createStatement();
+            ResultSet rs1 = st1.executeQuery("SELECT email FROM utente WHERE email='"+email+"");
+            String user = rs1.getString("email");
+            if(email == user){
+                out = false;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        finally {
+            if (conn1 != null) {
+                try {
+                    conn1.close();
+                } catch (SQLException e2) {
+                    System.out.println(e2.getMessage());
+                }
+            }
+        }
+        return out;
+
+    }
 }
