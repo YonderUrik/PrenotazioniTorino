@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
@@ -7,64 +7,77 @@
     <META HTTP-EQUIV="Expires" CONTENT="-1">
     <title>Ripetizioni Torino</title>
     <link rel="icon" href="img/logo_small_icon_only.png"  type="icon"/>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" integrity="sha512-NmLkDIU1C/C88wi324HBc+S2kLhi08PN5GDeUVVVC/BVt/9Izdsc9SVeVfA1UZbY3sHUlDSyRXhCzHfr6hmPPw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
          <link rel="stylesheet" href="style.css" type="text/css"> -->
 
 </head>
-<body >
+<body>
 
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 <!-- <div class="logo" >
         <img src="img/logo_large.png" alt="" width="90%" class="mt-15per">
     </div> -->
-
-    <div id="login">
-        <p>Email: <input v-model = "email" type="text"></p>
-        <p>Password: <input v-model="password" type="password"></p>
-        <p><button v-on:click = "login">Accedi</button></p>
-    </div>
+<div id="app" >
+    <p>Email <input v-model="email" type="text"/></p>
+    <p>Password: <input v-model="password" type="password"/></p>
+    <button type="button" v-on:click="this.login">Login</button>
+</div>
 
 <script>
-    var login = new Vue({
-        el:'#login',
+    var app= new Vue({
+        el:'#app',
         data:{
-            sessione:'sessione inseistente',
+            sessione:'sessione inesistente',
             email:'guest',
             password:'',
-            link: '/PrenotazioniTorinoWeb/AutServlet'
+            link: 'aut-servlet'
+        },
+        mounted: function () {
+            console.log("MOUNTED")
         },
         methods: {
             login:function(){
                 var self=this;
-                if(self.sessione === 'sessione inseistente')
+                if(self.sessione === 'sessione inesistente')
                     $.post(this.link, {utente: this.email, password: this.password}, function (data){
-                    self.sessione=data;
-                });
+
+                    });
                 else
                     $.post(this.link,{utente:this.email, password: this.password, sessione:this.sessione},
-                    function (data){});
+                        function (data){
+
+                        });
 
             }
         }
     })
+
+
+
+
+
+
+
+
 </script>
 
 
 
+<!--  <div class="regist " >
+    <h1>Benvenuto su Ripetizioni Torino</h1>
+    <h2>LOGIN</h2>
+    <form action="login-controller" method="post" >
+        <p><input type="text" name="username" size="30" placeholder="Username" class="mt-1"></p>
+        <p><input type="password" name="password" size="30" placeholder="Password" class="mt-1"></p>
+        <p><input type="submit" name="button" value="Accedi" class="mt-1"></p>
+    </form>
+<p>Non hai un account? <a href="registrazione.html"> Registrati</a></p>
 
-    <!--  <div class="regist " >
-        <h1>Benvenuto su Ripetizioni Torino</h1>
-        <h2>LOGIN</h2>
-        <form action="login-controller" method="post" >
-            <p><input type="text" name="username" size="30" placeholder="Username" class="mt-1"></p>
-            <p><input type="password" name="password" size="30" placeholder="Password" class="mt-1"></p>
-            <p><input type="submit" name="button" value="Accedi" class="mt-1"></p>
-        </form>
-    <p>Non hai un account? <a href="registrazione.html"> Registrati</a></p>
 
-
-    </div> -->
+</div> -->
 
 
 </body>
