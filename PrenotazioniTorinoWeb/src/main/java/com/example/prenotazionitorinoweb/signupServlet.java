@@ -43,7 +43,7 @@ public class signupServlet extends HttpServlet {
         System.out.println("email ricevuto:" + email);
         System.out.println("password ricevuta:" + password);
         if(!nome.equals("") && !cognome.equals("") && !email.equals("") && !password.equals("")){
-            if(!DAO.emailGetted(email)){
+            if(DAO.emailnotGetted(email)){
                 DAO.setUtente(email,nome,cognome,password);
                 System.out.println("Utente registrato");
             }else{

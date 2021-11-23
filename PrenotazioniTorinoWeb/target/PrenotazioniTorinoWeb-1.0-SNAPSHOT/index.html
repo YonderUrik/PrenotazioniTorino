@@ -15,23 +15,46 @@
 </head>
 <body>
 <!--Login Form-->
-<div id="login" v-show = "show">
-    <p>Email <input v-model="email" type="text"/></p>
-    <p>Password: <input v-model="password" type="password"/></p>
+<div id="login" v-show = "this.show">
+    <p>Email <label>
+        <input v-model="email" type="text"/>
+    </label></p>
+    <p>Password: <label>
+        <input v-model="password" type="password"/>
+    </label></p>
     <button type="button" v-on:click="this.login">Login</button>
     <p><button type="button" v-on:click="this.passtosignup"> Registrati</button></p>
 </div>
 
 <!--Signup Form-->
 <div id="sign-up" v-show = "this.show">
-    <p>Nome: <input v-model="nome" type="text"/></p>
-    <p>Cognome: <input v-model="cognome" type="text"/></p>
-    <p>Email: <input v-model="email" type="text"/></p>
-    <p>Password: <input v-model="password" type="password"></p>
+    <p>Nome: <label>
+        <input v-model="nome" type="text"/>
+    </label></p>
+    <p>Cognome: <label>
+        <input v-model="cognome" type="text"/>
+    </label></p>
+    <p>Email: <label>
+        <input v-model="email" type="text"/>
+    </label></p>
+    <p>Password: <label>
+        <input v-model="password" type="password">
+    </label></p>
     <button type="button" v-on:click="this.signup">Registrati</button>
 </div>
+<div id="homepage-administrator" v-show="this.show">
+    <h1>Bentornato Amministratore</h1>
+</div>
 
+<div id="homepage-student" v-show="this.show">
+    <h1>Bentornato Studente</h1>
+</div>
+
+<div id="homepage-guest" v-show="this.show">
+    <h1>Benvenuto Ospite</h1>
+</div>
 <script>
+    //LOGIN VUE
     var login= new Vue({
         el:'#login',
         data:{
@@ -40,7 +63,6 @@
             password:'',
             link: 'aut-servlet',
             show: true
-
         },
         mounted: function () {
             console.log("MOUNTED")
@@ -49,14 +71,10 @@
             login:function(){
                 var self=this;
                 if(self.sessione === 'sessione inesistente')
-                    $.post(this.link, {utente: this.email, password: this.password}, function (data){
-
-                    });
-                else
-                    $.post(this.link,{utente:this.email, password: this.password, sessione:this.sessione},
-                        function (data){
-
-                        });
+                    $.post(this.link, {utente: this.email, password: this.password}, function (data){});
+                //TODO: il cambio schermata avviene anche inserendo un utente errato
+                this.show = !this;
+                administrator.show = !administrator.show;
             },
             passtosignup:function (){
                 this.show = !this;
@@ -65,6 +83,7 @@
         }
     })
 
+    //SIGNUP VUE
     var signup = new Vue({
         el:'#sign-up',
         data:{
@@ -86,12 +105,30 @@
         }
 
     })
+
+    //ADMINISTRATOR VUE
+    var administrator = new Vue({
+        el:'#homepage-administrator',
+        data:{
+        show: false
+        }
+    })
+
+    //STUDENT VUE
+    var student = new Vue({
+        el:'#homepage-student',
+        data:{
+            show: false
+        }
+    })
+
+    //GUEST VUE
+    var guest = new Vue({
+        el:'#homepage-guest',
+        data:{
+            show: false
+        }
+    })
 </script>
-
-
-<!--  -->
-
-
-
 </body>
 </html>

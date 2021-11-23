@@ -46,5 +46,8 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="vue" level="application" />
+    <orderEntry type="library" name="jquery" level="application" />
+    <orderEntry type="library" name="popper.js" level="application" />
   </component>
 </module>

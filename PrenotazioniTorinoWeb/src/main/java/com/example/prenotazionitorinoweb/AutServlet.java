@@ -36,26 +36,20 @@ public class AutServlet extends HttpServlet {
 
         String email = request.getParameter("utente");
         String password = request.getParameter("password");
-        String sessionID = request.getParameter("sessione");
         HttpSession s = request.getSession(); //estraggo il session ID
         String jsessionID = s.getId();
-        sessionID=jsessionID;
         System.out.println("JSessionID:" + jsessionID);
-        System.out.println("sessionID ricevuto:" + sessionID);
         System.out.println("email ricevuto:" + email);
         System.out.println("password ricevuta:" + password);
 
-        if (email == null) {
-            System.out.println("null");
-            //BISOGNA INSERIRE UNA MAIL VALIDA
-        }else if (Objects.equals(email, "guest") && sessionID!=null && jsessionID.equals(sessionID)){
+       if (Objects.equals(email, "guest")){
             //AVVIO LA SESSIONE PER GUEST
             String role = "guest";
             s.setAttribute("email",email);
             s.setAttribute("ruolo", role);
             System.out.println("guest");
             //CAMBIO
-        }else if (sessionID!=null && jsessionID.equals(sessionID)) {
+       }else if (jsessionID!=null) {
             //VERIFICO L'UTENTE
             ArrayList<utente> utente= DAO.getUtente(email,password);
             if(utente.get(0).getEmail().equals(email) && utente.get(0).getPassword().equals(password)){
@@ -67,10 +61,7 @@ public class AutServlet extends HttpServlet {
             }else{
                 System.out.println("Utente errato");
             }
-        }else{
-            //SI E' VERIFICATO UN ERRORE ANOMALO, RIPROVA
-        }
-
+       }
     }
 
 

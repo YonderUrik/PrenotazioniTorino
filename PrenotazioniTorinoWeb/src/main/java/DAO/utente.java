@@ -17,6 +17,10 @@ public class utente {
         this.ruolo = ruolo;
     }
 
+    public utente(String email) {
+        this.email = email;
+    }
+
     public String getCognome() {
         return cognome;
     }

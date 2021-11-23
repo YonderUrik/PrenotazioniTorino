@@ -2,6 +2,7 @@ package DAO;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 public class DAO {
@@ -53,7 +54,8 @@ public class DAO {
         try {
             conn1 = DriverManager.getConnection(url1, user, password);
             Statement st = conn1.createStatement();
-            st.executeUpdate("INSERT INTO utente (id,email,nome,cognome,password,ruolo) VALUES (0,'"+email+"','"+nome+"','"+cognome+"','"+u_password+"')");
+            st.executeUpdate("INSERT INTO utente (id,email,nome,cognome,password,ruolo) VALUES (0,'"+email+"','"+nome+"','"+cognome+"','"+u_password+"','')");
+            System.out.println("Utente aggiunto");
             st.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -67,19 +69,24 @@ public class DAO {
                 }
             }
         }
-
     }
 
-    public static boolean emailGetted(String email){
+    public static boolean emailnotGetted(String email){
         Connection conn1 = null;
-        boolean out = true;
+        boolean out = false;
+        ArrayList<utente> users = new ArrayList<>();
         try {
             conn1 = DriverManager.getConnection(url1, user, password);
             Statement st1 = conn1.createStatement();
-            ResultSet rs1 = st1.executeQuery("SELECT email FROM utente WHERE email='"+email+"");
-            String user = rs1.getString("email");
-            if(email == user){
-                out = false;
+            ResultSet rs1 = st1.executeQuery("SELECT email FROM utente WHERE email='"+email+"'");
+            System.out.println("query presa");
+            while(rs1.next()){
+                System.out.println("utente : "+rs1.getString("email"));
+                utente user = new utente(rs1.getString("email"));
+                users.add(user);
+            }
+            if(users.isEmpty() || Objects.equals(users.get(0).getEmail(), "")){
+                out = true;
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -88,12 +95,13 @@ public class DAO {
             if (conn1 != null) {
                 try {
                     conn1.close();
+                    System.out.println("connesione chiusa");
                 } catch (SQLException e2) {
                     System.out.println(e2.getMessage());
                 }
             }
         }
+        System.out.println("out : "+out);
         return out;
-
     }
 }
