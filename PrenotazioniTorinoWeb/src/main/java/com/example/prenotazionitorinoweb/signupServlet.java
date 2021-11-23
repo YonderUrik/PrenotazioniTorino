@@ -45,8 +45,9 @@ public class signupServlet extends HttpServlet {
         if(!nome.equals("") && !cognome.equals("") && !email.equals("") && !password.equals("")){
             if(!DAO.emailGetted(email)){
                 DAO.setUtente(email,nome,cognome,password);
+                System.out.println("Utente registrato");
             }else{
-
+                System.out.println("L'email risulta associata ad un altro account");
             }
         }
 

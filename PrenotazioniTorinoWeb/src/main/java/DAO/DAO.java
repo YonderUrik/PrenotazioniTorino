@@ -53,7 +53,7 @@ public class DAO {
         try {
             conn1 = DriverManager.getConnection(url1, user, password);
             Statement st = conn1.createStatement();
-            st.executeUpdate("INSERT INTO utente (id,email,nome,cognome,password,ruolo) VALUES (0,'"+email+"','"+nome+"','"+cognome+"','"+u_password+"','')");
+            st.executeUpdate("INSERT INTO utente (id,email,nome,cognome,password,ruolo) VALUES (0,'"+email+"','"+nome+"','"+cognome+"','"+u_password+"')");
             st.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
