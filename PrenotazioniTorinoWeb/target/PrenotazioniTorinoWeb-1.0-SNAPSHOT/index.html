@@ -20,15 +20,15 @@
 <!-- <div class="logo" >
         <img src="img/logo_large.png" alt="" width="90%" class="mt-15per">
     </div> -->
-<div id="app" >
+<div id="login" >
     <p>Email <input v-model="email" type="text"/></p>
     <p>Password: <input v-model="password" type="password"/></p>
     <button type="button" v-on:click="this.login">Login</button>
 </div>
 
 <script>
-    var app= new Vue({
-        el:'#app',
+    var login= new Vue({
+        el:'#login',
         data:{
             sessione:'sessione inesistente',
             email:'guest',
