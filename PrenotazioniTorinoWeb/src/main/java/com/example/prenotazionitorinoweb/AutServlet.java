@@ -10,6 +10,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 
 @WebServlet(name = "autservlet", value = "/aut-servlet")
@@ -47,7 +49,10 @@ public class AutServlet extends HttpServlet {
             String role = "guest";
             s.setAttribute("email",email);
             s.setAttribute("ruolo", role);
-            System.out.println("guest");
+            JSONObject guest = new JSONObject();
+            guest.put("email",email);
+            guest.put("ruolo",role);
+
             //CAMBIO
        }else if (jsessionID!=null) {
             //VERIFICO L'UTENTE

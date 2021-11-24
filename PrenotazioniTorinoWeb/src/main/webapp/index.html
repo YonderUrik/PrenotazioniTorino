@@ -10,6 +10,8 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
 
 </head>
@@ -24,6 +26,7 @@
     </label></p>
     <button type="button" v-on:click="this.login">Login</button>
     <p><button type="button" v-on:click="this.passtosignup"> Registrati</button></p>
+
 </div>
 
 <!--Signup Page-->
@@ -41,12 +44,98 @@
         <input v-model="password" type="password">
     </label></p>
     <button type="button" v-on:click="this.signup">Registrati</button>
+
 </div>
 
 <!-- TODO: Estrarre i vari dati a seconda della schermata -->
+
 <!-- Administrator Page -->
 <div id="homepage-administrator" v-show="this.show">
-    <h1>Bentornato Amministratore</h1>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <!-- HOMEPAGE -->
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" v-on:click="" >Home</a>
+                    </li>
+
+                    <!-- SEZIONE AMMINISTRAZIONE -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Amministrazione
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#" >Visualizza prenotazioni</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Corsi</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Docenti</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Ripetizioni</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- SEZIONE PRENOTAZIONI -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Prenotazioni
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#">Catalogo</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Prenotazione</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Disdetta</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Visualizza</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid" id="homepage-amministrator" style=" width: 80%;margin-top: 5%">
+        <div class="accordion" id="accordionPanelsStayOpenExample">
+            <div class="accordion-item" >
+                <h2 class="accordion-header" id="panelsStayOpen-headingOne" >
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne" >
+                        Informazioni
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                    <div class="accordion-body">
+                        <strong>INFORMAZIONI UTENTE</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                        Studenti
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+                    <div class="accordion-body">
+                        <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-row text-center mt-1">
+            <div class="col-12">
+                <button type="button" class="btn btn-primary " v-on:click="this.logout_admin">Log out</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Student Page -->
@@ -60,6 +149,7 @@
 </div>
 <script>
     //LOGIN VUE
+
     var login= new Vue({
         el:'#login',
         data:{
@@ -75,11 +165,20 @@
         methods: {
             login:function(){
                 var self=this;
-                if(self.sessione === 'sessione inesistente')
-                    $.post(this.link, {utente: this.email, password: this.password}, function (data){});
-                //TODO: Gestire le varie schermate a seconda di che ruolo accede.
-                this.show = !this;
-                administrator.show = !administrator.show;
+                var controllo= true;
+                if((this.email === '' || this.password === '') && this.email !== 'guest'){
+                    window.alert("Inserire un'email ed una password");
+                    controllo=false;
+                }
+
+                if(self.sessione === 'sessione inesistente' && controllo) {
+                    $.post(this.link, {utente: this.email, password: this.password}, function (data) {
+                    });
+                    //TODO: Gestire le varie schermate a seconda di che ruolo accede.
+                    //TODO: Passare la sessione alla Vue corretta.
+                    this.show = !this;
+                    administrator.show = !administrator.show;
+                }
             },
             passtosignup:function (){
                 this.show = !this;
@@ -115,7 +214,15 @@
     var administrator = new Vue({
         el:'#homepage-administrator',
         data:{
-        show: false
+        show: false,
+            sessione: ''
+        },
+        methods:{
+            logout_admin:function (){
+                //TODO: Invalidare la sessione.
+                this.show = !this.show;
+                login.show = !login.show;
+            }
         }
     })
 
