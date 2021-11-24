@@ -14,7 +14,7 @@
 
 </head>
 <body>
-<!--Login Form-->
+<!--Login Page-->
 <div id="login" v-show = "this.show">
     <p>Email <label>
         <input v-model="email" type="text"/>
@@ -26,7 +26,7 @@
     <p><button type="button" v-on:click="this.passtosignup"> Registrati</button></p>
 </div>
 
-<!--Signup Form-->
+<!--Signup Page-->
 <div id="sign-up" v-show = "this.show">
     <p>Nome: <label>
         <input v-model="nome" type="text"/>
@@ -42,14 +42,19 @@
     </label></p>
     <button type="button" v-on:click="this.signup">Registrati</button>
 </div>
+
+<!-- TODO: Estrarre i vari dati a seconda della schermata -->
+<!-- Administrator Page -->
 <div id="homepage-administrator" v-show="this.show">
     <h1>Bentornato Amministratore</h1>
 </div>
 
+<!-- Student Page -->
 <div id="homepage-student" v-show="this.show">
     <h1>Bentornato Studente</h1>
 </div>
 
+<!-- Guest Page -->
 <div id="homepage-guest" v-show="this.show">
     <h1>Benvenuto Ospite</h1>
 </div>
@@ -72,7 +77,7 @@
                 var self=this;
                 if(self.sessione === 'sessione inesistente')
                     $.post(this.link, {utente: this.email, password: this.password}, function (data){});
-                //TODO: il cambio schermata avviene anche inserendo un utente errato
+                //TODO: Gestire le varie schermate a seconda di che ruolo accede.
                 this.show = !this;
                 administrator.show = !administrator.show;
             },
