@@ -244,7 +244,7 @@
                 }
                 //TODO: Il controllo dei dati non funziona sempre bene.
                 if(self.sessione === 'sessione inesistente' && controllo) {
-                    $.post(this.link, {utente: this.email, password: this.password}, function (data) {
+                    $.post('aut-servlet', {utente: this.email, password: this.password}, function (data) {
                     });
                     //TODO: Gestire le varie schermate a seconda di che ruolo accede.
                     //TODO: Passare la sessione alla Vue corretta.
