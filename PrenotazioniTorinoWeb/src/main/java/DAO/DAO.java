@@ -104,4 +104,33 @@ public class DAO {
         System.out.println("out : "+out);
         return out;
     }
+
+    public static ArrayList<utente> getAllUtente(){
+        Connection conn1 = null;
+        ArrayList<utente> out = new ArrayList<>();
+        try {
+            conn1 = DriverManager.getConnection(url1, user, password);
+
+
+            Statement st1 = conn1.createStatement();
+            ResultSet rs1 = st1.executeQuery("SELECT * FROM utente WHERE ruolo='studente'");
+            while (rs1.next()) {
+                utente u = new utente(rs1.getString("cognome"),rs1.getString("nome"),rs1.getInt("id"),rs1.getString("email"),rs1.getString("password"),rs1.getString("ruolo"));
+                out.add(u);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        finally {
+            if (conn1 != null) {
+                try {
+                    conn1.close();
+                } catch (SQLException e2) {
+                    System.out.println(e2.getMessage());
+                }
+            }
+        }
+        return out;
+
+    }
 }
