@@ -5,13 +5,12 @@ import DAO.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Objects;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 
 @WebServlet(name = "autservlet", value = "/aut-servlet")
@@ -20,22 +19,23 @@ public class AutServlet extends HttpServlet {
         DAO.registerDriver();
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("post");
         processRequest(request, response);
+        System.out.println("uscito post");
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("get");
         processRequest(request, response);
+        System.out.println("uscito get");
     }
 
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-
-
-        ServletContext ctx = getServletContext();
-        RequestDispatcher rd = ctx.getRequestDispatcher("/index.html");
-
+        response.setContentType("application/json");
+        PrintWriter out=response.getWriter();
         String email = request.getParameter("utente");
         String password = request.getParameter("password");
         HttpSession s = request.getSession(); //estraggo il session ID
@@ -44,16 +44,17 @@ public class AutServlet extends HttpServlet {
         System.out.println("email ricevuto:" + email);
         System.out.println("password ricevuta:" + password);
 
+
        if (Objects.equals(email, "guest")){
             //AVVIO LA SESSIONE PER GUEST
-            String role = "guest";
+            String role = "ospite";
             s.setAttribute("email",email);
             s.setAttribute("ruolo", role);
-            JSONObject guest = new JSONObject();
-            guest.put("email",email);
-            guest.put("ruolo",role);
-
-            //CAMBIO
+           JsonObject ospite=new JsonObject();
+           ospite.addProperty("email",email);
+           ospite.addProperty("ruolo",role);
+           System.out.println(ospite.get("ruolo"));
+           out.print(ospite);
        }else if (jsessionID!=null) {
             //VERIFICO L'UTENTE
             ArrayList<utente> utente= DAO.getUtente(email,password);
@@ -61,8 +62,12 @@ public class AutServlet extends HttpServlet {
                 String role = utente.get(0).getRuolo();
                 s.setAttribute("email", email);
                 s.setAttribute("ruolo", role);
-                System.out.println(s.getAttribute("ruolo"));
-                //CAMBIO
+                JsonObject utente2=new JsonObject();
+                utente2.addProperty("email",email);
+                utente2.addProperty("ruolo",role);
+                System.out.println("stampa: "+utente2.get("ruolo"));
+                System.out.println(utente2);
+                out.print(utente2);
             }else{
                 System.out.println("Utente errato");
             }

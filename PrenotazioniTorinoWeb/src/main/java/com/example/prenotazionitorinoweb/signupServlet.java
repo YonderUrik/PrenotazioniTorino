@@ -55,22 +55,5 @@ public class signupServlet extends HttpServlet {
     }
 
 
-
-
-
-
-    private String getRole(String username, String password){
-        String temp= null;
-        ArrayList<utente> utente= DAO.getUtente(username,password);
-        if(utente.isEmpty()){
-            return temp;
-        }
-        if(Objects.equals(utente.get(0).getEmail(),username) && Objects.equals(utente.get(0).getPassword(),password)){
-            temp=utente.get(0).getRuolo();
-        }
-
-        return temp;
-    }
-
 }
 
