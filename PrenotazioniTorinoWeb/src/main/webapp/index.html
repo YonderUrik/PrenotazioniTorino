@@ -225,27 +225,21 @@
         </div>
     </div>
 
-    <!-- Pagina delle prenotazioni -->
-    <div id="visualizza-prenotazioni"  v-show="this.prenotazioni">
-        <h1>mettere prenotazioni prenotate</h1>
-    </div>
 
 
 
 
 
-    <!-- pagina docenti -->
-    <div id="visualizza-docenti" v-show="this.docenti">
-        <h1>visualizzare docenti</h1>
-    </div>
 
-    <!-- pagina ripetizioni -->
-    <div id="visualizza-ripetizioni" v-show="this.ripetizioni">
-        <h1>visualizzare ripetizioni</h1>
-    </div>
+
+
+
 
 </div>
-
+<!-- Pagina delle prenotazioni -->
+<div id="visualizza-prenotazioni"  v-show="administrator.prenotazioni">
+    <h1>mettere prenotazioni prenotate</h1>
+</div>
 
 <!-- pagina corsi -->
 <div id="vis-corsi" v-show="administrator.corsi" style="width: 60%; text-align: center;" class="container-fluid">
@@ -272,6 +266,16 @@
     <!--TODO: creare funzione per aggiungere corso e schermata per inserimeto dati del corso-->
     <button type="button" class="btn btn-primary mt-3">Aggiungi corso</button>
 
+</div>
+
+<!-- pagina docenti -->
+<div id="visualizza-docenti" v-show="administrator.docenti">
+    <h1>visualizzare docenti</h1>
+</div>
+
+<!-- pagina ripetizioni -->
+<div id="visualizza-ripetizioni" v-show="administrator.ripetizioni">
+    <h1>visualizzare ripetizioni</h1>
 </div>
 
 
@@ -488,8 +492,16 @@
         }
     })
 
+    //vue visualizzazione prenotazioni
+    var visualizzaprenotazioni=new Vue({
+        el:'#visualizza-prenotazioni',
+        data:{
+            resultJson:'',
+        }
+    })
 
 
+    //vue visualizzazione corsi
     var visualizzaCorsi=new Vue({
         el:'#vis-corsi',
         data:{
@@ -511,6 +523,26 @@
             this.getCorso();
         },
     })
+
+
+    //vue visualizzazione docenti
+    var visualizzaDocenti=new Vue({
+        el:'#visualizza-docenti',
+        data:{
+            resultJson:'',
+        }
+    })
+
+    var visualizzaRipetizioni= new Vue({
+        el:'#visualizza-ripetizioni',
+        data:{
+            resultJson:'',
+        }
+    })
+
+
+
+
 </script>
 </body>
 </html>
