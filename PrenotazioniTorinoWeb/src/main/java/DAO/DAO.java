@@ -164,7 +164,33 @@ public class DAO {
     }
 
 
+    public static ArrayList<docente> getAllDocenti(){
+        Connection conn1 = null;
+        ArrayList<docente> out = new ArrayList<>();
+        try {
+            conn1 = DriverManager.getConnection(url1, user, password);
 
 
+            Statement st1 = conn1.createStatement();
+            ResultSet rs1 = st1.executeQuery("SELECT * FROM docente");
+            while (rs1.next()) {
+                docente d = new docente(rs1.getInt("id"),rs1.getString("nome"),rs1.getString("cognome"));
+                out.add(d);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        finally {
+            if (conn1 != null) {
+                try {
+                    conn1.close();
+                } catch (SQLException e2) {
+                    System.out.println(e2.getMessage());
+                }
+            }
+        }
+        return out;
+
+    }
 
 }
