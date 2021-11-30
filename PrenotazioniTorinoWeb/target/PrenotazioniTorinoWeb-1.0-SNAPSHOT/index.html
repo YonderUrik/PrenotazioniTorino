@@ -111,7 +111,7 @@
                         </div>
                     </div>
 
-                    <!-- TODO: Non funziona l'ancora dedicata al ritorno al login. -->
+
                     <!-- RITORNO LOGIN -->
                     <p class="text-center"><a v-on:click="this.passToLogin" class="btn">Ritorna al login.</a></p>
                 </form>
@@ -197,12 +197,17 @@
                 </h2>
                 <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
                     <div class="accordion-body">
+                        <table class="table" style="width: 100%">
+                            <tr v-for="item in resultJson" style="width: 100%">
+                                <td style="width: 10%">    {{item.nome}}</td>
+                                <td style="width: 10%">{{item.cognome}}</td>
+                                <td style="width: 10%">{{item.ruolo}}</td>
+                                <td style="width: 60%"></td>
+                                <td style="width: 10%; text-align: right">Elimina</td>
+                            </tr>
+                        </table>
 
-                        <ul>
-                            <li v-for="value in resultJson">
-                                {{value}}
-                            </li>
-                        </ul>
+
                     </div>
                 </div>
             </div>
