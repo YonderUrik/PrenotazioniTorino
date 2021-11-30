@@ -113,7 +113,7 @@
 
                     <!-- TODO: Non funziona l'ancora dedicata al ritorno al login. -->
                     <!-- RITORNO LOGIN -->
-                    <p class="text-center"><a v-on:click="this.passtologin" class="btn">Ritorna al login.</a></p>
+                    <p class="text-center"><a v-on:click="this.passToLogin" class="btn">Ritorna al login.</a></p>
                 </form>
             </div>
         </article>
@@ -338,6 +338,11 @@
                 $.post(this.link,{nome: this.nome, cognome: this.cognome, email: this.email, password:this.password},function(data){
 
                 });
+                this.show = !this;
+                login.show = !login.show;
+            },
+
+            passToLogin:function (){
                 this.show = !this;
                 login.show = !login.show;
             }
