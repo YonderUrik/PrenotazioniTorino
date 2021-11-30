@@ -197,6 +197,7 @@
                 </h2>
                 <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
                     <div class="accordion-body">
+                        <!-- TODO: creare funzione per ancora elimina nella tabella per eliminare uno studente -->
                         <table class="table" style="width: 100%">
                             <tr v-for="item in resultJson" style="width: 100%">
                                 <td style="width: 10%">    {{item.nome}}</td>
@@ -228,23 +229,50 @@
     <div id="visualizza-prenotazioni"  v-show="this.prenotazioni">
         <h1>mettere prenotazioni prenotate</h1>
     </div>
-    <!-- pagina corsi -->
-    <div id="corsi" v-show="this.corsi">
-        <h1>visualizzare corsi</h1>
-    </div>
+
+
+
+
 
     <!-- pagina docenti -->
-    <div id="docenti" v-show="this.docenti">
+    <div id="visualizza-docenti" v-show="this.docenti">
         <h1>visualizzare docenti</h1>
     </div>
 
     <!-- pagina ripetizioni -->
-    <div id="ripetizioni" v-show="this.ripetizioni">
+    <div id="visualizza-ripetizioni" v-show="this.ripetizioni">
         <h1>visualizzare ripetizioni</h1>
     </div>
 
 </div>
 
+
+<!-- pagina corsi -->
+<div id="vis-corsi" v-show="administrator.corsi" style="width: 60%; text-align: center;" class="container-fluid">
+    <h1>Corsi</h1>
+    <div class="card">
+        <div class="card-body">
+            <table class="table" style="width: 100%">
+                <thead>
+                <tr>
+                    <th> id</th> <th>nome</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="item in resultJson" style="width: 100%">
+                    <td style="width: 5%">{{item.id}}</td>
+                    <td style="width: 30%">{{item.nome}}</td>
+                    <td style="width: 55%"></td>
+                    <td style="width: 10%; text-align: right">Elimina</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- To -->
+    <button type="button" class="btn btn-primary mt-3">Aggiungi corso</button>
+
+</div>
 
 
 <!-- Student Page -->
@@ -458,6 +486,30 @@
         data:{
             show: false
         }
+    })
+
+
+
+    var visualizzaCorsi=new Vue({
+        el:'#vis-corsi',
+        data:{
+            resultJson:'funziona',
+        },
+
+        methods:{
+            getCorso: function (){
+                let self=this;
+                $.get('corso-servlet',{},function (data){
+                    let jsonResponse=JSON.parse(JSON.stringify(data));
+                    console.log(jsonResponse);
+                    self.resultJson=jsonResponse;
+                    console.log(self.resultJson);
+                });
+            },
+        },
+        created:function (){
+            this.getCorso();
+        },
     })
 </script>
 </body>

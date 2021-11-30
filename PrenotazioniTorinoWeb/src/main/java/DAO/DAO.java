@@ -133,4 +133,38 @@ public class DAO {
         return out;
 
     }
+
+    public static ArrayList<corsi> getAllCorsi(){
+        Connection conn1 = null;
+        ArrayList<corsi> out = new ArrayList<>();
+        try {
+            conn1 = DriverManager.getConnection(url1, user, password);
+
+
+            Statement st1 = conn1.createStatement();
+            ResultSet rs1 = st1.executeQuery("SELECT * FROM corso");
+            while (rs1.next()) {
+                corsi c = new corsi(rs1.getInt("id"),rs1.getString("nome"));
+                out.add(c);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        finally {
+            if (conn1 != null) {
+                try {
+                    conn1.close();
+                } catch (SQLException e2) {
+                    System.out.println(e2.getMessage());
+                }
+            }
+        }
+        return out;
+
+    }
+
+
+
+
+
 }
