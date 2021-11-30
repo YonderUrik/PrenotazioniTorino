@@ -133,8 +133,9 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <!-- HOMEPAGE -->
+                    <!-- TODO: mettere funzione di ritorno home una volta strutturata tutta la pagina intera -->
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" v-on:click="" >Home</a>
+                        <a class="nav-link active btn" aria-current="page" v-on:click="this.passHome" >Home</a>
                     </li>
 
                     <!-- SEZIONE AMMINISTRAZIONE -->
@@ -143,13 +144,13 @@
                             Amministrazione
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#" >Visualizza prenotazioni</a></li>
+                            <li><a class="dropdown-item btn" v-on:click="this.passRipetizioni">Visualizza prenotazioni</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Corsi</a></li>
+                            <li><a class="dropdown-item" v-on:click="this.passCorsi">Corsi</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Docenti</a></li>
+                            <li><a class="dropdown-item" v-on:click="this.passDocenti">Docenti</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Ripetizioni</a></li>
+                            <li><a class="dropdown-item" v-on:click="this.passRipet">Ripetizioni</a></li>
                         </ul>
                     </li>
 
@@ -172,11 +173,10 @@
             </div>
         </div>
     </nav>
-     <p>{{login.resultJson}}</p>
-    <p>{{login.studenti}}</p>
-    <div class="container-fluid" id="homepage-amministrator" style=" width: 80%;margin-top: 5%">
+    <!-- Hompage admin -->
+    <div class="container-fluid" id="homepage-amministrator" style=" width: 80%;margin-top: 5%" v-show="this.home">
 
-        <div class="accordion" id="accordionPanelsStayOpenExample">
+        <div class="accordion" id="accordionPanelsStayOpenExample" >
             <div class="accordion-item" >
                 <h2 class="accordion-header" id="panelsStayOpen-headingOne" >
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne" >
@@ -197,6 +197,7 @@
                 </h2>
                 <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
                     <div class="accordion-body">
+
                         <ul>
                             <li v-for="value in resultJson">
                                 {{value}}
@@ -208,13 +209,38 @@
         </div>
 
 
+
+
+
         <div class="form-row text-center mt-1">
             <div class="col-12">
                 <button type="button" class="btn btn-primary " v-on:click="this.logout_admin">Log out</button>
             </div>
         </div>
     </div>
+
+    <!-- Pagina delle prenotazioni -->
+    <div id="visualizza-prenotazioni"  v-show="this.prenotazioni">
+        <h1>mettere prenotazioni prenotate</h1>
+    </div>
+    <!-- pagina corsi -->
+    <div id="corsi" v-show="this.corsi">
+        <h1>visualizzare corsi</h1>
+    </div>
+
+    <!-- pagina docenti -->
+    <div id="docenti" v-show="this.docenti">
+        <h1>visualizzare docenti</h1>
+    </div>
+
+    <!-- pagina ripetizioni -->
+    <div id="ripetizioni" v-show="this.ripetizioni">
+        <h1>visualizzare ripetizioni</h1>
+    </div>
+
 </div>
+
+
 
 <!-- Student Page -->
 <div id="homepage-student" v-show="this.show">
@@ -276,10 +302,6 @@
                 }
             },
 
-            funcget: function(){
-
-            },
-
             passtocorrectvue:function(){
                 console.log("pass: "+this.resultJson);
                 if(this.resultJson==='ospite'){
@@ -328,6 +350,11 @@
         el:'#homepage-administrator',
         data:{
             show: false,
+            home:true,
+            prenotazioni:false,
+            corsi:false,
+            docenti:false,
+            ripetizioni:false,
             sessione: '',
             studenti: '',
             resultJson:'',
@@ -357,7 +384,53 @@
             stampaStudenti:function (){
                 let self=this;
                 console.log("risultato:"+self.resultJson.toString());
-            }
+            },
+
+            passHome:function (){
+                this.home=true;
+                this.prenotazioni=false;
+                this.corsi=false;
+                this.docenti=false;
+                this.ripetizioni=false;
+
+            },
+
+            passRipetizioni:function (){
+                this.home=false;
+                this.prenotazioni=true;
+                this.corsi=false;
+                this.docenti=false;
+                this.ripetizioni=false;
+
+            },
+
+            passCorsi:function (){
+                this.home=false;
+                this.prenotazioni=false;
+                this.corsi=true;
+                this.docenti=false;
+                this.ripetizioni=false;
+
+            },
+
+            passDocenti:function (){
+                this.home=false;
+                this.prenotazioni=false;
+                this.corsi=false;
+                this.docenti=true;
+                this.ripetizioni=false;
+
+            },
+
+            passRipet:function (){
+                this.home=false;
+                this.prenotazioni=false;
+                this.corsi=false;
+                this.docenti=false;
+                this.ripetizioni=true;
+
+            },
+
         }
     })
 
