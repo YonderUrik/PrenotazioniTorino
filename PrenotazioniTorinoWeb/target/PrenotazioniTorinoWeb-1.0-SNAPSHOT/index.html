@@ -237,8 +237,30 @@
 
 </div>
 <!-- Pagina delle prenotazioni -->
-<div id="visualizza-prenotazioni"  v-show="administrator.prenotazioni">
+<div id="visualizza-prenotazioni"  v-show="administrator.prenotazioni" style="width: 60%; text-align: center;" class="container-fluid">
     <h1>mettere prenotazioni prenotate</h1>
+    <div class="card">
+        <div class="card-body">
+            <table class="table" style="width: 100%">
+                <thead>
+                <tr>
+                    <th> docente</th> <th>utente</th>  <th>corso</th> <th>data</th> <th>ora</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="item in resultJson" style="width: 100%">
+                    <td style="width: 15%">{{item.docente}}</td>
+                    <td style="width: 15%">{{item.utente}}</td>
+                    <td style="width: 15%">{{item.corso}}</td>
+                    <td style="width: 15%">{{item.data}}</td>
+                    <td style="width: 15%">{{item.ora}}</td>
+                    <td style="width: 10%"></td>
+                    <td style="width: 15%; text-align: right">Elimina</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 <!-- pagina corsi -->
@@ -268,7 +290,7 @@
 
 </div>
 
-<!-- pagina docenti -->
+<!-- pagina docenti --><!-- TODO: v-on:clik non può essere inserito in un v-for trovare soluzione per eliminare il docente selezionato -->
 <div id="visualizza-docenti" v-show="administrator.docenti" style="width: 60%; text-align: center;" class="container-fluid">
     <h1>Docenti</h1>
     <div class="card">
@@ -280,12 +302,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="item in resultJson" v-on:click="this.eliminaDocente" style="width: 100%">
+                <!-- TODO: v-on:clik non può essere inserito in un v-for trovare soluzione per eliminare il docente selezionato -->
+                <tr v-for="item in resultJson" style="width: 100%">
                     <td style="width: 10%">{{item.id}}</td>
                     <td style="width: 15%; text-align: left">{{item.nome}}</td>
                     <td style="width: 20%; text-align: left">{{item.cognome}}</td>
                     <td style="width: 45%"></td>
-                    <td style="width: 10%; text-align: right"><button type="button" class="btn btn-sm"  >Elimina</button></td>
+                    <td style="width: 10%; text-align: right"><button type="button" class="btn btn-sm"  v-on:click="this.eliminaDocente">Elimina</button></td>
                 </tr>
                 </tbody>
             </table>
@@ -519,6 +542,18 @@
         el:'#visualizza-prenotazioni',
         data:{
             resultJson:'',
+        },
+        methods:{
+          getRipetizioniPrenotate:function (){
+             let self=this;
+             $.get('prenotazioni-servlet',{},function (data){
+                let jsonResponse=JSON.parse(JSON.stringify(data));
+                self.resultJson=jsonResponse;
+             });
+          } ,
+        },
+        created:function (){
+            this.getRipetizioniPrenotate();
         }
     })
 

@@ -193,4 +193,33 @@ public class DAO {
 
     }
 
+    public static ArrayList<RipetizioniPrenotate> getAllPrenotazioni(){
+        Connection conn1 = null;
+        ArrayList<RipetizioniPrenotate> out = new ArrayList<>();
+        try {
+            conn1 = DriverManager.getConnection(url1, user, password);
+
+
+            Statement st1 = conn1.createStatement();
+            ResultSet rs1 = st1.executeQuery("SELECT d.cognome AS docente, c.nome AS corso, u.nome AS utente,p.data,p.ora FROM (((prenotazione p JOIN docente d ON (d.id=p.docente))JOIN corso c ON (c.id=p.corso))JOIN utente u ON u.id=p.utente);");
+            while (rs1.next()) {
+                RipetizioniPrenotate rp = new RipetizioniPrenotate(rs1.getString("docente"),rs1.getString("corso"),rs1.getString("utente"), rs1.getString("data"), rs1.getInt("ora") );
+                out.add(rp);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        finally {
+            if (conn1 != null) {
+                try {
+                    conn1.close();
+                } catch (SQLException e2) {
+                    System.out.println(e2.getMessage());
+                }
+            }
+        }
+        return out;
+
+    }
+
 }
