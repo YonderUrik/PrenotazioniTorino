@@ -236,6 +236,8 @@
 
 
 </div>
+
+
 <!-- Pagina delle prenotazioni -->
 <div id="visualizza-prenotazioni"  v-show="administrator.prenotazioni" style="width: 60%; text-align: center;" class="container-fluid">
     <h1>Ripetizioni prenotate</h1>
@@ -422,6 +424,7 @@
                 });
                 this.show = !this;
                 login.show = !login.show;
+
             },
 
             passToLogin:function (){
@@ -445,8 +448,10 @@
             sessione: '',
             studenti: '',
             resultJson:'',
+            InfoAdmin:'',
 
         },
+        
         methods:{
             logout_admin:function (){
                 //TODO: Invalidare la sessione.
@@ -518,7 +523,9 @@
 
             },
 
-        }
+
+        },
+
     })
 
     //STUDENT VUE
