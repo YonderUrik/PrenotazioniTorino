@@ -21,7 +21,9 @@ public class CorsoServlet extends HttpServlet {
         DAO.registerDriver();
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processRequest(request, response);
+        response.setContentType("application/json");
+        String nome= request.getParameter("nome");
+        DAO.setCorso(nome);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

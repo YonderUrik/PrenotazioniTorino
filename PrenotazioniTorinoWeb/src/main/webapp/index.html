@@ -149,8 +149,6 @@
                             <li><a class="dropdown-item btn" v-on:click="this.passCorsi">Corsi</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item btn" v-on:click="this.passDocenti">Docenti</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item btn" v-on:click="this.passRipet">Ripetizioni</a></li>
                         </ul>
                     </li>
 
@@ -225,18 +223,7 @@
         </div>
     </div>
 
-
-
-
-
-
-
-
-
-
-
 </div>
-
 
 <!-- Pagina delle prenotazioni -->
 <div id="visualizza-prenotazioni"  v-show="administrator.prenotazioni" style="width: 60%; text-align: center;" class="container-fluid">
@@ -266,9 +253,11 @@
 </div>
 
 <!-- pagina corsi -->
-<div id="vis-corsi" v-show="administrator.corsi" style="width: 60%; text-align: center;" class="container-fluid">
-    <h1>Corsi</h1>
-    <div class="card">
+<div id="vis-corsi" v-show="administrator.corsi" style="width: 60%; text-align: center;" class="container-fluid" >
+    <div class="card mt-2" v-show="this.page1" >
+        <div class="card-header" style="background: white">
+            <h1>Corsi</h1>
+        </div>
         <div class="card-body">
             <table class="table" style="width: 100%">
                 <thead>
@@ -286,9 +275,31 @@
                 </tbody>
             </table>
         </div>
-    </div>
+        <div class="card-footer" style="background: white">
+            <button type="button" class="btn btn-primary mt-3" v-on:click="this.topage2">Aggiungi corso</button>
+        </div>
+    </div >
     <!--TODO: creare funzione per aggiungere corso e schermata per inserimeto dati del corso-->
-    <button type="button" class="btn btn-primary mt-3">Aggiungi corso</button>
+
+    <div class="card mt-2" v-show="this.page2">
+        <div class="card-body">
+            <form name="myform2">
+
+                <div class="row g-3">
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="Nome corso" v-model="nome"/>
+                    </div>
+
+                </div>
+
+                <div>
+                    <input type="button" value="Aggiugi docente" class="btn btn-primary mt-3" v-on:click="this.addCorso"/>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
 
 </div>
 
@@ -320,10 +331,9 @@
     <button type="button" class="btn btn-primary mt-3" >Aggiungi docente</button>
 </div>
 
-<!-- pagina ripetizioni -->
-<div id="visualizza-ripetizioni" v-show="administrator.ripetizioni">
-    <h1>visualizzare ripetizioni</h1>
-</div>
+
+
+
 
 
 <!-- Student Page -->
@@ -444,14 +454,13 @@
             prenotazioni:false,
             corsi:false,
             docenti:false,
-            ripetizioni:false,
             sessione: '',
             studenti: '',
             resultJson:'',
             InfoAdmin:'',
 
         },
-        
+
         methods:{
             logout_admin:function (){
                 //TODO: Invalidare la sessione.
@@ -483,7 +492,6 @@
                 this.prenotazioni=false;
                 this.corsi=false;
                 this.docenti=false;
-                this.ripetizioni=false;
 
             },
 
@@ -492,8 +500,7 @@
                 this.prenotazioni=true;
                 this.corsi=false;
                 this.docenti=false;
-                this.ripetizioni=false;
-
+                visualizzaprenotazioni.getRipetizioniPrenotate();
             },
 
             passCorsi:function (){
@@ -501,7 +508,7 @@
                 this.prenotazioni=false;
                 this.corsi=true;
                 this.docenti=false;
-                this.ripetizioni=false;
+                visualizzaCorsi.getCorso();
 
             },
 
@@ -510,16 +517,7 @@
                 this.prenotazioni=false;
                 this.corsi=false;
                 this.docenti=true;
-                this.ripetizioni=false;
-
-            },
-
-            passRipet:function (){
-                this.home=false;
-                this.prenotazioni=false;
-                this.corsi=false;
-                this.docenti=false;
-                this.ripetizioni=true;
+                visualizzaDocenti.getDocenti();
 
             },
 
@@ -559,9 +557,7 @@
              });
           } ,
         },
-        created:function (){
-            this.getRipetizioniPrenotate();
-        }
+
     })
 
 
@@ -570,9 +566,39 @@
         el:'#vis-corsi',
         data:{
             resultJson:'funziona',
+            page1: true,
+            page2:false,
+            nome:'',
+
         },
 
         methods:{
+            addCorso:function (){
+                let self=this;
+              $.post('corso-servlet',{nome: this.nome},function (data){
+
+              });
+                self.getCorso();
+                self.topage1();
+            },
+
+
+
+//TODO: non si aggiorna resultJson quadno passo da page 1 a page 2
+            topage1:function (){
+                let self=this;
+                self.page1= true;
+                self.page2=false;
+
+
+            },
+
+
+            topage2:function (){
+              this.page1= false;
+              this.page2=true;
+            },
+
             getCorso: function (){
                 let self=this;
                 $.get('corso-servlet',{},function (data){
@@ -582,9 +608,7 @@
                 });
             },
         },
-        created:function (){
-            this.getCorso();
-        },
+
     })
 
 
@@ -610,17 +634,10 @@
                 });
            },
         },
-        created:function (){
-            this.getDocenti();
-        },
+
     })
 
-    var visualizzaRipetizioni= new Vue({
-        el:'#visualizza-ripetizioni',
-        data:{
-            resultJson:'',
-        }
-    })
+
 
 
 

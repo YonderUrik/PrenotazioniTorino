@@ -222,4 +222,26 @@ public class DAO {
 
     }
 
+    public static void setCorso(String nome){
+        Connection conn1 = null;
+        try {
+            conn1 = DriverManager.getConnection(url1, user, password);
+            Statement st = conn1.createStatement();
+            st.executeUpdate("INSERT INTO corso (id,nome) VALUES (0,'"+nome+"')");
+            System.out.println("Corso aggiunto");
+            st.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        finally {
+            if (conn1 != null) {
+                try {
+                    conn1.close();
+                } catch (SQLException e2) {
+                    System.out.println(e2.getMessage());
+                }
+            }
+        }
+    }
+
 }
