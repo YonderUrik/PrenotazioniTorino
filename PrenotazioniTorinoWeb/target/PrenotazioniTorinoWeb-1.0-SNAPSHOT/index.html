@@ -293,7 +293,7 @@
                 </div>
 
                 <div>
-                    <input type="button" value="Aggiugi docente" class="btn btn-primary mt-3" v-on:click="this.addCorso"/>
+                    <input type="button" value="Aggiugi corso" class="btn btn-primary mt-3" v-on:click="this.addCorso"/>
                 </div>
 
             </form>
@@ -573,12 +573,12 @@
         },
 
         methods:{
-            addCorso:function (){
-                let self=this;
-              $.post('corso-servlet',{nome: this.nome},function (data){
+            addCorso:async function () {
+                let self = this;
+                $.post('corso-servlet', {nome: this.nome}, function (data) {
 
-              });
-                self.getCorso();
+                });
+                await self.getCorso();
                 self.topage1();
             },
 
@@ -589,7 +589,7 @@
                 let self=this;
                 self.page1= true;
                 self.page2=false;
-
+                self.nome='';
 
             },
 

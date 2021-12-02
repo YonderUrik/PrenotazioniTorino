@@ -142,7 +142,7 @@ public class DAO {
 
 
             Statement st1 = conn1.createStatement();
-            ResultSet rs1 = st1.executeQuery("SELECT * FROM corso");
+            ResultSet rs1 = st1.executeQuery("SELECT * FROM corso ORDER BY id");
             while (rs1.next()) {
                 corsi c = new corsi(rs1.getInt("id"),rs1.getString("nome"));
                 out.add(c);
