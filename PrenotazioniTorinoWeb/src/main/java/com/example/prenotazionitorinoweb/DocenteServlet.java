@@ -22,11 +22,9 @@ public class DocenteServlet extends HttpServlet {
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
-        System.out.println("ci sono");
-        String nome=request.getParameter("nome");
-        String cognome=request.getParameter("cognome");
-        int id=request.getIntHeader("id");
-        System.out.println(nome+" /  "+ cognome + "  / "+id);
+        String nome= request.getParameter("nome");
+        String cognome= request.getParameter("cognome");
+        DAO.setDocente(nome,cognome);
 
     }
 
