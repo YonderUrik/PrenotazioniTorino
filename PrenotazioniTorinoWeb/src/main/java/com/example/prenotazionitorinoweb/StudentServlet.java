@@ -35,24 +35,28 @@ public class StudentServlet extends HttpServlet {
         PrintWriter out=response.getWriter();
         ArrayList<utente> studenti= DAO.getAllUtente();
 
-        JsonArray allStudent=new JsonArray();
-
-
-
-        for(int i=0;i< studenti.size();i++){
-            String nome= studenti.get(i).getNome();
-            String cognome= studenti.get(i).getCognome();
-            String ruolo=studenti.get(i).getRuolo();
-            JsonObject studente= new JsonObject();
-            studente.addProperty("nome",nome);
-            studente.addProperty("cognome",cognome);
-            studente.addProperty("ruolo",ruolo);
-            allStudent.add(studente);
+        JsonArray allStudent = null;
+        String sessione = request.getParameter("sessione");
+        HttpSession s = request.getSession();
+        String sessionID = s.getId();
+        if(sessione.equals(sessionID)) {
+            allStudent = new JsonArray();
+            for (int i = 0; i < studenti.size(); i++) {
+                String nome = studenti.get(i).getNome();
+                String cognome = studenti.get(i).getCognome();
+                String ruolo = studenti.get(i).getRuolo();
+                JsonObject studente = new JsonObject();
+                studente.addProperty("nome", nome);
+                studente.addProperty("cognome", cognome);
+                studente.addProperty("ruolo", ruolo);
+                allStudent.add(studente);
+            }
+            out.print(allStudent);
+        }else if(s.isNew()){
+            out.print(allStudent);
+            s.invalidate();
 
         }
-
-        out.print(allStudent);
-
 
 
     }

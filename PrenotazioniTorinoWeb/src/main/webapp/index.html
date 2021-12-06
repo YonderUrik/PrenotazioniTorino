@@ -120,7 +120,6 @@
     </div>
 </div>
 
-<!-- TODO: Estrarre i vari dati necessari -->
 <!-- Administrator Page -->
 <div id="homepage-administrator" v-show="this.show">
     <!-- NAVBAR -->
@@ -133,7 +132,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <!-- HOMEPAGE -->
-                    <!-- TODO: mettere funzione di ritorno home una volta strutturata tutta la pagina intera -->
+
                     <li class="nav-item">
                         <a class="nav-link active btn" aria-current="page" v-on:click="this.passHome" >Home</a>
                     </li>
@@ -171,19 +170,21 @@
             </div>
         </div>
     </nav>
-    <!-- Hompage admin -->
+    <!-- Homepage admin -->
     <div class="container-fluid" id="homepage-amministrator" style=" width: 80%;margin-top: 5%" v-show="this.home">
 
         <div class="accordion" id="accordionPanelsStayOpenExample" >
             <div class="accordion-item" >
                 <h2 class="accordion-header" id="panelsStayOpen-headingOne" >
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne" >
-                        Informazioni
+                        Informazioni Utente
                     </button>
                 </h2>
                 <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
                     <div class="accordion-body">
-                        <strong>INFORMAZIONI UTENTE</strong>
+                        <p>Username:  {{login.email}}</p>
+                        <p>Nome:  {{login.nome}} </p>
+                        <p>Cognome:  {{login.cognome}} </p>
                     </div>
                 </div>
             </div>
@@ -211,11 +212,6 @@
                 </div>
             </div>
         </div>
-
-
-
-
-
         <div class="form-row text-center mt-1">
             <div class="col-12">
                 <button type="button" class="btn btn-primary " v-on:click="this.logout_admin">Log out</button>
@@ -279,7 +275,7 @@
             <button type="button" class="btn btn-primary mt-3" v-on:click="this.topage2">Aggiungi corso</button>
         </div>
     </div >
-    <!--TODO: creare funzione per aggiungere corso e schermata per inserimeto dati del corso-->
+
 
     <div class="card mt-2" v-show="this.page2">
         <div class="card-body">
@@ -321,20 +317,18 @@
                     <td style="width: 15%; text-align: left">{{item.nome}}</td>
                     <td style="width: 20%; text-align: left">{{item.cognome}}</td>
                     <td style="width: 45%"></td>
-                    <td style="width: 10%; text-align: right"><button type="button" class="btn btn-sm"  v-on:click="this.eliminaDocente">Elimina</button></td>
+                    <td style="width: 10%; text-align: right"><button type="button" class="btn btn-sm"  >Elimina</button></td>
                 </tr>
                 </tbody>
             </table>
         </div>
+        <div class="card-footer">
+            <!--TODO: creare funzione per aggiungere docente e schermata per inserimeto dati del corso-->
+            <button type="button" class="btn btn-primary mt-3" >Aggiungi docente</button>
+        </div>
     </div>
-    <!--TODO: creare funzione per aggiungere corso e schermata per inserimeto dati del corso-->
-    <button type="button" class="btn btn-primary mt-3" >Aggiungi docente</button>
+
 </div>
-
-
-
-
-
 
 <!-- Student Page -->
 <div id="homepage-student" v-show="this.show">
@@ -353,6 +347,8 @@
         data:{
             sessione:'sessione inesistente',
             email:'guest',
+            nome: '',
+            cognome: '',
             password:'',
             link: 'aut-servlet',
             show: true,
@@ -373,12 +369,9 @@
                 }
                 //TODO: Il controllo dei dati non funziona sempre bene.
                 if(self.sessione === 'sessione inesistente' && controllo) {
-                    $.post(this.link, {utente: this.email, password: this.password}, function (data) {
+                    $.post(this.link, {utente: this.email, password: this.password, sessione: this.sessione}, function (data) {
                         controllo = false;
                     });
-
-                    //TODO: Gestire le varie schermate a seconda di che ruolo accede.
-                    //TODO: Passare la sessione alla Vue corretta.
                     while (controllo === false){
                         let i = 0;
                         console.log(i++);
@@ -386,11 +379,10 @@
                     console.log("sono uscito dalla trappola infernale");
                     $.get(this.link,{utente: this.email, password: this.password},function(data){
                         let jsonResponse=JSON.parse(JSON.stringify(data));
-                        console.log(jsonResponse);
-                        let prova=jsonResponse.ruolo;
-                        console.log("prelievo mail: "+ prova);
                         self.resultJson = jsonResponse.ruolo;
-                        console.log(self.resultJson);
+                        self.sessione = jsonResponse.sessione;
+                        self.nome = jsonResponse.nome;
+                        self.cognome = jsonResponse.cognome;
                         self.passtocorrectvue();
                     });
                 }
@@ -463,9 +455,9 @@
 
         methods:{
             logout_admin:function (){
-                //TODO: Invalidare la sessione.
-                this.show = !this.show;
-                login.show = !login.show;
+                login.sessione = "sessione inesistente";
+                window.location.reload();
+
             },
             passtologin:function (){
                 this.show = !this;
@@ -474,11 +466,18 @@
 
             mostrastudenti: function (){
                 let self=this;
-                $.get('student-servlet',{studenti:'vuoto'},function (data){
+                $.get('student-servlet',{studenti:'vuoto', sessione:login.sessione},function (data){
                     let jsonResponse=JSON.parse(JSON.stringify(data));
-                    console.log(jsonResponse);
-                    self.resultJson=jsonResponse;
-                    self.stampaStudenti();
+                    if(jsonResponse===null){
+                        window.alert("Sessione scaduta : Riaccedi");
+                        window.location.reload();
+                        login.sessione = "sessione inesistente";
+                    }else{
+                        console.log(jsonResponse);
+                        self.resultJson=jsonResponse;
+                        self.stampaStudenti();
+                    }
+
                 });
             },
 
@@ -513,11 +512,11 @@
             },
 
             passDocenti:function (){
-                this.home=false;
+                this.home= false;
                 this.prenotazioni=false;
                 this.corsi=false;
                 this.docenti=true;
-                visualizzaDocenti.getDocenti();
+                visualizzaDocenti.getProf();
 
             },
 
@@ -549,6 +548,7 @@
             resultJson:'',
         },
         methods:{
+            //TODO: Invalidare la sessione
           getRipetizioniPrenotate:function (){
              let self=this;
              $.get('prenotazioni-servlet',{},function (data){
@@ -573,23 +573,28 @@
         },
 
         methods:{
-            addCorso:async function () {
+            //TODO: invalidare la sessione
+            addCorso: function () {
                 let self = this;
                 $.post('corso-servlet', {nome: this.nome}, function (data) {
 
                 });
-                await self.getCorso();
+
                 self.topage1();
             },
 
 
 
-//TODO: non si aggiorna resultJson quadno passo da page 1 a page 2
-            topage1:function (){
-                let self=this;
-                self.page1= true;
-                self.page2=false;
-                self.nome='';
+            //TODO: non si aggiorna resultJson quadno passo da page 1 a page 2
+            topage1: function () {
+                let self = this;
+                self.getCorso().then((result)=>{
+                    self.page1 = true;
+                    self.page2 = false;
+                    self.nome = '';
+
+                });
+
 
             },
 
@@ -599,6 +604,7 @@
               this.page2=true;
             },
 
+            //TODO: Invalidare la sessione
             getCorso: function (){
                 let self=this;
                 $.get('corso-servlet',{},function (data){
@@ -619,22 +625,26 @@
             resultJson:'',
         },
         methods:{
-            getDocenti:function(){
+            //TODO:Risolvere il blocco che avviene quando si cambia dalla schermata docenti ad un'altra pagina
+            // TODO: invalidare la sessione
+            getProf:function(){
                 let self=this;
-                $.get('docente-servlet',{},function(data){
+                $.get('docente-servlet',{},function (data){
                     let jsonResponse=JSON.parse(JSON.stringify(data));
                     self.resultJson=jsonResponse;
+                    console.log(self.resultJson);
                 });
             },
 
-            eliminaDocente:function (){
+
+            //TODO: invalidare la sessione
+            /* eliminaDocente:function (){
                let self=this;
                 $.post('docente-servlet',{nome:'ciao', cognome:'ciao',id:'this.resultJson.id'},function(data){
 
                 });
-           },
+           },*/
         },
-
     })
 
 

@@ -42,9 +42,6 @@ public class DocenteServlet extends HttpServlet {
         ArrayList<docente> docente= DAO.getAllDocenti();
 
         JsonArray allDocenti=new JsonArray();
-
-
-
         for(int i=0;i< docente.size();i++){
             int id= docente.get(i).getId();
             String nome= docente.get(i).getNome();
@@ -54,7 +51,6 @@ public class DocenteServlet extends HttpServlet {
             docenti.addProperty("nome",nome);
             docenti.addProperty("cognome",cognome);
             allDocenti.add(docenti);
-
         }
 
         out.print(allDocenti);

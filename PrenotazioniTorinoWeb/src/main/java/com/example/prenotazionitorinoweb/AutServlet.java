@@ -38,8 +38,10 @@ public class AutServlet extends HttpServlet {
         PrintWriter out=response.getWriter();
         String email = request.getParameter("utente");
         String password = request.getParameter("password");
+        String sessione=request.getParameter("sessione");
         HttpSession s = request.getSession(); //estraggo il session ID
         String jsessionID = s.getId();
+        s.setMaxInactiveInterval(60);
         System.out.println("JSessionID:" + jsessionID);
         System.out.println("email ricevuto:" + email);
         System.out.println("password ricevuta:" + password);
@@ -55,7 +57,7 @@ public class AutServlet extends HttpServlet {
            ospite.addProperty("ruolo",role);
            System.out.println(ospite.get("ruolo"));
            out.print(ospite);
-       }else if (jsessionID!=null) {
+       }else if(jsessionID!=null && !jsessionID.equals(sessione)){
             //VERIFICO L'UTENTE
             ArrayList<utente> utente= DAO.getUtente(email,password);
             if(utente.get(0).getEmail().equals(email) && utente.get(0).getPassword().equals(password)){
@@ -65,12 +67,17 @@ public class AutServlet extends HttpServlet {
                 JsonObject utente2=new JsonObject();
                 utente2.addProperty("email",email);
                 utente2.addProperty("ruolo",role);
+                utente2.addProperty("sessione", jsessionID);
+                utente2.addProperty("nome", utente.get(0).getNome());
+                utente2.addProperty("cognome", utente.get(0).getCognome());
                 System.out.println("stampa: "+utente2.get("ruolo"));
                 System.out.println(utente2);
                 out.print(utente2);
             }else{
                 System.out.println("Utente errato");
             }
+       }else{
+           //SESSIONE GIA AUTENTICATA
        }
     }
 
@@ -79,17 +86,6 @@ public class AutServlet extends HttpServlet {
 
 
 
-    private String getRole(String username, String password){
-        String temp= null;
-        ArrayList<utente> utente= DAO.getUtente(username,password);
-        if(utente.isEmpty()){
-            return temp;
-        }
-        if(Objects.equals(utente.get(0).getEmail(),username) && Objects.equals(utente.get(0).getPassword(),password)){
-            temp=utente.get(0).getRuolo();
-        }
 
-        return temp;
-    }
 
 }
