@@ -36,28 +36,32 @@ public class PrenotazioniServlet extends HttpServlet {
         PrintWriter out=response.getWriter();
         ArrayList<RipetizioniPrenotate> prenotazioni= DAO.getAllPrenotazioni();
 
-        JsonArray allPrenotazioni=new JsonArray();
+        JsonArray allPrenotazioni=null;
+        String sessione = request.getParameter("sessione");
+        HttpSession s = request.getSession();
+        String sessionID = s.getId();
+        if(sessione.equals(sessionID)){
+            allPrenotazioni = new JsonArray();
+            for (int i = 0; i < prenotazioni.size(); i++) {
+                String docente = prenotazioni.get(i).getDocente();
+                String corso = prenotazioni.get(i).getCorso();
+                String utente = prenotazioni.get(i).getUtente();
+                String data = prenotazioni.get(i).getData();
+                int ora = prenotazioni.get(i).getOra();
+                JsonObject prenot = new JsonObject();
+                prenot.addProperty("docente", docente);
+                prenot.addProperty("corso", corso);
+                prenot.addProperty("utente", utente);
+                prenot.addProperty("data", data);
+                prenot.addProperty("ora", ora);
+                allPrenotazioni.add(prenot);
+            }
 
-
-
-        for(int i=0;i< prenotazioni.size();i++){
-            String docente= prenotazioni.get(i).getDocente();
-            String corso= prenotazioni.get(i).getCorso();
-            String utente= prenotazioni.get(i).getUtente();
-            String data= prenotazioni.get(i).getData();
-            int ora= prenotazioni.get(i).getOra();
-            JsonObject prenot= new JsonObject();
-            prenot.addProperty("docente",docente);
-            prenot.addProperty("corso",corso);
-            prenot.addProperty("utente",utente);
-            prenot.addProperty("data",data);
-            prenot.addProperty("ora",ora);
-
-            allPrenotazioni.add(prenot);
-
+            out.print(allPrenotazioni);
+        }else if(s.isNew()){
+            outprint(allPrenotazioni);
+            s.invalidate();
         }
-
-        out.print(allPrenotazioni);
 
 
     }
