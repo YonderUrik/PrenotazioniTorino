@@ -485,13 +485,12 @@
                 this.show = !this;
                 login.show = !login.show;
             },
-
             mostrastudenti: function (){
                 let self=this;
                 $.get('student-servlet',{studenti:'vuoto', sessione:login.sessione},function (data){
                     let jsonResponse=JSON.parse(JSON.stringify(data));
                     if(jsonResponse===null){
-                        window.alert("Sessione scaduta : Riaccedi");
+                        window.alert("Sessione scaduta : riaccedi");
                         window.location.reload();
                         login.sessione = "sessione inesistente";
                     }else{
@@ -570,12 +569,18 @@
             resultJson:'',
         },
         methods:{
-            //TODO: Invalidare la sessione
+            //TODO: Testare sessione invalidata.
           getRipetizioniPrenotate:function (){
              let self=this;
-             $.get('prenotazioni-servlet',{},function (data){
+             $.get('prenotazioni-servlet',{sessione : login.sessione},function (data){
                 let jsonResponse=JSON.parse(JSON.stringify(data));
-                self.resultJson=jsonResponse;
+                if(jsonResponse === null){
+                    window.alert("Sessione scaduta, riaccedi.");
+                    window.location.reload();
+                    login.sessione = 'sessione inesistente';
+                }else {
+                    self.resultJson = jsonResponse;
+                }
              });
           } ,
         },
@@ -595,10 +600,10 @@
         },
 
         methods:{
-            //TODO: invalidare la sessione
+            //TODO: invalidare la sessione *
             addCorso: function () {
                 let self = this;
-                $.post('corso-servlet', {nome: this.nome}, function (data) {
+                $.post('corso-servlet', {nome: this.nome, sessione : login.sessione}, function (data) {
 
                 });
 

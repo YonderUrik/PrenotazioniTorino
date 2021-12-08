@@ -59,7 +59,7 @@ public class PrenotazioniServlet extends HttpServlet {
 
             out.print(allPrenotazioni);
         }else if(s.isNew()){
-            outprint(allPrenotazioni);
+            out.print(allPrenotazioni);
             s.invalidate();
         }
 
