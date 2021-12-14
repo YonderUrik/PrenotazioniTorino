@@ -41,7 +41,6 @@ public class AutServlet extends HttpServlet {
         String sessione=request.getParameter("sessione");
         HttpSession s = request.getSession(); //estraggo il session ID
         String jsessionID = s.getId();
-        s.setMaxInactiveInterval(60);
         System.out.println("JSessionID:" + jsessionID);
         System.out.println("email ricevuto:" + email);
         System.out.println("password ricevuta:" + password);

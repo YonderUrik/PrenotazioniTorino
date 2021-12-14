@@ -37,20 +37,22 @@ public class CorsoServlet extends HttpServlet {
         PrintWriter out=response.getWriter();
         ArrayList<corsi> corsi= DAO.getAllCorsi();
 
-        JsonArray allCourses=new JsonArray();
+        JsonArray allCourses=null;
+        String sessione = request.getParameter("sessione");
+        HttpSession s = request.getSession();
+        String sessionID = s.getId();
+        if(sessione.equals(sessionID)) {
+            allCourses = new JsonArray();
+            for (int i = 0; i < corsi.size(); i++) {
+                int id = corsi.get(i).getId();
+                String nome = corsi.get(i).getNome();
+                JsonObject course = new JsonObject();
+                course.addProperty("id", id);
+                course.addProperty("nome", nome);
+                allCourses.add(course);
 
-
-
-        for(int i=0;i< corsi.size();i++){
-            int id= corsi.get(i).getId();
-            String nome= corsi.get(i).getNome();
-            JsonObject course= new JsonObject();
-            course.addProperty("id",id);
-            course.addProperty("nome",nome);
-            allCourses.add(course);
-
+            }
         }
-
         out.print(allCourses);
 
 

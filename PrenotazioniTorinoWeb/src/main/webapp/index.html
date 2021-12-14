@@ -600,11 +600,16 @@
         },
 
         methods:{
-            //TODO: invalidare la sessione *
+            //TODO: Testare sessione invalidata.
             addCorso: function () {
                 let self = this;
                 $.post('corso-servlet', {nome: this.nome, sessione : login.sessione}, function (data) {
-
+                    let jsonResponde = JSON.parse(JSON.stringify(data));
+                    if(jsonResponde === null){
+                        window.alert("Sessione scaduta, riaccedi.");
+                        window.location.reload();
+                        login.sessione = "sessione inesistente";
+                    }
                 });
 
                 self.topage1();
@@ -630,13 +635,18 @@
               this.page2=true;
             },
 
-            //TODO: Invalidare la sessione
+            //TODO: Testare sessione invalidata:
             getCorso: function (){
                 let self=this;
-                $.get('corso-servlet',{},function (data){
+                $.get('corso-servlet',{sessione: login.sessione},function (data){
                     let jsonResponse=JSON.parse(JSON.stringify(data));
-                    self.resultJson=jsonResponse;
-
+                    if(jsonResponse === null){
+                        window.alert("Sessione scaduta, riaccedi");
+                        window.location.reload();
+                        login.sessione = "sessione inesistente";
+                    }else{
+                        self.resultJson = jsonResponse;
+                    }
                 });
             },
         },
@@ -656,13 +666,19 @@
         },
         methods:{
             //TODO:Risolvere il blocco che avviene quando si cambia dalla schermata docenti ad un'altra pagina
-            // TODO: invalidare la sessione
+            // TODO: Testare sessione invalidata.
             getProf:function(){
                 let self=this;
-                $.get('docente-servlet',{},function (data){
+                $.get('docente-servlet',{sessione:login.sessione},function (data){
                     let jsonResponse=JSON.parse(JSON.stringify(data));
-                    self.resultJson=jsonResponse;
-                    console.log(self.resultJson);
+                    if(jsonResponse === null){
+                        window.alert("Sessione scaduta, riaccedi");
+                        window.location.reload();
+                        login.sessione = "sessione inesistente";
+                    }else {
+                        self.resultJson = jsonResponse;
+                        console.log(self.resultJson);
+                    }
                 });
             },
 
@@ -678,10 +694,16 @@
                 this.page1= false;
                 this.page2= true;
             },
-            //TODO: invalidare la sessione
+            //TODO: Testare sessione invalidata.
+            //      Dubbio su cosa fa questa funzione.
             addDocente:function (){
-              $.post('docente-servlet', {nome:this.nome,cognome:this.cognome}, function (data){
-
+              $.post('docente-servlet', {nome:this.nome,cognome:this.cognome,sessione:login.sessione}, function (data){
+                  let jsonResponse = JSON.parse(JSON.stringify(data));
+                  if(jsonResponse === null){
+                      window.alert("Sessione scaduta, riaccedi");
+                      window.location.reload();
+                      login.sessione = "sessione inesistente";
+                  }
               });
               this.topage1();
 

@@ -56,7 +56,6 @@ public class PrenotazioniServlet extends HttpServlet {
                 prenot.addProperty("ora", ora);
                 allPrenotazioni.add(prenot);
             }
-
             out.print(allPrenotazioni);
         }else if(s.isNew()){
             out.print(allPrenotazioni);

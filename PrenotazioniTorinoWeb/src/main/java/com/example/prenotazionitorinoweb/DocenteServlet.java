@@ -39,16 +39,22 @@ public class DocenteServlet extends HttpServlet {
         PrintWriter out=response.getWriter();
         ArrayList<docente> docente= DAO.getAllDocenti();
 
-        JsonArray allDocenti=new JsonArray();
-        for(int i=0;i< docente.size();i++){
-            int id= docente.get(i).getId();
-            String nome= docente.get(i).getNome();
-            String cognome= docente.get(i).getCognome();
-            JsonObject docenti= new JsonObject();
-            docenti.addProperty("id",id);
-            docenti.addProperty("nome",nome);
-            docenti.addProperty("cognome",cognome);
-            allDocenti.add(docenti);
+        JsonArray allDocenti=null;
+        String sessione = request.getParameter("sessione");
+        HttpSession s = request.getSession();
+        String sessionID = s.getId();
+        if(sessione.equals(sessionID)) {
+            allDocenti = new JsonArray();
+            for (int i = 0; i < docente.size(); i++) {
+                int id = docente.get(i).getId();
+                String nome = docente.get(i).getNome();
+                String cognome = docente.get(i).getCognome();
+                JsonObject docenti = new JsonObject();
+                docenti.addProperty("id", id);
+                docenti.addProperty("nome", nome);
+                docenti.addProperty("cognome", cognome);
+                allDocenti.add(docenti);
+            }
         }
 
         out.print(allDocenti);
