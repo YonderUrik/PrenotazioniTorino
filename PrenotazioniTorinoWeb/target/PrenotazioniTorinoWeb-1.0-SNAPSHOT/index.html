@@ -357,9 +357,50 @@
     <h1>Bentornato Studente</h1>
 </div>
 
+
+
 <!-- Guest Page -->
 <div id="homepage-guest" v-show="this.show">
-    <h1>Benvenuto Ospite</h1>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand">Guest</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent2" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="text-center">
+        <h1>Benvenuto Ospite</h1>
+        <p>Essendo loggato come ospite puoi solo visualizzare questa pagina.</p>
+    </div>
+
+    <div class="container ">
+        <div class="card">
+            <div class="card-head">
+                <h3 class="text-center">possibili ripetizioni</h3>
+            </div>
+            <div class="card-body ">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nome Docente</th> <th>Cognome Docente</th> <th>Corso</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="item in resultJson" style="width: 100%">
+                            <td style="width: 20%">{{item.nome_docente}}</td>
+                            <td style="width: 20%">{{item.cognome_docente}}</td>
+                            <td style="width: 20%">{{item.corso}}</td>
+                            <td style="width: 40%"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
 </div>
 <script>
     //LOGIN VUE
@@ -414,6 +455,8 @@
                 console.log("pass: "+this.resultJson);
                 if(this.resultJson==='ospite'){
                     this.show = !this;
+                    guest.getRipetizioni();
+                    console.log("ciao")
                     guest.show = !guest.show;
                 }else if(this.resultJson==='admin'){
                     this.show = !this;
@@ -558,7 +601,24 @@
     var guest = new Vue({
         el:'#homepage-guest',
         data:{
-            show: false
+            show: false,
+            resultJson:''
+        },
+        methods:{
+          getRipetizioni:function (){
+              let self=this;
+              $.get('guest-servlet', {},function (data){
+                  let jsonResponse=JSON.parse(JSON.stringify(data));
+                  if(jsonResponse===null){
+                      window.alert("Sessione scaduta, riaccedi.");
+                      window.location.reload();
+                      login.sessione = 'sessione inesistente';
+                  }else{
+                      self.resultJson = jsonResponse;
+                      console.log(self.resultJson);
+                  }
+              } )
+          }
         }
     })
 
@@ -600,11 +660,16 @@
         },
 
         methods:{
-            //TODO: invalidare la sessione *
+            //TODO: Testare sessione invalidata.
             addCorso: function () {
                 let self = this;
                 $.post('corso-servlet', {nome: this.nome, sessione : login.sessione}, function (data) {
-
+                    let jsonResponde = JSON.parse(JSON.stringify(data));
+                    if(jsonResponde === null){
+                        window.alert("Sessione scaduta, riaccedi.");
+                        window.location.reload();
+                        login.sessione = "sessione inesistente";
+                    }
                 });
 
                 self.topage1();
@@ -630,13 +695,18 @@
               this.page2=true;
             },
 
-            //TODO: Invalidare la sessione
+            //TODO: Testare sessione invalidata:
             getCorso: function (){
                 let self=this;
-                $.get('corso-servlet',{},function (data){
+                $.get('corso-servlet',{sessione: login.sessione},function (data){
                     let jsonResponse=JSON.parse(JSON.stringify(data));
-                    self.resultJson=jsonResponse;
-
+                    if(jsonResponse === null){
+                        window.alert("Sessione scaduta, riaccedi");
+                        window.location.reload();
+                        login.sessione = "sessione inesistente";
+                    }else{
+                        self.resultJson = jsonResponse;
+                    }
                 });
             },
         },
@@ -655,14 +725,19 @@
             cognome:'',
         },
         methods:{
-            //TODO:Risolvere il blocco che avviene quando si cambia dalla schermata docenti ad un'altra pagina
-            // TODO: invalidare la sessione
+            // TODO: Testare sessione invalidata.
             getProf:function(){
                 let self=this;
-                $.get('docente-servlet',{},function (data){
+                $.get('docente-servlet',{sessione:login.sessione},function (data){
                     let jsonResponse=JSON.parse(JSON.stringify(data));
-                    self.resultJson=jsonResponse;
-                    console.log(self.resultJson);
+                    if(jsonResponse === null){
+                        window.alert("Sessione scaduta, riaccedi");
+                        window.location.reload();
+                        login.sessione = "sessione inesistente";
+                    }else {
+                        self.resultJson = jsonResponse;
+                        console.log(self.resultJson);
+                    }
                 });
             },
 
@@ -678,10 +753,16 @@
                 this.page1= false;
                 this.page2= true;
             },
-            //TODO: invalidare la sessione
+            //TODO: Testare sessione invalidata.
+            //      Dubbio su cosa fa questa funzione.
             addDocente:function (){
-              $.post('docente-servlet', {nome:this.nome,cognome:this.cognome}, function (data){
-
+              $.post('docente-servlet', {nome:this.nome,cognome:this.cognome,sessione:login.sessione}, function (data){
+                  let jsonResponse = JSON.parse(JSON.stringify(data));
+                  if(jsonResponse === null){
+                      window.alert("Sessione scaduta, riaccedi");
+                      window.location.reload();
+                      login.sessione = "sessione inesistente";
+                  }
               });
               this.topage1();
 
