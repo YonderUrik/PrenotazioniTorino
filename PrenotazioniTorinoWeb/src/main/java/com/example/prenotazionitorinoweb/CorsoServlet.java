@@ -22,8 +22,15 @@ public class CorsoServlet extends HttpServlet {
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
-        String nome= request.getParameter("nome");
-        DAO.setCorso(nome);
+        String post=request.getParameter("post");
+        if(Objects.equals(post, "aggiungi")){
+            String nome= request.getParameter("nome");
+            DAO.setCorso(nome);
+        } else if(Objects.equals(post, "elimina")){
+            int id=Integer.parseInt(request.getParameter("id"));
+            DAO.deleteCorso(id);
+        }
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

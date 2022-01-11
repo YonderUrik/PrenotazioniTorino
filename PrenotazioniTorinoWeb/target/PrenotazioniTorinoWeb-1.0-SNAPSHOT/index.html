@@ -266,7 +266,7 @@
                     <td style="width: 5%">{{item.id}}</td>
                     <td style="width: 30%">{{item.nome}}</td>
                     <td style="width: 55%"></td>
-                    <td style="width: 10%; text-align: right">Elimina</td>
+                    <td style="width: 10%; text-align: right" ><button type="button" class="btn btn-sm"  v-on:click="visualizzaCorsi.delete(item.id)">Elimina</button></td>
                 </tr>
                 </tbody>
             </table>
@@ -842,7 +842,7 @@
             //TODO: Testare sessione invalidata.
             addCorso: function () {
                 let self = this;
-                $.post('corso-servlet', {nome: this.nome, sessione : login.sessione}, function (data) {
+                $.post('corso-servlet', {nome: this.nome, sessione : login.sessione,post:'aggiungi'}, function (data) {
                     let jsonResponde = JSON.parse(JSON.stringify(data));
                     if(jsonResponde === null){
                         window.alert("Sessione scaduta, riaccedi.");
@@ -863,6 +863,7 @@
                 self.page1 = true;
                 self.page2 = false;
                 self.nome = '';
+                administrator.passCorsi();
 
 
 
@@ -888,6 +889,11 @@
                     }
                 });
             },
+
+            delete:function (id){
+                $.post('corso-servlet',{post:'elimina', id:id})
+                visualizzaCorsi.topage1();
+            }
         },
 
     })
