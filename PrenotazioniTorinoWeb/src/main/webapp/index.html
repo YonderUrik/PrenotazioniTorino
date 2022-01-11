@@ -157,7 +157,7 @@
                             Prenotazioni
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Catalogo</a></li>
+                            <li><a class="dropdown-item btn" v-on:click="this.passCatalogo">Catalogo</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="#">Prenotazione</a></li>
                             <li><hr class="dropdown-divider"></li>
@@ -352,6 +352,35 @@
 
 </div>
 
+
+<!-- catalogo ripetizioni possibili -->
+<div id="catalogo-ripetizioni" v-show="administrator.catalogo" class="text-center container-fluid">
+    <div class="container ">
+        <div class="card">
+            <div class="card-head">
+                <h3 class="text-center">possibili ripetizioni</h3>
+            </div>
+            <div class="card-body ">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Nome Docente</th> <th>Cognome Docente</th> <th>Corso</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="item in resultJson" style="width: 100%">
+                        <td style="width: 20%">{{item.nome_docente}}</td>
+                        <td style="width: 20%">{{item.cognome_docente}}</td>
+                        <td style="width: 20%">{{item.corso}}</td>
+                        <td style="width: 40%"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Student Page -->
 <div id="homepage-student" v-show="this.show">
     <h1>Bentornato Studente</h1>
@@ -511,6 +540,7 @@
             prenotazioni:false,
             corsi:false,
             docenti:false,
+            catalogo:false,
             sessione: '',
             studenti: '',
             resultJson:'',
@@ -555,6 +585,7 @@
                 this.prenotazioni=false;
                 this.corsi=false;
                 this.docenti=false;
+                this.catalogo=false;
 
             },
 
@@ -564,6 +595,7 @@
                 this.corsi=false;
                 this.docenti=false;
                 visualizzaprenotazioni.getRipetizioniPrenotate();
+                this.catalogo=false;
             },
 
             passCorsi:function (){
@@ -572,6 +604,7 @@
                 this.corsi=true;
                 this.docenti=false;
                 visualizzaCorsi.getCorso();
+                this.catalogo=false;
 
             },
 
@@ -581,8 +614,18 @@
                 this.corsi=false;
                 this.docenti=true;
                 visualizzaDocenti.getProf();
+                this.catalogo=false;
 
             },
+
+            passCatalogo:function(){
+                this.home= false;
+                this.prenotazioni=false;
+                this.corsi=false;
+                this.docenti=false;
+                this.catalogo=true;
+                catalogoRipetizioni.getRipetizioni();
+            }
 
 
         },
@@ -774,7 +817,31 @@
         },
     })
 
+   //vue visualizzazione catalogo
+    var catalogoRipetizioni=new Vue({
+        el:'#catalogo-ripetizioni',
+        data:{
+            resultJson:'',
+        },
+        methods:{
+            getRipetizioni:function (){
+                let self=this;
+                $.get('guest-servlet', {},function (data){
+                    let jsonResponse=JSON.parse(JSON.stringify(data));
+                    if(jsonResponse===null){
+                        window.alert("Sessione scaduta, riaccedi.");
+                        window.location.reload();
+                        login.sessione = 'sessione inesistente';
+                    }else{
+                        self.resultJson = jsonResponse;
+                        console.log(self.resultJson);
+                    }
+                } )
+            }
+        }
+    })
 
+    
 
 
 
