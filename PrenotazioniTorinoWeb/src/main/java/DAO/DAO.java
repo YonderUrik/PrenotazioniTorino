@@ -297,4 +297,55 @@ public class DAO {
 
     }
 
+    public static void setPrenotazione(int docente,int corso, String giorno, int ora,int utente ){
+        Connection conn1 = null;
+        try {
+            conn1 = DriverManager.getConnection(url1, user, password);
+            Statement st = conn1.createStatement();
+            st.executeUpdate("INSERT INTO prenotazione (docente,corso,utente,data,ora) VALUES ('"+docente+"','"+corso+"','"+utente+"','"+giorno+"','"+ora+"')");
+            System.out.println("Prenotazione effettuata");
+            st.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        finally {
+            if (conn1 != null) {
+                try {
+                    conn1.close();
+                } catch (SQLException e2) {
+                    System.out.println(e2.getMessage());
+                }
+            }
+        }
+    }
+
+    public static ArrayList<id> getIdUtente(String username){
+        Connection conn1 = null;
+        ArrayList<id> out = new ArrayList<>();
+        try {
+            conn1 = DriverManager.getConnection(url1, user, password);
+
+
+            Statement st1 = conn1.createStatement();
+            ResultSet rs1 = st1.executeQuery("SELECT id FROM utente WHERE email='"+username+"'");
+            while (rs1.next()) {
+                id id = new id(rs1.getInt("id"));
+                out.add(id);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        finally {
+            if (conn1 != null) {
+                try {
+                    conn1.close();
+                } catch (SQLException e2) {
+                    System.out.println(e2.getMessage());
+                }
+            }
+        }
+        return out;
+
+    }
+
 }
