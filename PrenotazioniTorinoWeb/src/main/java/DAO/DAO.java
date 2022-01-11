@@ -276,9 +276,9 @@ public class DAO {
 
 
             Statement st1 = conn1.createStatement();
-            ResultSet rs1 = st1.executeQuery("SELECT d.nome AS nome_docente,d.cognome AS cognome_docente, c.nome AS corso FROM (docente d JOIN insegnamento i ON (d.id=i.docente)) JOIN corso c ON(c.id=i.corso);");
+            ResultSet rs1 = st1.executeQuery("SELECT d.nome AS nome_docente,d.cognome AS cognome_docente,d.id AS id_docente, c.nome AS corso, c.id AS id_corso FROM (docente d JOIN insegnamento i ON (d.id=i.docente)) JOIN corso c ON(c.id=i.corso);");
             while (rs1.next()) {
-                Ripetizioni ripetizioni = new Ripetizioni(rs1.getString("nome_docente"),rs1.getString("cognome_docente"),rs1.getString("corso") );
+                Ripetizioni ripetizioni = new Ripetizioni(rs1.getString("nome_docente"),rs1.getString("cognome_docente"),rs1.getInt("id_docente"),rs1.getString("corso"),rs1.getInt("id_docente") );
                 out.add(ripetizioni);
             }
         } catch (SQLException e) {

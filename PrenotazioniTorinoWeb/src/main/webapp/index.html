@@ -364,15 +364,17 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>Nome Docente</th> <th>Cognome Docente</th> <th>Corso</th>
+                        <th>Nome Docente</th> <th>Cognome Docente</th> <th>Id Docente</th> <th>Corso</th> <th>Id Corso</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr v-for="item in resultJson" style="width: 100%">
                         <td style="width: 20%">{{item.nome_docente}}</td>
                         <td style="width: 20%">{{item.cognome_docente}}</td>
+                        <td style="width: 20%">{{item.id_docente}}</td>
                         <td style="width: 20%">{{item.corso}}</td>
-                        <td style="width: 40%"></td>
+                        <td style="width: 20%">{{item.id_corso}}</td>
+
                     </tr>
                     </tbody>
                 </table>
@@ -412,17 +414,19 @@
             <div class="card-body ">
                 <table class="table">
                     <thead>
-                        <tr>
-                            <th>Nome Docente</th> <th>Cognome Docente</th> <th>Corso</th>
-                        </tr>
+                    <tr>
+                        <th>Nome Docente</th> <th>Cognome Docente</th> <th>Id Docente</th> <th>Corso</th> <th>Id Corso</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="item in resultJson" style="width: 100%">
-                            <td style="width: 20%">{{item.nome_docente}}</td>
-                            <td style="width: 20%">{{item.cognome_docente}}</td>
-                            <td style="width: 20%">{{item.corso}}</td>
-                            <td style="width: 40%"></td>
-                        </tr>
+                    <tr v-for="item in resultJson" style="width: 100%">
+                        <td style="width: 20%">{{item.nome_docente}}</td>
+                        <td style="width: 20%">{{item.cognome_docente}}</td>
+                        <td style="width: 20%">{{item.id_docente}}</td>
+                        <td style="width: 20%">{{item.corso}}</td>
+                        <td style="width: 20%">{{item.id_corso}}</td>
+
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -841,7 +845,7 @@
         }
     })
 
-    
+    //vue
 
 
 
