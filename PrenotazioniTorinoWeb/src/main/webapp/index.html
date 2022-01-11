@@ -36,7 +36,7 @@
                                 </i>
                             </span>
                             </div>
-                            <input v-model="email" class="form-control" placeholder="Email" type="email">
+                            <input v-model="email" class="form-control" placeholder="Username" type="text">
                         </div>
                     </div>
                     <!-- PASSWORD -->
@@ -57,7 +57,7 @@
 
                     <div class="form-row text-center mt-1">
                         <div class="col-12">
-                            <input type="submit" v-on:click="this.login" value="Accedi" class="btn btn-primary btn-block "/>
+                            <input type="button" v-on:click="this.login" value="Accedi" class="btn btn-primary btn-block "/>
                         </div>
                     </div>
 
@@ -539,6 +539,11 @@
         </div>
     </div>
 
+    <!-- TODO: il pulsante log out da problemi se si prova a riloggare  -->
+    <div class="container text-center mt-2">
+        <button type="button" class="btn btn-primary" v-on:click="this.passtologin">Log out</button>
+    </div>
+
 
 </div>
 <script>
@@ -787,7 +792,12 @@
                       console.log(self.resultJson);
                   }
               } )
-          }
+          },
+            passtologin:function (){
+                this.show = !this;
+                login.show = !login.show;
+            },
+
         }
     })
 
