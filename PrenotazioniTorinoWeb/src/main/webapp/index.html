@@ -419,7 +419,7 @@
             <div class="row"  style="margin-top: 2%">
                 <div class="col">
                     <select v-model="giorno" class="form-select" aria-label="Default select example">
-                        <option selected>Seleziona giorno ripetizione</option>
+                        <option selected>Seleziona giorno</option>
                         <option value="Lunedì">Lunedì</option>
                         <option value="Martedì">Martedì</option>
                         <option value="Mercoledì">Mercoledì</option>
@@ -429,8 +429,8 @@
                 </div>
 
                 <div class="col">
-                    <select v-model="ora" class="form-select" aria-label="Default select example">
-                        <option selected>Seleziona orario ripetizione</option>
+                    <select v-model="ora" class="form-select" aria-label="Default select example" >
+                        <option selected>Seleziona orario</option>
                         <option value="15">15-16</option>
                         <option value="16">16-17</option>
                         <option value="17">17-18</option>
@@ -973,15 +973,15 @@
         data:{
             id_corso:'',
             id_docente:'',
-            ora:'',
-            giorno:'',
+            ora:'Seleziona orario',
+            giorno:'Seleziona giorno',
             utente: '',
         },
         methods:{
             prenota:function (){
                 let self=this;
                 $.post('prenota-servlet',{id_docente:this.id_docente, id_corso:this.id_corso, ora:this.ora,giorno:this.giorno,utente:this.utente},function (data){
-                    
+
                 })
             }
         }
