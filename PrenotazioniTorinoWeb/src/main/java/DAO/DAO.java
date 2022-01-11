@@ -348,4 +348,26 @@ public class DAO {
 
     }
 
+    public static void deleteDocente(int id){
+        Connection conn1 = null;
+        try {
+            conn1 = DriverManager.getConnection(url1, user, password);
+            Statement st = conn1.createStatement();
+            st.executeUpdate("DELETE FROM docente WHERE id='"+id+"'");
+            System.out.println("Docente aggiunto");
+            st.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        finally {
+            if (conn1 != null) {
+                try {
+                    conn1.close();
+                } catch (SQLException e2) {
+                    System.out.println(e2.getMessage());
+                }
+            }
+        }
+    }
+
 }

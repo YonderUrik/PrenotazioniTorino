@@ -313,11 +313,11 @@
                 <tbody>
                 <!-- TODO: v-on:clik non può essere inserito in un v-for trovare soluzione per eliminare il docente selezionato -->
                 <tr v-for="item in resultJson" style="width: 100%">
-                    <td style="width: 10%">{{item.id}}</td>
+                    <td style="width: 10%" >{{item.id}}</td>
                     <td style="width: 15%; text-align: left">{{item.nome}}</td>
                     <td style="width: 20%; text-align: left">{{item.cognome}}</td>
                     <td style="width: 45%"></td>
-                    <td style="width: 10%; text-align: right"><button type="button" class="btn btn-sm"  >Elimina</button></td>
+                    <td style="width: 10%; text-align: right"><button type="button" class="btn btn-sm"  v-on:click="visualizzaDocenti.delete(item.id)">Elimina</button></td>
                 </tr>
                 </tbody>
             </table>
@@ -539,8 +539,9 @@
         </div>
     </div>
 
+    <!-- TODO: il pulsante log out da problemi se si prova a riloggare  -->
     <div class="container text-center mt-2">
-        <button type="button" class="btn" v-on:click="this.passtologin">Log out</button>
+        <button type="button" class="btn btn-primary" v-on:click="this.passtologin">Log out</button>
     </div>
 
 
@@ -901,6 +902,7 @@
             page2:false,
             nome:'',
             cognome:'',
+            id:'',
         },
         methods:{
             // TODO: Testare sessione invalidata.
@@ -925,6 +927,7 @@
                 this.nome='';
                 this.cognome='';
                 this.getProf();
+                administrator.passDocenti();
             },
 
             topage2:function (){
@@ -934,7 +937,7 @@
             //TODO: Testare sessione invalidata.
             //      Dubbio su cosa fa questa funzione.
             addDocente:function (){
-              $.post('docente-servlet', {nome:this.nome,cognome:this.cognome,sessione:login.sessione}, function (data){
+              $.post('docente-servlet', {nome:this.nome,cognome:this.cognome,sessione:login.sessione,post:'aggiungi'}, function (data){
                   let jsonResponse = JSON.parse(JSON.stringify(data));
                   if(jsonResponse === null){
                       window.alert("Sessione scaduta, riaccedi");
@@ -947,7 +950,12 @@
             },
 
 
-
+            delete:function (id){
+                let self=this;
+                console.log("elimina docente");
+                $.post('docente-servlet',{id:id,post:'elimina'});
+                visualizzaDocenti.topage1();
+            }
 
         },
     })
