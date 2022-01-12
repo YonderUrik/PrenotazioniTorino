@@ -393,4 +393,27 @@ public class DAO {
         }
     }
 
+
+    public static void deleteStudente(int id){
+        Connection conn1 = null;
+        try {
+            conn1 = DriverManager.getConnection(url1, user, password);
+            Statement st = conn1.createStatement();
+            st.executeUpdate("DELETE FROM utente WHERE id='"+id+"'");
+            System.out.println("utente Eliminato");
+            st.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        finally {
+            if (conn1 != null) {
+                try {
+                    conn1.close();
+                } catch (SQLException e2) {
+                    System.out.println(e2.getMessage());
+                }
+            }
+        }
+    }
+
 }

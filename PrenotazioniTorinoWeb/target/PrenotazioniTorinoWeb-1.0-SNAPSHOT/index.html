@@ -203,7 +203,7 @@
                                 <td style="width: 10%">{{item.cognome}}</td>
                                 <td style="width: 10%">{{item.ruolo}}</td>
                                 <td style="width: 60%"></td>
-                                <td style="width: 10%; text-align: right">Elimina</td>
+                                <td style="width: 10%; text-align: right"><button type="button" class="btn" v-on:click="administrator.delete(item.id)">Elimina</button></td>
                             </tr>
                         </table>
 
@@ -299,7 +299,7 @@
 
 </div>
 
-<!-- pagina docenti --><!-- TODO: v-on:clik non può essere inserito in un v-for trovare soluzione per eliminare il docente selezionato -->
+<!-- pagina docenti -->
 <div id="visualizza-docenti" v-show="administrator.docenti" style="width: 60%; text-align: center;" class="container-fluid">
     <h1>Docenti</h1>
     <div class="card" v-show="this.page1">
@@ -685,6 +685,7 @@
                     }else{
                         console.log(jsonResponse);
                         self.resultJson=jsonResponse;
+                        console.log(self.resultJson);
                         self.stampaStudenti();
                     }
 
@@ -694,6 +695,7 @@
             stampaStudenti:function (){
                 let self=this;
                 console.log("risultato:"+self.resultJson.toString());
+                administrator.passHome();
             },
 
             passHome:function (){
@@ -756,6 +758,13 @@
                 this.catalogo=false;
                 catalogoRipetizioni.getRipetizioni();
                 this.prenota=true;
+            },
+
+            delete:async function (id){
+                await $.post('student-servlet',{post:'eliminastudenti',id:id});
+                await administrator.mostrastudenti();
+                administrator.passHome();
+
             }
 
 

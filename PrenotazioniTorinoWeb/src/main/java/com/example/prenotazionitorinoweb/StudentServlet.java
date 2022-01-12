@@ -21,7 +21,11 @@ public class StudentServlet extends HttpServlet {
         DAO.registerDriver();
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processRequest(request, response);
+        String post=request.getParameter("post");
+        if(Objects.equals(post, "eliminastudenti")){
+            int id=Integer.parseInt(request.getParameter("id"));
+            DAO.deleteStudente(id);
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -45,10 +49,12 @@ public class StudentServlet extends HttpServlet {
                 String nome = studenti.get(i).getNome();
                 String cognome = studenti.get(i).getCognome();
                 String ruolo = studenti.get(i).getRuolo();
+                int id=studenti.get(i).getId();
                 JsonObject studente = new JsonObject();
                 studente.addProperty("nome", nome);
                 studente.addProperty("cognome", cognome);
                 studente.addProperty("ruolo", ruolo);
+                studente.addProperty("id",id);
                 allStudent.add(studente);
             }
             out.print(allStudent);
