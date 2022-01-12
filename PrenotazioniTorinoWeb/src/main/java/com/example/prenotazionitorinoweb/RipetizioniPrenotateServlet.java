@@ -32,6 +32,7 @@ public class RipetizioniPrenotateServlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //TODO:fare tutta òa servlet questa è una copia, bisogna fare anche la funzione che seleziona i valori nel DAO
         response.setContentType("application/json");
         PrintWriter out=response.getWriter();
         ArrayList<RipetizioniPrenotate> prenotazioni= DAO.getAllPrenotazioni();
