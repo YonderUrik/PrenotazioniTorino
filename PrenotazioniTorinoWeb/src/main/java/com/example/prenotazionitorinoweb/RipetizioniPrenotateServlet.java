@@ -32,12 +32,13 @@ public class RipetizioniPrenotateServlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //TODO:fare tutta òa servlet questa è una copia, bisogna fare anche la funzione che seleziona i valori nel DAO
+
         response.setContentType("application/json");
         PrintWriter out=response.getWriter();
         HttpSession s = request.getSession();
         int id= Integer.parseInt(s.getAttribute("id").toString());
         System.out.println(id);
+        //TODO:fare tutta òa servlet questa è una copia, bisogna fare anche la funzione che seleziona i valori nel DAO
         //int id=Integer.parseInt(request.getParameter("utente"));
         //System.out.println("id untente    "+ id);
         /*ArrayList<RipetizioniPrenotate> prenotazioni= DAO.getAllPrenotazioni();
