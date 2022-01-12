@@ -569,6 +569,7 @@
             objType: '',
             resultJson:'',
 
+
         },
         mounted: function () {
             console.log("MOUNTED")
@@ -782,6 +783,7 @@
                 this.docenti=false;
                 this.catalogo=false;
                 this.prenota=false;
+                ripetizPrenotate.ripetizioni();
                 this.ripPrenot=true;
             },
 
@@ -1051,9 +1053,9 @@
             resultJson:'',
         },
         methods:{
-            ripetizioni:async function (){
+            ripetizioni: function (){
                 let self=this;
-                await $.get('ripetizioni-prenotate-servlet',{},function (data){
+                 $.get('ripetizioni-prenotate-servlet',{},function (data){
 
                 })
             }

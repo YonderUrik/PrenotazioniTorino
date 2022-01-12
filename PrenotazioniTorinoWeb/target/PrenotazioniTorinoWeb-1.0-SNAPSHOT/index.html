@@ -489,7 +489,7 @@
 </div>
 
 <!-- visualizza prenotazioni -->
-<div id="visualizza-ripetizioni-prenotate" v-show="administrator.ripPrenot">
+<div id="visualizza-ripetizioni-prenotate" v-show="administrator.ripPrenot" class="text-center mt-3">
     <h1>ripetizioni prenotate</h1>
 
 </div>
@@ -568,6 +568,7 @@
             show: true,
             objType: '',
             resultJson:'',
+            resultJson2:'',
 
         },
         mounted: function () {
@@ -594,6 +595,8 @@
                     $.get(this.link,{utente: this.email, password: this.password},function(data){
                         let jsonResponse=JSON.parse(JSON.stringify(data));
                         self.resultJson = jsonResponse.ruolo;
+                        this.resultJson2=jsonResponse;
+                        console.log( this.resultJson2);
                         self.sessione = jsonResponse.sessione;
                         self.nome = jsonResponse.nome;
                         self.cognome = jsonResponse.cognome;
@@ -782,6 +785,7 @@
                 this.docenti=false;
                 this.catalogo=false;
                 this.prenota=false;
+                ripetizPrenotate.ripetizioni();
                 this.ripPrenot=true;
             },
 
@@ -1048,10 +1052,16 @@
     var ripetizPrenotate=new Vue({
         el:'#visualizza-ripetizioni-prenotate',
         data:{
-
+            resultJson:'',
         },
         methods:{
+            ripetizioni: function (){
+                let self=this;
+                console.log(login.resultJson2);
+                 $.get('ripetizioni-prenotate-servlet',{},function (data){
 
+                })
+            }
         }
     })
 

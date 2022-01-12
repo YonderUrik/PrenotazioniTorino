@@ -35,7 +35,12 @@ public class RipetizioniPrenotateServlet extends HttpServlet {
         //TODO:fare tutta òa servlet questa è una copia, bisogna fare anche la funzione che seleziona i valori nel DAO
         response.setContentType("application/json");
         PrintWriter out=response.getWriter();
-        ArrayList<RipetizioniPrenotate> prenotazioni= DAO.getAllPrenotazioni();
+        HttpSession s = request.getSession();
+        int id= Integer.parseInt(s.getAttribute("id").toString());
+        System.out.println(id);
+        //int id=Integer.parseInt(request.getParameter("utente"));
+        //System.out.println("id untente    "+ id);
+        /*ArrayList<RipetizioniPrenotate> prenotazioni= DAO.getAllPrenotazioni();
 
         JsonArray allPrenotazioni=null;
         String sessione = request.getParameter("sessione");
@@ -61,7 +66,7 @@ public class RipetizioniPrenotateServlet extends HttpServlet {
         }else if(s.isNew()){
             out.print(allPrenotazioni);
             s.invalidate();
-        }
+        }*/
 
 
     }

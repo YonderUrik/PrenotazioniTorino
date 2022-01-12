@@ -63,12 +63,14 @@ public class AutServlet extends HttpServlet {
                 String role = utente.get(0).getRuolo();
                 s.setAttribute("email", email);
                 s.setAttribute("ruolo", role);
+                s.setAttribute("id",utente.get(0).getId());
                 JsonObject utente2=new JsonObject();
                 utente2.addProperty("email",email);
                 utente2.addProperty("ruolo",role);
                 utente2.addProperty("sessione", jsessionID);
                 utente2.addProperty("nome", utente.get(0).getNome());
                 utente2.addProperty("cognome", utente.get(0).getCognome());
+                utente2.addProperty("id",utente.get(0).getId());
                 System.out.println("stampa: "+utente2.get("ruolo"));
                 System.out.println(utente2);
                 out.print(utente2);
