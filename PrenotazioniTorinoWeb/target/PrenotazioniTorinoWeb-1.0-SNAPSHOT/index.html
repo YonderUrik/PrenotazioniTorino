@@ -822,44 +822,6 @@
 
     })
 
-    //STUDENT VUE
-    var student = new Vue({
-        el:'#homepage-student',
-        data:{
-            show: false
-        }
-    })
-
-    //GUEST VUE
-    var guest = new Vue({
-        el:'#homepage-guest',
-        data:{
-            show: false,
-            resultJson:''
-        },
-        methods:{
-          getRipetizioni:function (){
-              let self=this;
-              $.get('guest-servlet', {},function (data){
-                  let jsonResponse=JSON.parse(JSON.stringify(data));
-                  if(jsonResponse===null){
-                      window.alert("Sessione scaduta, riaccedi.");
-                      window.location.reload();
-                      login.sessione = 'sessione inesistente';
-                  }else{
-                      self.resultJson = jsonResponse;
-                      console.log(self.resultJson);
-                  }
-              } )
-          },
-            passtologin:function (){
-                this.show = !this;
-                login.show = !login.show;
-            },
-
-        }
-    })
-
     //vue visualizzazione prenotazioni
     var visualizzaprenotazioni=new Vue({
         el:'#visualizza-prenotazioni',
@@ -1087,6 +1049,48 @@
             }
         }
     })
+
+
+    
+
+    //STUDENT VUE
+    var student = new Vue({
+        el:'#homepage-student',
+        data:{
+            show: false
+        }
+    })
+
+    //GUEST VUE
+    var guest = new Vue({
+        el:'#homepage-guest',
+        data:{
+            show: false,
+            resultJson:''
+        },
+        methods:{
+            getRipetizioni:function (){
+                let self=this;
+                $.get('guest-servlet', {},function (data){
+                    let jsonResponse=JSON.parse(JSON.stringify(data));
+                    if(jsonResponse===null){
+                        window.alert("Sessione scaduta, riaccedi.");
+                        window.location.reload();
+                        login.sessione = 'sessione inesistente';
+                    }else{
+                        self.resultJson = jsonResponse;
+                        console.log(self.resultJson);
+                    }
+                } )
+            },
+            passtologin:function (){
+                this.show = !this;
+                login.show = !login.show;
+            },
+
+        }
+    })
+
 
 
 

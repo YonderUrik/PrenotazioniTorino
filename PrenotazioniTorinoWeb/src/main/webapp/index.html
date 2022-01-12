@@ -308,7 +308,6 @@
                 </tr>
                 </thead>
                 <tbody>
-                <!-- TODO: v-on:clik non può essere inserito in un v-for trovare soluzione per eliminare il docente selezionato -->
                 <tr v-for="item in resultJson" style="width: 100%">
                     <td style="width: 10%" >{{item.id}}</td>
                     <td style="width: 15%; text-align: left">{{item.nome}}</td>
@@ -320,7 +319,6 @@
             </table>
         </div>
         <div class="card-footer">
-            <!--TODO: creare funzione per aggiungere docente e schermata per inserimeto dati del corso-->
             <button type="button" class="btn btn-primary mt-3" v-on:click="this.topage2">Aggiungi docente</button>
         </div>
     </div>
@@ -876,8 +874,7 @@
             },
 
 
-
-            //TODO: non si aggiorna resultJson quadno passo da page 1 a page 2
+            
             topage1: function () {
                 let self = this;
                 self.getCorso();
@@ -1051,7 +1048,7 @@
     })
 
 
-    
+
 
     //STUDENT VUE
     var student = new Vue({
