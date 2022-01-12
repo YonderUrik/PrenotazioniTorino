@@ -163,7 +163,7 @@
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="#">Disdetta</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Visualizza</a></li>
+                            <li><a class="dropdown-item btn" v-on:click="this.passRipetPrenotat">Visualizza</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -196,7 +196,6 @@
                 </h2>
                 <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
                     <div class="accordion-body">
-                        <!-- TODO: creare funzione per ancora elimina nella tabella per eliminare uno studente -->
                         <table class="table" style="width: 100%">
                             <tr v-for="item in resultJson" style="width: 100%">
                                 <td style="width: 10%">    {{item.nome}}</td>
@@ -489,6 +488,14 @@
 
 </div>
 
+<!-- visualizza prenotazioni -->
+<div id="visualizza-ripetizioni-prenotate" v-show="administrator.ripPrenot">
+    <h1>ripetizioni prenotate</h1>
+
+</div>
+
+
+
 <!-- Student Page -->
 <div id="homepage-student" v-show="this.show">
     <h1>Bentornato Studente</h1>
@@ -657,6 +664,7 @@
             docenti:false,
             catalogo:false,
             prenota:false,
+            ripPrenot:false,
             sessione: '',
             studenti: '',
             resultJson:'',
@@ -705,6 +713,7 @@
                 this.docenti=false;
                 this.catalogo=false;
                 this.prenota=false;
+                this.ripPrenot=false;
 
             },
 
@@ -716,6 +725,7 @@
                 visualizzaprenotazioni.getRipetizioniPrenotate();
                 this.catalogo=false;
                 this.prenota=false;
+                this.ripPrenot=false;
             },
 
             passCorsi:function (){
@@ -726,6 +736,7 @@
                 visualizzaCorsi.getCorso();
                 this.catalogo=false;
                 this.prenota=false;
+                this.ripPrenot=false;
 
             },
 
@@ -737,6 +748,7 @@
                 visualizzaDocenti.getProf();
                 this.catalogo=false;
                 this.prenota=false;
+                this.ripPrenot=false;
 
             },
 
@@ -748,6 +760,7 @@
                 this.catalogo=true;
                 catalogoRipetizioni.getRipetizioni();
                 this.prenota=false;
+                this.ripPrenot=false;
             },
 
             passPrenota:function (){
@@ -758,6 +771,18 @@
                 this.catalogo=false;
                 catalogoRipetizioni.getRipetizioni();
                 this.prenota=true;
+                this.ripPrenot=false;
+            },
+
+
+            passRipetPrenotat:function (){
+                this.home= false;
+                this.prenotazioni=false;
+                this.corsi=false;
+                this.docenti=false;
+                this.catalogo=false;
+                this.prenota=false;
+                this.ripPrenot=true;
             },
 
             delete:async function (id){
@@ -1016,6 +1041,17 @@
 
                 })
             }
+        }
+    })
+
+    //vue ripetiz preontate admin
+    var ripetizPrenotate=new Vue({
+        el:'#visualizza-ripetizioni-prenotate',
+        data:{
+
+        },
+        methods:{
+
         }
     })
 
