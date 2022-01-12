@@ -38,37 +38,27 @@ public class RipetizioniPrenotateServlet extends HttpServlet {
         HttpSession s = request.getSession();
         int id= Integer.parseInt(s.getAttribute("id").toString());
         System.out.println(id);
-        //TODO:fare tutta òa servlet questa è una copia, bisogna fare anche la funzione che seleziona i valori nel DAO
-        //int id=Integer.parseInt(request.getParameter("utente"));
-        //System.out.println("id untente    "+ id);
-        /*ArrayList<RipetizioniPrenotate> prenotazioni= DAO.getAllPrenotazioni();
-
-        JsonArray allPrenotazioni=null;
         String sessione = request.getParameter("sessione");
-        HttpSession s = request.getSession();
         String sessionID = s.getId();
-        if(sessione.equals(sessionID)){
-            allPrenotazioni = new JsonArray();
-            for (int i = 0; i < prenotazioni.size(); i++) {
-                String docente = prenotazioni.get(i).getDocente();
-                String corso = prenotazioni.get(i).getCorso();
-                String utente = prenotazioni.get(i).getUtente();
-                String data = prenotazioni.get(i).getData();
-                int ora = prenotazioni.get(i).getOra();
-                JsonObject prenot = new JsonObject();
-                prenot.addProperty("docente", docente);
-                prenot.addProperty("corso", corso);
-                prenot.addProperty("utente", utente);
-                prenot.addProperty("data", data);
-                prenot.addProperty("ora", ora);
-                allPrenotazioni.add(prenot);
-            }
-            out.print(allPrenotazioni);
-        }else if(s.isNew()){
-            out.print(allPrenotazioni);
-            s.invalidate();
-        }*/
+        ArrayList<RipetizioniPrenotate> rip=DAO.getRipetizioniUtente(id);
+        JsonArray PrenotUtente=null;
+        PrenotUtente=new JsonArray();
+        for(int i=0;i< rip.size();i++){
+            String docente=rip.get(i).getDocente();
+            String corso=rip.get(i).getCorso();
+            String utente=rip.get(i).getUtente();
+            String giorno=rip.get(i).getData();
+            int ora=rip.get(i).getOra();
+            JsonObject prenotazionesingola=new JsonObject();
+            prenotazionesingola.addProperty("docente",docente);
+            prenotazionesingola.addProperty("corso",corso);
+            prenotazionesingola.addProperty("utente",utente);
+            prenotazionesingola.addProperty("data",giorno);
+            prenotazionesingola.addProperty("ora",ora);
+            PrenotUtente.add(prenotazionesingola);
 
+        }
+        out.print(PrenotUtente);
 
     }
 

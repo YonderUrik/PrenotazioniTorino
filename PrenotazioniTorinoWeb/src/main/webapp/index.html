@@ -491,7 +491,32 @@
 <!-- visualizza prenotazioni -->
 <div id="visualizza-ripetizioni-prenotate" v-show="administrator.ripPrenot" class="text-center mt-3">
     <h1>ripetizioni prenotate</h1>
+    <div class="container ">
+        <div class="card">
+            <div class="card-head">
+                <h3 class="text-center">possibili ripetizioni</h3>
+            </div>
+            <div class="card-body ">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Docente</th> <th>corso</th> <th>utente</th> <th>data</th> <th>ora</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="item in resultJson" style="width: 100%">
+                        <td style="width: 20%">{{item.docente}}</td>
+                        <td style="width: 20%">{{item.corso}}</td>
+                        <td style="width: 20%">{{item.utente}}</td>
+                        <td style="width: 20%">{{item.data}}</td>
+                        <td style="width: 20%">{{item.ora}}</td>
 
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 
 
@@ -1053,10 +1078,13 @@
             resultJson:'',
         },
         methods:{
-            ripetizioni: function (){
+            ripetizioni:function (){
                 let self=this;
-                 $.get('ripetizioni-prenotate-servlet',{},function (data){
-
+                $.get('ripetizioni-prenotate-servlet',{},function (data){
+                     let jsonResponse=JSON.parse(JSON.stringify(data));
+                     self.resultJson=jsonResponse;
+                     console.log("sono entrato");
+                     console.log(self.resultJson);
                 })
             }
         }
