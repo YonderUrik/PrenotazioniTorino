@@ -319,34 +319,6 @@ public class DAO {
         }
     }
 
-    public static ArrayList<id> getIdUtente(String username){
-        Connection conn1 = null;
-        ArrayList<id> out = new ArrayList<>();
-        try {
-            conn1 = DriverManager.getConnection(url1, user, password);
-
-
-            Statement st1 = conn1.createStatement();
-            ResultSet rs1 = st1.executeQuery("SELECT id FROM utente WHERE email='"+username+"'");
-            while (rs1.next()) {
-                id id = new id(rs1.getInt("id"));
-                out.add(id);
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        finally {
-            if (conn1 != null) {
-                try {
-                    conn1.close();
-                } catch (SQLException e2) {
-                    System.out.println(e2.getMessage());
-                }
-            }
-        }
-        return out;
-
-    }
 
     public static void deleteDocente(int id){
         Connection conn1 = null;

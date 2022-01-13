@@ -402,14 +402,7 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="col">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <input v-model="utente" class="form-control" placeholder="username" type="text">
-                        </div>
-                    </div>
-                </div>
+                
             </div>
             <div class="row"  style="margin-top: 2%">
                 <div class="col">
@@ -568,13 +561,6 @@
                        </div>
                    </div>
 
-                   <div class="col">
-                       <div class="form-group">
-                           <div class="input-group">
-                               <input v-model="utente" class="form-control" placeholder="username" type="text">
-                           </div>
-                       </div>
-                   </div>
                </div>
                <div class="row"  style="margin-top: 2%">
                    <div class="col">
@@ -1226,7 +1212,7 @@
 
             prenota:function (){
                 let self=this;
-                $.post('prenota-servlet',{id_docente:this.id_docente, id_corso:this.id_corso, ora:this.ora,giorno:this.giorno,utente:this.utente},function (data){
+                $.post('prenota-servlet',{id_docente:this.id_docente, id_corso:this.id_corso, ora:this.ora,giorno:this.giorno},function (data){
 
                 });
                 self.id_docente="";

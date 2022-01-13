@@ -19,12 +19,13 @@ public class prenotaServlet extends HttpServlet {
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        HttpSession s = request.getSession();
+        int id= Integer.parseInt(s.getAttribute("id").toString());
         int docente= Integer.parseInt(request.getParameter("id_docente"));
         int corso= Integer.parseInt(request.getParameter("id_corso"));
         String giorno= request.getParameter("giorno");
         int ora= Integer.parseInt(request.getParameter("ora"));
-        ArrayList<id> utente= DAO.getIdUtente(request.getParameter("utente"));
-        DAO.setPrenotazione(docente,corso,giorno,ora,utente.get(0).getId());
+        DAO.setPrenotazione(docente,corso,giorno,ora,id);
 
 
     }
@@ -38,26 +39,6 @@ public class prenotaServlet extends HttpServlet {
             throws ServletException, IOException {
 
 
-
-
-
-        /*
-        String nome = request.getParameter("nome");
-        String cognome = request.getParameter("cognome");
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        System.out.println("nome ricevuto:" + nome);
-        System.out.println("cognome ricevuto:" + cognome);
-        System.out.println("email ricevuto:" + email);
-        System.out.println("password ricevuta:" + password);
-        if(!nome.equals("") && !cognome.equals("") && !email.equals("") && !password.equals("")){
-            if(DAO.emailnotGetted(email)){
-                DAO.setUtente(email,nome,cognome,password);
-                System.out.println("Utente registrato");
-            }else{
-                System.out.println("L'email risulta associata ad un altro account");
-            }
-        }*/
 
 
     }
