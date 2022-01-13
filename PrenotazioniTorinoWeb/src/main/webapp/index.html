@@ -519,7 +519,153 @@
 
 <!-- Student Page -->
 <div id="homepage-student" v-show="this.show">
-    <h1>Bentornato Studente</h1>
+    <!-- nav -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand">Admin</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent2" aria-controls="navbarSupportedContent2" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent2">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+
+                    <li class="nav-item">
+                        <a class="nav-link btn" aria-current="page" v-on:click="this.passToPrenota" >Prenota Ripetizioni</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link btn" aria-current="page" v-on:click="this.passToVisualizza" >Visualizza Ripetizioni</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+   <div class="container text-center mt-5" v-show="this.prenotaRip">
+       <h1>prenota ripetizioni</h1>
+
+       <!-- form prenotazione -->
+       <div class="container mt-2" style="width: 50%">
+           <form >
+               <div class="row" >
+                   <div class="col">
+                       <div class="form-group">
+                           <div class="input-group">
+                               <input v-model="id_docente" class="form-control" placeholder="id_docente" type="text">
+                           </div>
+                       </div>
+                   </div>
+
+
+
+                   <div class="col">
+                       <div class="form-group">
+                           <div class="input-group">
+                               <input v-model="id_corso" class="form-control" placeholder="id_corso" type="text">
+                           </div>
+                       </div>
+                   </div>
+
+                   <div class="col">
+                       <div class="form-group">
+                           <div class="input-group">
+                               <input v-model="utente" class="form-control" placeholder="username" type="text">
+                           </div>
+                       </div>
+                   </div>
+               </div>
+               <div class="row"  style="margin-top: 2%">
+                   <div class="col">
+                       <select v-model="giorno" class="form-select" aria-label="Default select example">
+                           <option selected>Seleziona giorno</option>
+                           <option value="Lunedì">Lunedì</option>
+                           <option value="Martedì">Martedì</option>
+                           <option value="Mercoledì">Mercoledì</option>
+                           <option value="Giovedì">Giovedì</option>
+                           <option value="Venerdì">Venerdì</option>
+                       </select>
+                   </div>
+
+                   <div class="col">
+                       <select v-model="ora" class="form-select" aria-label="Default select example" >
+                           <option selected>Seleziona orario</option>
+                           <option value="15">15-16</option>
+                           <option value="16">16-17</option>
+                           <option value="17">17-18</option>
+                           <option value="18">18-19</option>
+
+                       </select>
+                   </div>
+               </div>
+               <div class=" text-center mt-2" >
+                   <button class="btn btn-primary" type="button" v-on:click="this.prenota">Prenota</button>
+               </div>
+           </form>
+       </div>
+
+
+       <!-- catalogo -->
+       <div class="container " style="margin-top: 3%">
+           <div class="card">
+               <div class="card-head">
+                   <h3 class="text-center">Catalogo ripetizioni</h3>
+               </div>
+               <div class="card-body ">
+                   <table class="table">
+                       <thead>
+                       <tr>
+                           <th>Nome Docente</th> <th>Cognome Docente</th> <th>Id Docente</th> <th>Corso</th> <th>Id Corso</th>
+                       </tr>
+                       </thead>
+                       <tbody>
+                       <tr v-for="item in catalogoRipetizioni.resultJson" style="width: 100%">
+                           <td style="width: 20%">{{item.nome_docente}}</td>
+                           <td style="width: 20%">{{item.cognome_docente}}</td>
+                           <td style="width: 20%">{{item.id_docente}}</td>
+                           <td style="width: 20%">{{item.corso}}</td>
+                           <td style="width: 20%">{{item.id_corso}}</td>
+
+                       </tr>
+                       </tbody>
+                   </table>
+               </div>
+           </div>
+       </div>
+   </div>
+
+
+    <div class="container text-center" v-show="this.visualizza">
+        <h1>Visualizza Prenotazioni</h1>
+
+        <div class="container mt-5 ">
+            <div class="card">
+                <div class="card-head">
+                    <h3 class="text-center">Le tue ripetizioni</h3>
+                </div>
+                <div class="card-body ">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Docente</th> <th>corso</th> <th>utente</th> <th>data</th> <th>ora</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="item in resultJson" style="width: 100%">
+                            <td style="width: 20%">{{item.docente}}</td>
+                            <td style="width: 20%">{{item.corso}}</td>
+                            <td style="width: 20%">{{item.utente}}</td>
+                            <td style="width: 20%">{{item.data}}</td>
+                            <td style="width: 20%">{{item.ora}}</td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
@@ -635,6 +781,7 @@
                     this.show = !this;
                     administrator.show = !administrator.show;
                 }else if(this.resultJson==="studente"){
+                    catalogoRipetizioni.getRipetizioni();
                     this.show = !this;
                     student.show = !student.show;
                 }
@@ -874,7 +1021,7 @@
             },
 
 
-            
+
             topage1: function () {
                 let self = this;
                 self.getCorso();
@@ -1054,7 +1201,48 @@
     var student = new Vue({
         el:'#homepage-student',
         data:{
-            show: false
+            show: false,
+            prenotaRip:true,
+            visualizza:false,
+            id_docente:'',
+            id_corso:'',
+            utente:'',
+            giorno:'Seleziona giorno',
+            ora:'Seleziona orario',
+            resultJson:'',
+
+        },
+        methods:{
+            passToPrenota:function (){
+                this.prenotaRip=true;
+                this.visualizza=false;
+            },
+
+            passToVisualizza:function (){
+                this.ripetizioni();
+                this.prenotaRip=false;
+                this.visualizza=true;
+            },
+
+            prenota:function (){
+                let self=this;
+                $.post('prenota-servlet',{id_docente:this.id_docente, id_corso:this.id_corso, ora:this.ora,giorno:this.giorno,utente:this.utente},function (data){
+
+                });
+                self.id_docente="";
+                self.id_corso="";
+                self.giorno="seleziona giorno";
+                self.ora="seleziona orario";
+            },
+            ripetizioni:function (){
+                let self=this;
+                $.get('ripetizioni-prenotate-servlet',{},function (data){
+                    let jsonResponse=JSON.parse(JSON.stringify(data));
+                    self.resultJson=jsonResponse;
+                    console.log("sono entrato");
+                    console.log(self.resultJson);
+                })
+            }
         }
     })
 
