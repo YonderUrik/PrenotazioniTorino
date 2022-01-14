@@ -402,7 +402,7 @@
                         </div>
                     </div>
                 </div>
-                
+
             </div>
             <div class="row"  style="margin-top: 2%">
                 <div class="col">
@@ -515,7 +515,7 @@
     <!-- nav -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand">Admin</a>
+            <a class="navbar-brand">Studente</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent2" aria-controls="navbarSupportedContent2" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -621,7 +621,7 @@
        </div>
    </div>
 
-
+    <!-- TODO:pulsanti per disdetta e conferma -->
     <div class="container text-center" v-show="this.visualizza">
         <h1>Visualizza Prenotazioni</h1>
 
@@ -1150,13 +1150,20 @@
             ora:'Seleziona orario',
             giorno:'Seleziona giorno',
             utente: '',
+            result:'',
         },
         methods:{
-            prenota:function (){
+            prenota:async function (){
                 let self=this;
-                $.post('prenota-servlet',{id_docente:this.id_docente, id_corso:this.id_corso, ora:this.ora,giorno:this.giorno,utente:this.utente},function (data){
 
-                })
+                await $.post('prenota-servlet',{id_docente:this.id_docente, id_corso:this.id_corso, ora:this.ora,giorno:this.giorno,utente:this.utente},function (data){
+                        self.result=data.toString();
+
+                });
+                console.log("data:  "+this.result);
+                
+
+
             }
         }
     })

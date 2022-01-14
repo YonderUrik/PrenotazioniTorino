@@ -1150,13 +1150,20 @@
             ora:'Seleziona orario',
             giorno:'Seleziona giorno',
             utente: '',
+
         },
         methods:{
-            prenota:function (){
+            prenota: function (){
                 let self=this;
+
                 $.post('prenota-servlet',{id_docente:this.id_docente, id_corso:this.id_corso, ora:this.ora,giorno:this.giorno,utente:this.utente},function (data){
 
-                })
+
+                });
+
+
+
+
             }
         }
     })
