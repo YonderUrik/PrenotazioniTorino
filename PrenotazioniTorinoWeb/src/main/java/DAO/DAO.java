@@ -49,13 +49,15 @@ public class DAO {
     }
 
 
-    public static void setUtente(String email,String nome,String cognome, String u_password){
+    public static boolean setUtente(String email,String nome,String cognome, String u_password){
         Connection conn1 = null;
+        boolean setted = false;
         try {
             conn1 = DriverManager.getConnection(url1, user, password);
             Statement st = conn1.createStatement();
             st.executeUpdate("INSERT INTO utente (id,email,nome,cognome,password,ruolo) VALUES (0,'"+email+"','"+nome+"','"+cognome+"','"+u_password+"','studente')");
             System.out.println("Utente aggiunto");
+            setted = true;
             st.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -69,6 +71,7 @@ public class DAO {
                 }
             }
         }
+        return setted;
     }
 
     public static boolean emailnotGetted(String email){
@@ -163,7 +166,6 @@ public class DAO {
 
     }
 
-
     public static ArrayList<docente> getAllDocenti(){
         Connection conn1 = null;
         ArrayList<docente> out = new ArrayList<>();
@@ -244,7 +246,6 @@ public class DAO {
         }
     }
 
-
     public static void setDocente(String nome,String cognome){
         Connection conn1 = null;
         try {
@@ -266,7 +267,6 @@ public class DAO {
             }
         }
     }
-
 
     public static ArrayList<Ripetizioni> getAllRipetizioni(){
         Connection conn1 = null;
@@ -319,7 +319,6 @@ public class DAO {
         }
     }
 
-
     public static void deleteDocente(int id){
         Connection conn1 = null;
         try {
@@ -342,7 +341,6 @@ public class DAO {
         }
     }
 
-
     public static void deleteCorso(int id){
         Connection conn1 = null;
         try {
@@ -364,7 +362,6 @@ public class DAO {
             }
         }
     }
-
 
     public static void deleteStudente(int id){
         Connection conn1 = null;

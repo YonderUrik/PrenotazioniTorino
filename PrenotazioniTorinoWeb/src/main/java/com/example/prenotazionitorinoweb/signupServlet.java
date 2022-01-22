@@ -29,23 +29,18 @@ public class signupServlet extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-
-        ServletContext ctx = getServletContext();
-        RequestDispatcher rd = ctx.getRequestDispatcher("/index.html");
-
+        PrintWriter out=response.getWriter();
         String nome = request.getParameter("nome");
         String cognome = request.getParameter("cognome");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        System.out.println("nome ricevuto:" + nome);
-        System.out.println("cognome ricevuto:" + cognome);
-        System.out.println("email ricevuto:" + email);
-        System.out.println("password ricevuta:" + password);
         if(!nome.equals("") && !cognome.equals("") && !email.equals("") && !password.equals("")){
             if(DAO.emailnotGetted(email)){
-                DAO.setUtente(email,nome,cognome,password);
-                System.out.println("Utente registrato");
+                if(DAO.setUtente(email,nome,cognome,password)){
+                    out.print("Utente registrato");
+                }else{
+                    out.print("Utente non registrato");
+                }
             }else{
                 System.out.println("L'email risulta associata ad un altro account");
             }
