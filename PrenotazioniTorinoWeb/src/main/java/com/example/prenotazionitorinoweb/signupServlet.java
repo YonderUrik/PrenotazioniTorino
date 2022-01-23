@@ -42,7 +42,7 @@ public class signupServlet extends HttpServlet {
                     out.print("Utente non registrato");
                 }
             }else{
-                System.out.println("L'email risulta associata ad un altro account");
+                out.print("Utente giá registrato");
             }
         }
 

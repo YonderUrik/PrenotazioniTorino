@@ -48,32 +48,6 @@ public class DAO {
 
     }
 
-
-    public static boolean setUtente(String email,String nome,String cognome, String u_password){
-        Connection conn1 = null;
-        boolean setted = false;
-        try {
-            conn1 = DriverManager.getConnection(url1, user, password);
-            Statement st = conn1.createStatement();
-            st.executeUpdate("INSERT INTO utente (id,email,nome,cognome,password,ruolo) VALUES (0,'"+email+"','"+nome+"','"+cognome+"','"+u_password+"','studente')");
-            System.out.println("Utente aggiunto");
-            setted = true;
-            st.close();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        finally {
-            if (conn1 != null) {
-                try {
-                    conn1.close();
-                } catch (SQLException e2) {
-                    System.out.println(e2.getMessage());
-                }
-            }
-        }
-        return setted;
-    }
-
     public static boolean emailnotGetted(String email){
         Connection conn1 = null;
         boolean out = false;
@@ -224,13 +198,14 @@ public class DAO {
 
     }
 
-    public static void setCorso(String nome){
+    public static boolean setUtente(String email,String nome,String cognome, String u_password){
         Connection conn1 = null;
+        boolean setted = false;
         try {
             conn1 = DriverManager.getConnection(url1, user, password);
             Statement st = conn1.createStatement();
-            st.executeUpdate("INSERT INTO corso (id,nome) VALUES (0,'"+nome+"')");
-            System.out.println("Corso aggiunto");
+            st.executeUpdate("INSERT INTO utente (id,email,nome,cognome,password,ruolo) VALUES (0,'"+email+"','"+nome+"','"+cognome+"','"+u_password+"','studente')");
+            setted = true;
             st.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -244,6 +219,32 @@ public class DAO {
                 }
             }
         }
+        return setted;
+    }
+
+    public static boolean setCorso(String nome){
+        Connection conn1 = null;
+        boolean result = false;
+        try {
+            conn1 = DriverManager.getConnection(url1, user, password);
+            Statement st = conn1.createStatement();
+            st.executeUpdate("INSERT INTO corso (id,nome) VALUES (0,'"+nome+"')");
+            System.out.println("Corso aggiunto");
+            result = true;
+            st.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        finally {
+            if (conn1 != null) {
+                try {
+                    conn1.close();
+                } catch (SQLException e2) {
+                    System.out.println(e2.getMessage());
+                }
+            }
+        }
+        return result;
     }
 
     public static void setDocente(String nome,String cognome){

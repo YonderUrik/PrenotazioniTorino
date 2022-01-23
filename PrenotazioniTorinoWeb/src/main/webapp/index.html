@@ -704,7 +704,6 @@
 </div>
 <script>
     //LOGIN VUE
-
     var login= new Vue({
         el:'#login',
         data:{
@@ -792,12 +791,14 @@
                 let self=this;
                await $.post(this.link,{nome: this.nome, cognome: this.cognome, email: this.email, password:this.password},function(data){
                    console.log(data);
+                   //TODO
                    if(data==='Utente registrato'){
                        window.alert("Utente Registrato");
-                       this.show = !this;
-                       login.show = !login.show;
-                    }else{
+                       this.passToLogin();
+                    }else if(data === 'Utente non registrato'){
                        window.alert("Utente non Registrato");
+                   }else if(data === 'Utente giá registrato'){
+                       window.alert("Utente giá registrato");
                    }
                 });
             },
@@ -980,8 +981,7 @@
 
     })
 
-
-    //vue visualizzazione corsi
+    //Vue visualizzazione corsi
     var visualizzaCorsi=new Vue({
         el:'#vis-corsi',
         data:{
@@ -994,18 +994,25 @@
 
         methods:{
             //TODO: Testare sessione invalidata.
-            addCorso: function () {
+            addCorso: async function () {
                 let self = this;
-                $.post('corso-servlet', {nome: this.nome, sessione : login.sessione,post:'aggiungi'}, function (data) {
+                await $.post('corso-servlet', {nome: this.nome, sessione : login.sessione, post:'aggiungi'}, function (data) {
                     let jsonResponde = JSON.parse(JSON.stringify(data));
                     if(jsonResponde === null){
                         window.alert("Sessione scaduta, riaccedi.");
                         window.location.reload();
                         login.sessione = "sessione inesistente";
                     }
+                    //TODO
+                    console.log(data);
+                    if(data === 'Corso aggiunto'){
+                        window.alert("Corso aggiunto con successo");
+                        self.topage1();
+                    }else{
+                        window.alert("Corso non aggiunto");
+                    }
                 });
 
-                self.topage1();
             },
 
 
@@ -1017,9 +1024,6 @@
                 self.page2 = false;
                 self.nome = '';
                 administrator.passCorsi();
-
-
-
             },
 
 
@@ -1050,7 +1054,6 @@
         },
 
     })
-
 
     //vue visualizzazione docenti
     var visualizzaDocenti=new Vue({
@@ -1180,17 +1183,13 @@
             ripetizioni:function (){
                 let self=this;
                 $.get('ripetizioni-prenotate-servlet',{},function (data){
-                     let jsonResponse=JSON.parse(JSON.stringify(data));
-                     self.resultJson=jsonResponse;
+                    self.resultJson=JSON.parse(JSON.stringify(data));
                      console.log("sono entrato");
                      console.log(self.resultJson);
                 })
             }
         }
     })
-
-
-
 
     //STUDENT VUE
     var student = new Vue({
@@ -1232,8 +1231,7 @@
             ripetizioni:function (){
                 let self=this;
                 $.get('ripetizioni-prenotate-servlet',{},function (data){
-                    let jsonResponse=JSON.parse(JSON.stringify(data));
-                    self.resultJson=jsonResponse;
+                    self.resultJson=JSON.parse(JSON.stringify(data));
                     console.log("sono entrato");
                     console.log(self.resultJson);
                 })

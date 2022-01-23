@@ -23,9 +23,14 @@ public class CorsoServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
         String post=request.getParameter("post");
+        PrintWriter out = response.getWriter();
         if(Objects.equals(post, "aggiungi")){
             String nome= request.getParameter("nome");
-            DAO.setCorso(nome);
+            if(DAO.setCorso(nome)){
+                out.print("Corso aggiunto");
+            }else{
+                out.print("Corso non aggiunto");
+            }
         } else if(Objects.equals(post, "elimina")){
             int id=Integer.parseInt(request.getParameter("id"));
             DAO.deleteCorso(id);
@@ -36,7 +41,6 @@ public class CorsoServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
-
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
