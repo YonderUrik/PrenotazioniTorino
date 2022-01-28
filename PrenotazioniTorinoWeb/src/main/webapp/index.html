@@ -1140,25 +1140,7 @@
             }
         }
     })
-
-    //vue ripetiz preontate admin
-    var ripetizPrenotate=new Vue({
-        el:'#visualizza-ripetizioni-prenotate',
-        data:{
-            resultJson:'',
-        },
-        methods:{
-            ripetizioni:async function (){
-                let self=this;
-                await $.get('ripetizioni-prenotate-servlet',{},function (data){
-                    self.resultJson=JSON.parse(JSON.stringify(data));
-                     console.log("sono entrato");
-                     console.log(self.resultJson);
-                });
-
-            }
-        }
-    })
+    
 
     //STUDENT VUE
     var student = new Vue({
