@@ -237,7 +237,7 @@
                     <td style="width: 15%">{{item.data}}</td>
                     <td style="width: 15%">{{item.ora}}</td>
                     <td style="width: 10%"></td>
-                    <td style="width: 15%; text-align: right">Elimina</td>
+                    <td style="width: 15%; text-align: right"><button type="button" class="btn btn-sm"  v-on:click="visualizzaprenotazioni.delete(item.idDocente,item.idCorso,item.idUtente,item.data,item.ora)">Elimina</button></td>
                 </tr>
                 </tbody>
             </table>
@@ -739,7 +739,6 @@
                         let i = 0;
                         console.log(i++);
                     }
-                    console.log("sono uscito dalla trappola infernale");
                     $.get(this.link,{utente: this.email, password: this.password},function(data){
                         let jsonResponse=JSON.parse(JSON.stringify(data));
                         self.resultJson = jsonResponse.ruolo;
@@ -974,9 +973,23 @@
                     login.sessione = 'sessione inesistente';
                 }else {
                     self.resultJson = jsonResponse;
+                    console.log(self.resultJson);
                 }
              });
           } ,
+
+
+          delete:async function (docente, corso, utente, data, ora) {
+              await $.post('prenotazioni-servlet', {
+                  post: 'elimina',
+                  docente: docente,
+                  corso: corso,
+                  utente: utente,
+                  data: data,
+                  ora: ora
+              });
+              administrator.passRipetizioni();
+          }
         },
 
     })
@@ -994,9 +1007,9 @@
 
         methods:{
             //TODO: Testare sessione invalidata.
-            addCorso: async function () {
+            addCorso: function () {
                 let self = this;
-                await $.post('corso-servlet', {nome: this.nome, sessione : login.sessione, post:'aggiungi'}, function (data) {
+                $.post('corso-servlet', {nome: this.nome, sessione : login.sessione, post:'aggiungi'}, function (data) {
 
                     //TODO:gestire sessione con txt e non json
                     console.log(data);

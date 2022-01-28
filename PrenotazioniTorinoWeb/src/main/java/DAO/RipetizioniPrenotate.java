@@ -6,14 +6,33 @@ public class RipetizioniPrenotate {
     String utente;
     String data;
     int ora;
+    int idCorso;
+    int idDocente;
+    int idUtente;
 
 
-    public RipetizioniPrenotate(String docente, String corso, String utente, String data, int ora) {
+    public RipetizioniPrenotate(String docente, String corso, String utente, String data, int ora, int idCorso, int idDocente, int idUtente) {
         this.docente = docente;
         this.corso = corso;
         this.utente = utente;
         this.data = data;
         this.ora = ora;
+        this.idCorso = idCorso;
+        this.idDocente = idDocente;
+        this.idUtente = idUtente;
+    }
+
+
+    public int getIdCorso() {
+        return idCorso;
+    }
+
+    public int getIdDocente() {
+        return idDocente;
+    }
+
+    public int getIdUtente() {
+        return idUtente;
     }
 
     public String getDocente() {
