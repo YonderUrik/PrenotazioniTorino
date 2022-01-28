@@ -44,15 +44,19 @@ public class GuestServlet extends HttpServlet {
             for (int i = 0; i < ripetizioni.size(); i++) {
                 String nome_docente = ripetizioni.get(i).getNome_docente();
                 String cognome_docente = ripetizioni.get(i).getCognome_docente();
-                int id_docente=ripetizioni.get(i).getId_docente();
                 String corso = ripetizioni.get(i).getNome_corso();
-                int id_corso=ripetizioni.get(i).getId_corso();
+                String giorno=ripetizioni.get(i).getGiorno();
+                int ora=ripetizioni.get(i).getOra();
+                int idDocente=ripetizioni.get(i).getIdDocente();
+                int idCorso=ripetizioni.get(i).getIdCorso();
                 JsonObject ripet = new JsonObject();
                 ripet.addProperty("nome_docente", nome_docente);
                 ripet.addProperty("cognome_docente", cognome_docente);
-                ripet.addProperty("id_docente", id_docente);
+                ripet.addProperty("giorno", giorno);
                 ripet.addProperty("corso", corso);
-                ripet.addProperty("id_corso", id_corso);
+                ripet.addProperty("ora", ora);
+                ripet.addProperty("id_corso", idCorso);
+                ripet.addProperty("id_docente", idDocente);
                 allRipetizioni.add(ripet);
             }
             out.print(allRipetizioni);
