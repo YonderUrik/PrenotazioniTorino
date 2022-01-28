@@ -997,13 +997,8 @@
             addCorso: async function () {
                 let self = this;
                 await $.post('corso-servlet', {nome: this.nome, sessione : login.sessione, post:'aggiungi'}, function (data) {
-                    let jsonResponde = JSON.parse(JSON.stringify(data));
-                    if(jsonResponde === null){
-                        window.alert("Sessione scaduta, riaccedi.");
-                        window.location.reload();
-                        login.sessione = "sessione inesistente";
-                    }
-                    //TODO
+
+                    //TODO:gestire sessione con txt e non json
                     console.log(data);
                     if(data === 'Corso aggiunto'){
                         window.alert("Corso aggiunto con successo");
