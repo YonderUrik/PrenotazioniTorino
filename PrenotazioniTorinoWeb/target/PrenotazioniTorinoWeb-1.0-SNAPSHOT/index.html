@@ -407,7 +407,7 @@
             </div>
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingTwo">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" v-on:click="this.ripet;">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" v-on:click="this.ripetizioni">
                         Le tue prenotazioni
                     </button>
                 </h2>
@@ -1224,22 +1224,18 @@
                 } )
             },
 
-            ripet:async function (){
+            ripetizioni:async function (){
                 let self=this;
                 await $.get('ripetizioni-prenotate-servlet',{},function (data){
                     self.resultJson2=JSON.parse(JSON.stringify(data));
                     console.log("sono entrato");
                     console.log(self.resultJson2);
+                    administrator.passCatalogo();
                 });
-                self.stampaPrenot();
 
-            },
+            }
 
-            stampaPrenot:function (){
-                let self=this;
-                console.log("risultato:"+self.resultJson2.toString());
-                administrator.passCatalogo();
-            },
+
         }
     })
 
@@ -1277,13 +1273,14 @@
             resultJson:'',
         },
         methods:{
-            ripetizioni:function (){
+            ripetizioni:async function (){
                 let self=this;
-                $.get('ripetizioni-prenotate-servlet',{},function (data){
+                await $.get('ripetizioni-prenotate-servlet',{},function (data){
                     self.resultJson=JSON.parse(JSON.stringify(data));
                      console.log("sono entrato");
                      console.log(self.resultJson);
-                })
+                });
+
             }
         }
     })
