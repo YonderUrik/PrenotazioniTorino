@@ -49,12 +49,18 @@ public class RipetizioniPrenotateServlet extends HttpServlet {
             String utente=rip.get(i).getUtente();
             String giorno=rip.get(i).getData();
             int ora=rip.get(i).getOra();
+            int idCorso = rip.get(i).getIdCorso();
+            int idDocente = rip.get(i).getIdDocente();
+            int idUtente = rip.get(i).getIdUtente();
             JsonObject prenotazionesingola=new JsonObject();
             prenotazionesingola.addProperty("docente",docente);
             prenotazionesingola.addProperty("corso",corso);
             prenotazionesingola.addProperty("utente",utente);
             prenotazionesingola.addProperty("data",giorno);
             prenotazionesingola.addProperty("ora",ora);
+            prenotazionesingola.addProperty("idCorso", idCorso);
+            prenotazionesingola.addProperty("idDocente", idDocente);
+            prenotazionesingola.addProperty("idUtente", idUtente);
             PrenotUtente.add(prenotazionesingola);
 
         }

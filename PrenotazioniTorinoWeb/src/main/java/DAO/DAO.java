@@ -418,7 +418,7 @@ public class DAO {
 
 
             Statement st1 = conn1.createStatement();
-            ResultSet rs1 = st1.executeQuery("SELECT d.cognome AS docente, c.nome AS corso, u.email AS utente, p.data AS data, p.ora, d.id AS idDocente, c.id AS idCorso, u.id AS idUtente AS ora FROM ((corso c JOIN prenotazione p ON(c.id=p.corso))JOIN utente u ON (u.id=p.utente))JOIN docente d ON (d.id=p.docente) WHERE u.id='"+id+"';");
+            ResultSet rs1 = st1.executeQuery("SELECT d.cognome AS docente, c.nome AS corso, u.email AS utente, p.data AS data, p.ora AS ora, d.id AS idDocente, c.id AS idCorso, u.id AS idUtente  FROM ((corso c JOIN prenotazione p ON(c.id=p.corso))JOIN utente u ON (u.id=p.utente))JOIN docente d ON (d.id=p.docente) WHERE u.id='"+id+"';");
             while (rs1.next()) {
                 RipetizioniPrenotate ripetizioni = new RipetizioniPrenotate(rs1.getString("docente"),rs1.getString("corso"),rs1.getString("utente"),rs1.getString("data"),rs1.getInt("ora"),rs1.getInt("idCorso"),rs1.getInt("idDocente"),rs1.getInt("idUtente") );
                 out.add(ripetizioni);
