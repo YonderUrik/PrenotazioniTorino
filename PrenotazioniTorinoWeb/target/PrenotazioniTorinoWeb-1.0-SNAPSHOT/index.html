@@ -347,56 +347,7 @@
 <!-- prenota ripetizione -->
 <div id="prenota-ripetizioni" v-show="administrator.prenota" class="text-center container-fluid" style="margin-top: 3%">
     <h1>prenota ripetizioni</h1>
-    <div class="container mt-2" style="width: 50%">
-        <form >
-            <div class="row" >
-                <div class="col">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <input v-model="id_docente" class="form-control" placeholder="id_docente" type="text">
-                        </div>
-                    </div>
-                </div>
 
-
-
-                <div class="col">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <input v-model="id_corso" class="form-control" placeholder="id_corso" type="text">
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <div class="row"  style="margin-top: 2%">
-                <div class="col">
-                    <select v-model="giorno" class="form-select" aria-label="Default select example">
-                        <option selected>Seleziona giorno</option>
-                        <option value="Lunedì">Lunedì</option>
-                        <option value="Martedì">Martedì</option>
-                        <option value="Mercoledì">Mercoledì</option>
-                        <option value="Giovedì">Giovedì</option>
-                        <option value="Venerdì">Venerdì</option>
-                    </select>
-                </div>
-
-                <div class="col">
-                    <select v-model="ora" class="form-select" aria-label="Default select example" >
-                        <option selected>Seleziona orario</option>
-                        <option value="15">15-16</option>
-                        <option value="16">16-17</option>
-                        <option value="17">17-18</option>
-                        <option value="18">18-19</option>
-
-                    </select>
-                </div>
-            </div>
-            <div class=" text-center " style="margin-top: 2%">
-                <button class="btn btn-primary" type="button" v-on:click="this.prenota">Prenota</button>
-            </div>
-        </form>
-    </div>
 
 
     <!-- catalogo -->
