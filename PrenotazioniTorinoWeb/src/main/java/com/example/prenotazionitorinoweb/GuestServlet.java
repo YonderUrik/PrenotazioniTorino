@@ -36,11 +36,14 @@ public class GuestServlet extends HttpServlet {
         PrintWriter out=response.getWriter();
         ArrayList<Ripetizioni> ripetizioni= DAO.getAllRipetizioni();
 
+
+
         JsonArray allRipetizioni=null;
+        allRipetizioni = new JsonArray();
+
+        
 
 
-
-            allRipetizioni = new JsonArray();
             for (int i = 0; i < ripetizioni.size(); i++) {
                 String nome_docente = ripetizioni.get(i).getNome_docente();
                 String cognome_docente = ripetizioni.get(i).getCognome_docente();
