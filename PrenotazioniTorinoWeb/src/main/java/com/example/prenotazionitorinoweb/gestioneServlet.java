@@ -21,16 +21,19 @@ public class gestioneServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession s = request.getSession();
         String post=request.getParameter("post");
+        int id= Integer.parseInt(s.getAttribute("id").toString());
+        int docente= Integer.parseInt(request.getParameter("id_docente"));
+        int corso= Integer.parseInt(request.getParameter("id_corso"));
+        String data= request.getParameter("data");
+        int ora= Integer.parseInt(request.getParameter("ora"));
         if(post.equals("conferma")){
-            int id= Integer.parseInt(s.getAttribute("id").toString());
-            int docente= Integer.parseInt(request.getParameter("id_docente"));
-            int corso= Integer.parseInt(request.getParameter("id_corso"));
-            String data= request.getParameter("data");
-            int ora= Integer.parseInt(request.getParameter("ora"));
             DAO.conferma(docente,corso,data,ora,id);
             System.out.println(data);
 
 
+        }else if(post.equals("disdici")){
+            System.out.println("disdetta");
+            DAO.disdetta(docente,corso,data,ora,id);
         }
 
 

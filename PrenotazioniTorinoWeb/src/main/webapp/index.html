@@ -376,8 +376,7 @@
                                 <td style="width: 20%">{{item.giorno}}</td>
                                 <td style="width: 10%">{{item.ora}}</td>
                                 <td style="width: 10%; text-align: right"><button type="button" class="btn btn-sm"  v-on:click="prenotaRipetizioniAdmin.prenota(item.id_docente,item.id_corso,item.ora,item.giorno)">Prenota</button></td>
-
-                            </tr>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -402,12 +401,10 @@
                                 <td style="width: 20%">{{item.docente}}</td>
                                 <td style="width: 20%">{{item.corso}}</td>
                                 <td style="width: 20%">{{item.utente}}</td>
-                                <td style="width: 20%">{{item.data}}</td>
+                                <td style="width: 10%">{{item.data}}</td>
                                 <td style="width: 10%">{{item.ora}}</td>
                                 <td style="width: 10%; text-align: right"><button type="button" class="btn btn-sm"  v-on:click="prenotaRipetizioniAdmin.conferma(item.idDocente,item.idCorso,item.ora,item.data)">Conferma</button></td>
-
-
-
+                                <td style="width: 10%; text-align: right"><button type="button" class="btn btn-sm"  v-on:click="prenotaRipetizioniAdmin.disdici(item.idDocente,item.idCorso,item.ora,item.data)">Disdici</button></td>
                             </tr>
                             </tbody>
                         </table>
@@ -482,7 +479,6 @@
                                    <td style="width: 10%">{{item.giorno}}</td>
                                    <td style="width: 10%">{{item.ora}}</td>
                                    <td style="width: 10%; text-align: right"><button type="button" class="btn btn-sm"  v-on:click="student.prenota(item.id_docente,item.id_corso,item.ora,item.giorno)">Prenota</button></td>
-                                   <!-- <td style="width: 10%; text-align: right"><button type="button" class="btn btn-sm"  v-on:click="student.disdici(item.id_docente,item.id_corso,item.ora,item.giorno)">disdici</button></td> -->
                                </tr>
                                </tbody>
                            </table>
@@ -511,6 +507,7 @@
                                    <td style="width: 20%">{{item.data}}</td>
                                    <td style="width: 10%">{{item.ora}}</td>
                                    <td style="width: 10%; text-align: right"><button type="button" class="btn btn-sm"  v-on:click="student.conferma(item.idDocente,item.idCorso,item.ora,item.data)">Conferma</button></td>
+                                   <td style="width: 10%; text-align: right"><button type="button" class="btn btn-sm"  v-on:click="student.disdici(item.idDocente,item.idCorso,item.ora,item.data)">Disdici</button></td>
 
                                </tr>
                                </tbody>
@@ -1046,7 +1043,14 @@
                     console.log("ripetizione confermata");
                     catalogoRipetizioni.getRipetizioni();
                 });
-            }
+            },
+            disdici:function (id_docente,id_corso,ora,data){
+                $.post('gestione-servlet',{id_docente:id_docente, id_corso:id_corso, ora:ora,data:data,post:'disdici'},function (data){
+                    console.log("disdetta effettuata");
+                    catalogoRipetizioni.getRipetizioni();
+                    prenotaRipetizioniAdmin.ripetizioni();
+                });
+            },
 
 
         }
@@ -1086,7 +1090,15 @@
                     console.log("ripetizione confermata");
                     catalogoRipetizioni.getRipetizioni();
                 });
-            }
+            },
+
+            disdici:function (id_docente,id_corso,ora,data){
+                $.post('gestione-servlet',{id_docente:id_docente, id_corso:id_corso, ora:ora,data:data,post:'disdici'},function (data){
+                    console.log("disdetta effettuata");
+                    catalogoRipetizioni.getRipetizioni();
+                    student.ripetizioni();
+                });
+            },
         }
     })
 
