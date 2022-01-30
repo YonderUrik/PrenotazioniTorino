@@ -356,7 +356,7 @@
         <div class="accordion" id="accordionExample">
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingOne">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" v-on:click="administrator.passPrenota">
                         Catalogo
                     </button>
                 </h2>
@@ -835,7 +835,8 @@
                   data: data,
                   ora: ora
               });
-              administrator.passRipetizioni();
+
+              await administrator.passRipetizioni();
           }
         },
 
@@ -984,9 +985,9 @@
             resultJson:'',
         },
         methods:{
-            getRipetizioni:function (){
+            getRipetizioni:async function (){
                 let self=this;
-                $.get('guest-servlet', {},function (data){
+                await $.get('guest-servlet', {},function (data){
                     let jsonResponse=JSON.parse(JSON.stringify(data));
                     if(jsonResponse===null){
                         window.alert("Sessione scaduta, riaccedi.");
@@ -1018,11 +1019,15 @@
 
         },
         methods:{
-            prenota:function (id_docente,id_corso,ora,giorno){
+            prenota:async function (id_docente,id_corso,ora,giorno){
                 let self=this;
-                $.post('prenota-servlet',{id_docente:id_docente, id_corso:id_corso, ora:ora,giorno:giorno},function (data){
+                await $.post('prenota-servlet',{id_docente:id_docente, id_corso:id_corso, ora:ora,giorno:giorno},function (data){
 
                 });
+                await catalogoRipetizioni.getRipetizioni();
+               
+
+
             },
 
             ripetizioni:async function (){

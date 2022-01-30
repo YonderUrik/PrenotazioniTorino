@@ -35,14 +35,8 @@ public class GuestServlet extends HttpServlet {
         response.setContentType("application/json");
         PrintWriter out=response.getWriter();
         ArrayList<Ripetizioni> ripetizioni= DAO.getAllRipetizioni();
-
-
-
         JsonArray allRipetizioni=null;
         allRipetizioni = new JsonArray();
-
-        
-
 
             for (int i = 0; i < ripetizioni.size(); i++) {
                 String nome_docente = ripetizioni.get(i).getNome_docente();
