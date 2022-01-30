@@ -570,7 +570,7 @@
 
     <!-- TODO: il pulsante log out da problemi se si prova a riloggare  -->
     <div class="container text-center mt-2">
-        <button type="button" class="btn btn-primary" v-on:click="this.passtologin">Log out</button>
+        <button type="button" class="btn btn-primary" v-on:click="this.logout_guest">Log out</button>
     </div>
 
 
@@ -1098,6 +1098,11 @@
                 this.show = !this;
                 login.show = !login.show;
             },
+
+            logout_guest:function (){
+                window.location.reload();
+
+            }
 
         }
     })
