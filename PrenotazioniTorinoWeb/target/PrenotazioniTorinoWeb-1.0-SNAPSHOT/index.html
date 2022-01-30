@@ -403,7 +403,9 @@
                                 <td style="width: 20%">{{item.corso}}</td>
                                 <td style="width: 20%">{{item.utente}}</td>
                                 <td style="width: 20%">{{item.data}}</td>
-                                <td style="width: 20%">{{item.ora}}</td>
+                                <td style="width: 10%">{{item.ora}}</td>
+                                <td style="width: 10%; text-align: right"><button type="button" class="btn btn-sm"  v-on:click="prenotaRipetizioniAdmin.conferma(item.idDocente,item.idCorso,item.ora,item.data)">Conferma</button></td>
+
 
 
                             </tr>
@@ -476,12 +478,11 @@
                                <tr v-for="item in catalogoRipetizioni.resultJson" style="width: 100%">
                                    <td style="width: 20%">{{item.nome_docente}}</td>
                                    <td style="width: 20%">{{item.cognome_docente}}</td>
-                                   <td style="width: 20%">{{item.corso}}</td>
-                                   <td style="width: 20%">{{item.giorno}}</td>
+                                   <td style="width: 10%">{{item.corso}}</td>
+                                   <td style="width: 10%">{{item.giorno}}</td>
                                    <td style="width: 10%">{{item.ora}}</td>
                                    <td style="width: 10%; text-align: right"><button type="button" class="btn btn-sm"  v-on:click="student.prenota(item.id_docente,item.id_corso,item.ora,item.giorno)">Prenota</button></td>
-
-
+                                   <!-- <td style="width: 10%; text-align: right"><button type="button" class="btn btn-sm"  v-on:click="student.disdici(item.id_docente,item.id_corso,item.ora,item.giorno)">disdici</button></td> -->
                                </tr>
                                </tbody>
                            </table>
@@ -508,7 +509,8 @@
                                    <td style="width: 20%">{{item.corso}}</td>
                                    <td style="width: 20%">{{item.utente}}</td>
                                    <td style="width: 20%">{{item.data}}</td>
-                                   <td style="width: 20%">{{item.ora}}</td>
+                                   <td style="width: 10%">{{item.ora}}</td>
+                                   <td style="width: 10%; text-align: right"><button type="button" class="btn btn-sm"  v-on:click="student.conferma(item.idDocente,item.idCorso,item.ora,item.data)">Conferma</button></td>
 
                                </tr>
                                </tbody>
@@ -1037,7 +1039,16 @@
                     console.log(self.resultJson2);
                 });
 
+            },
+
+            conferma:function (id_docente,id_corso,ora,data){
+                $.post('gestione-servlet',{id_docente:id_docente, id_corso:id_corso, ora:ora,data:data,post:'conferma'},function (data){
+                    console.log("ripetizione confermata");
+                    catalogoRipetizioni.getRipetizioni();
+                });
             }
+
+
         }
     })
 
@@ -1068,6 +1079,13 @@
                     console.log("sono entrato");
                     console.log(self.resultJson);
                 })
+            },
+
+            conferma:function (id_docente,id_corso,ora,data){
+                $.post('gestione-servlet',{id_docente:id_docente, id_corso:id_corso, ora:ora,data:data,post:'conferma'},function (data){
+                    console.log("ripetizione confermata");
+                    catalogoRipetizioni.getRipetizioni();
+                });
             }
         }
     })
@@ -1093,10 +1111,6 @@
                         console.log(self.resultJson);
                     }
                 } )
-            },
-            passtologin:function (){
-                this.show = !this;
-                login.show = !login.show;
             },
 
             logout_guest:function (){

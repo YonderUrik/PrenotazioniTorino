@@ -303,7 +303,7 @@ public class DAO {
         try {
             conn1 = DriverManager.getConnection(url1, user, password);
             Statement st = conn1.createStatement();
-            st.executeUpdate("INSERT INTO prenotazione (docente,corso,utente,data,ora) VALUES ('"+docente+"','"+corso+"','"+utente+"','"+giorno+"','"+ora+"')");
+            st.executeUpdate("INSERT INTO prenotazione (docente,corso,utente,data,ora,stato) VALUES ('"+docente+"','"+corso+"','"+utente+"','"+giorno+"','"+ora+"','prenotata')");
             st.executeUpdate("UPDATE insegnamento SET stato= 1 WHERE insegnamento.corso='"+corso+"' AND insegnamento.docente='"+docente+"' AND   insegnamento.giorno='"+giorno+"' AND insegnamento.ora='"+ora+"'   " );
             System.out.println("Prenotazione effettuata");
             st.close();
@@ -439,6 +439,28 @@ public class DAO {
         }
         return out;
 
+    }
+
+    public static void conferma(int docente,int corso, String giorno, int ora,int utente ){
+        Connection conn1 = null;
+        try {
+            conn1 = DriverManager.getConnection(url1, user, password);
+            Statement st = conn1.createStatement();
+            st.executeUpdate("UPDATE prenotazione SET stato='effettuata' WHERE prenotazione.utente='"+utente+"' AND prenotazione.docente='"+docente+"' AND prenotazione.corso='"+corso+"' AND prenotazione.data='"+giorno+"' AND prenotazione.ora='"+ora+"'; " );
+            System.out.println("conferma effettuata");
+            st.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        finally {
+            if (conn1 != null) {
+                try {
+                    conn1.close();
+                } catch (SQLException e2) {
+                    System.out.println(e2.getMessage());
+                }
+            }
+        }
     }
 
 }
