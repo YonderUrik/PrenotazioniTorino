@@ -375,7 +375,7 @@
                                 <td style="width: 20%">{{item.corso}}</td>
                                 <td style="width: 20%">{{item.giorno}}</td>
                                 <td style="width: 10%">{{item.ora}}</td>
-                                <td style="width: 10%; text-align: right"><button type="button" class="btn btn-sm"  v-on:click="student.prenota(item.id_docente,item.id_corso,item.ora,item.giorno)">Prenota</button></td>
+                                <td style="width: 10%; text-align: right"><button type="button" class="btn btn-sm"  v-on:click="prenotaRipetizioniAdmin.prenota(item.id_docente,item.id_corso,item.ora,item.giorno)">Prenota</button></td>
 
                             </tr>
                             </tbody>
@@ -479,7 +479,7 @@
                                    <td style="width: 20%">{{item.corso}}</td>
                                    <td style="width: 20%">{{item.giorno}}</td>
                                    <td style="width: 10%">{{item.ora}}</td>
-                                   <td style="width: 10%; text-align: right"><button type="button" class="btn btn-sm"  v-on:click="prenotaRipetizioniAdmin.prenota(item.id_docente,item.id_corso,item.ora,item.giorno)">Prenota</button></td>
+                                   <td style="width: 10%; text-align: right"><button type="button" class="btn btn-sm"  v-on:click="student.prenota(item.id_docente,item.id_corso,item.ora,item.giorno)">Prenota</button></td>
 
 
                                </tr>
@@ -1019,12 +1019,13 @@
 
         },
         methods:{
-            prenota:async function (id_docente,id_corso,ora,giorno){
+            prenota:function (id_docente,id_corso,ora,giorno){
                 let self=this;
-                await $.post('prenota-servlet',{id_docente:id_docente, id_corso:id_corso, ora:ora,giorno:giorno},function (data){
-
+                $.post('prenota-servlet',{id_docente:id_docente, id_corso:id_corso, ora:ora,giorno:giorno},function (data){
+                    console.log("prenotata");
+                    administrator.passPrenota();
                 });
-                administrator.passPrenota();
+
 
             },
 
@@ -1055,8 +1056,10 @@
             prenota:function (id_docente,id_corso,ora,giorno){
                 let self=this;
                 $.post('prenota-servlet',{id_docente:id_docente, id_corso:id_corso, ora:ora,giorno:giorno},function (data){
-
+                    console.log("prenotata student");
+                    catalogoRipetizioni.getRipetizioni();
                 });
+
             },
             ripetizioni:function (){
                 let self=this;

@@ -26,6 +26,7 @@ public class prenotaServlet extends HttpServlet {
         String giorno= request.getParameter("giorno");
         int ora= Integer.parseInt(request.getParameter("ora"));
         DAO.setPrenotazione(docente,corso,giorno,ora,id);
+        System.out.println("uscito da prenota servlet");
 
 
 
