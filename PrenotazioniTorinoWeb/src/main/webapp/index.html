@@ -356,7 +356,7 @@
         <div class="accordion" id="accordionExample">
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingOne">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" v-on:click="administrator.passPrenota">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" v-on:click="catalogoRipetizioni.getRipetizioni">
                         Catalogo
                     </button>
                 </h2>
@@ -835,7 +835,7 @@
                   data: data,
                   ora: ora
               });
-
+              await catalogoRipetizioni.getRipetizioni();
               await administrator.passRipetizioni();
           }
         },
@@ -1024,9 +1024,7 @@
                 await $.post('prenota-servlet',{id_docente:id_docente, id_corso:id_corso, ora:ora,giorno:giorno},function (data){
 
                 });
-                await catalogoRipetizioni.getRipetizioni();
-               
-
+                administrator.passPrenota();
 
             },
 
