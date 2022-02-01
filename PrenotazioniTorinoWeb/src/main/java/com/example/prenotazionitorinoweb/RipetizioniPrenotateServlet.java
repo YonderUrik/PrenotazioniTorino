@@ -48,6 +48,7 @@ public class RipetizioniPrenotateServlet extends HttpServlet {
             String corso=rip.get(i).getCorso();
             String utente=rip.get(i).getUtente();
             String giorno=rip.get(i).getData();
+            String stato=rip.get(i).getStato();
             int ora=rip.get(i).getOra();
             int idCorso = rip.get(i).getIdCorso();
             int idDocente = rip.get(i).getIdDocente();
@@ -58,6 +59,7 @@ public class RipetizioniPrenotateServlet extends HttpServlet {
             prenotazionesingola.addProperty("utente",utente);
             prenotazionesingola.addProperty("data",giorno);
             prenotazionesingola.addProperty("ora",ora);
+            prenotazionesingola.addProperty("stato",stato);
             prenotazionesingola.addProperty("idCorso", idCorso);
             prenotazionesingola.addProperty("idDocente", idDocente);
             prenotazionesingola.addProperty("idUtente", idUtente);

@@ -5,23 +5,28 @@ public class RipetizioniPrenotate {
     String corso;
     String utente;
     String data;
+    String stato;
     int ora;
     int idCorso;
     int idDocente;
     int idUtente;
 
-
-    public RipetizioniPrenotate(String docente, String corso, String utente, String data, int ora, int idCorso, int idDocente, int idUtente) {
+    public RipetizioniPrenotate(String docente, String corso, String utente, String data, String stato, int ora, int idCorso, int idDocente, int idUtente) {
         this.docente = docente;
         this.corso = corso;
         this.utente = utente;
         this.data = data;
+        this.stato = stato;
         this.ora = ora;
         this.idCorso = idCorso;
         this.idDocente = idDocente;
         this.idUtente = idUtente;
     }
 
+
+    public String getStato() {
+        return stato;
+    }
 
     public int getIdCorso() {
         return idCorso;

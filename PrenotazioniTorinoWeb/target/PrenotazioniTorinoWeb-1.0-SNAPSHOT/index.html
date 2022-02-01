@@ -393,16 +393,17 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th>Docente</th> <th>corso</th> <th>utente</th> <th>data</th> <th>ora</th>
+                                <th>Docente</th> <th>corso</th> <th>utente</th> <th>data</th> <th>ora</th> <th>stato</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr v-for="item in resultJson2" style="width: 100%">
                                 <td style="width: 20%">{{item.docente}}</td>
                                 <td style="width: 20%">{{item.corso}}</td>
-                                <td style="width: 20%">{{item.utente}}</td>
+                                <td style="width: 10%">{{item.utente}}</td>
                                 <td style="width: 10%">{{item.data}}</td>
                                 <td style="width: 10%">{{item.ora}}</td>
+                                <td style="width: 10%">{{item.stato}}</td>
                                 <td style="width: 10%; text-align: right"><button type="button" class="btn btn-sm"  v-on:click="prenotaRipetizioniAdmin.conferma(item.idDocente,item.idCorso,item.ora,item.data)">Conferma</button></td>
                                 <td style="width: 10%; text-align: right"><button type="button" class="btn btn-sm"  v-on:click="prenotaRipetizioniAdmin.disdici(item.idDocente,item.idCorso,item.ora,item.data)">Disdici</button></td>
                             </tr>
@@ -496,16 +497,17 @@
                            <table class="table">
                                <thead>
                                <tr>
-                                   <th>Docente</th> <th>corso</th> <th>utente</th> <th>data</th> <th>ora</th>
+                                   <th>Docente</th> <th>corso</th> <th>utente</th> <th>data</th> <th>ora</th> <th>stato</th>
                                </tr>
                                </thead>
                                <tbody>
                                <tr v-for="item in resultJson" style="width: 100%">
                                    <td style="width: 20%">{{item.docente}}</td>
                                    <td style="width: 20%">{{item.corso}}</td>
-                                   <td style="width: 20%">{{item.utente}}</td>
-                                   <td style="width: 20%">{{item.data}}</td>
+                                   <td style="width: 10%">{{item.utente}}</td>
+                                   <td style="width: 10%">{{item.data}}</td>
                                    <td style="width: 10%">{{item.ora}}</td>
+                                   <td style="width: 10%">{{item.stato}}</td>
                                    <td style="width: 10%; text-align: right"><button type="button" class="btn btn-sm"  v-on:click="student.conferma(item.idDocente,item.idCorso,item.ora,item.data)">Conferma</button></td>
                                    <td style="width: 10%; text-align: right"><button type="button" class="btn btn-sm"  v-on:click="student.disdici(item.idDocente,item.idCorso,item.ora,item.data)">Disdici</button></td>
 
@@ -1042,6 +1044,7 @@
                 $.post('gestione-servlet',{id_docente:id_docente, id_corso:id_corso, ora:ora,data:data,post:'conferma'},function (data){
                     console.log("ripetizione confermata");
                     catalogoRipetizioni.getRipetizioni();
+                    prenotaRipetizioniAdmin.ripetizioni();
                 });
             },
             disdici:function (id_docente,id_corso,ora,data){
@@ -1089,6 +1092,7 @@
                 $.post('gestione-servlet',{id_docente:id_docente, id_corso:id_corso, ora:ora,data:data,post:'conferma'},function (data){
                     console.log("ripetizione confermata");
                     catalogoRipetizioni.getRipetizioni();
+                    student.ripetizioni();
                 });
             },
 
