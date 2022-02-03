@@ -222,18 +222,19 @@
             <table class="table" style="width: 100%">
                 <thead>
                 <tr>
-                    <th> docente</th> <th>utente</th>  <th>corso</th> <th>data</th> <th>ora</th>
+                    <th> docente</th> <th>utente</th>  <th>corso</th> <th>data</th> <th>ora</th> <th>stato</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr v-for="item in resultJson" style="width: 100%">
-                    <td style="width: 15%">{{item.docente}}</td>
-                    <td style="width: 15%">{{item.utente}}</td>
-                    <td style="width: 15%">{{item.corso}}</td>
-                    <td style="width: 15%">{{item.data}}</td>
-                    <td style="width: 15%">{{item.ora}}</td>
-                    <td style="width: 10%"></td>
-                    <td style="width: 15%; text-align: right"><button type="button" class="btn btn-sm"  v-on:click="visualizzaprenotazioni.delete(item.idDocente,item.idCorso,item.idUtente,item.data,item.ora)">Elimina</button></td>
+                    <td >{{item.docente}}</td>
+                    <td >{{item.utente}}</td>
+                    <td >{{item.corso}}</td>
+                    <td >{{item.data}}</td>
+                    <td >{{item.ora}}</td>
+                    <td >{{item.stato}}</td>
+                    <td ></td>
+                    <td ><button type="button" class="btn btn-sm"  v-on:click="visualizzaprenotazioni.delete(item.idDocente,item.idCorso,item.idUtente,item.data,item.ora)">Elimina</button></td>
                 </tr>
                 </tbody>
             </table>

@@ -65,6 +65,7 @@ public class PrenotazioniServlet extends HttpServlet {
                 int idCorso = prenotazioni.get(i).getIdCorso();
                 int idDocente = prenotazioni.get(i).getIdDocente();
                 int idUtente = prenotazioni.get(i).getIdUtente();
+                String stato=prenotazioni.get(i).getStato();
                 JsonObject prenot = new JsonObject();
                 prenot.addProperty("docente", docente);
                 prenot.addProperty("corso", corso);
@@ -74,7 +75,9 @@ public class PrenotazioniServlet extends HttpServlet {
                 prenot.addProperty("idCorso", idCorso);
                 prenot.addProperty("idDocente", idDocente);
                 prenot.addProperty("idUtente", idUtente);
+                prenot.addProperty("stato", stato);
                 allPrenotazioni.add(prenot);
+
             }
             out.print(allPrenotazioni);
         }else if(s.isNew()){
