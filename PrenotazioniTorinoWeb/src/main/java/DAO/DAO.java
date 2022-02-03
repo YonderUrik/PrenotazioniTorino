@@ -303,7 +303,7 @@ public class DAO {
         try {
             conn1 = DriverManager.getConnection(url1, user, password);
             Statement st = conn1.createStatement();
-            st.executeUpdate("INSERT INTO prenotazione (docente,corso,utente,data,ora,stato) VALUES ('"+docente+"','"+corso+"','"+utente+"','"+giorno+"','"+ora+"','prenotata')");
+            st.executeUpdate("INSERT INTO prenotazione (id,docente,corso,utente,data,ora,stato) VALUES (0,'"+docente+"','"+corso+"','"+utente+"','"+giorno+"','"+ora+"','prenotata')");
             st.executeUpdate("UPDATE insegnamento SET stato= 1 WHERE insegnamento.corso='"+corso+"' AND insegnamento.docente='"+docente+"' AND   insegnamento.giorno='"+giorno+"' AND insegnamento.ora='"+ora+"'   " );
             System.out.println("Prenotazione effettuata");
             st.close();
