@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/ic_account"
+        android:icon="@drawable/ic_account"
+        android:title="@string/account"/>
+    <item
+            android:id="@+id/ic_mycourses"
+            android:icon="@drawable/ic_mycourses"
+            android:title="@string/i_miei_corsi"/>
+    <item
+            android:id="@+id/ic_search"
+            android:icon="@drawable/ic_search"
+            android:title="@string/cerca"/>
+</menu>
