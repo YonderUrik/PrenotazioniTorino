@@ -21,7 +21,21 @@ public class PrenotazioniServlet extends HttpServlet {
         DAO.registerDriver();
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processRequest(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        String post=request.getParameter("post");
+        PrintWriter out = response.getWriter();
+
+
+        if(Objects.equals(post, "elimina")){
+            int docente=Integer.parseInt(request.getParameter("docente"));
+            int corso=Integer.parseInt(request.getParameter("corso"));
+            int utente=Integer.parseInt(request.getParameter("utente"));
+            String data=request.getParameter("data");
+            int ora=Integer.parseInt(request.getParameter("ora"));
+            DAO.deletePrenotazione(docente,corso,utente,data,ora);
+        }
+
+
 
     }
 
@@ -48,13 +62,22 @@ public class PrenotazioniServlet extends HttpServlet {
                 String utente = prenotazioni.get(i).getUtente();
                 String data = prenotazioni.get(i).getData();
                 int ora = prenotazioni.get(i).getOra();
+                int idCorso = prenotazioni.get(i).getIdCorso();
+                int idDocente = prenotazioni.get(i).getIdDocente();
+                int idUtente = prenotazioni.get(i).getIdUtente();
+                String stato=prenotazioni.get(i).getStato();
                 JsonObject prenot = new JsonObject();
                 prenot.addProperty("docente", docente);
                 prenot.addProperty("corso", corso);
                 prenot.addProperty("utente", utente);
                 prenot.addProperty("data", data);
                 prenot.addProperty("ora", ora);
+                prenot.addProperty("idCorso", idCorso);
+                prenot.addProperty("idDocente", idDocente);
+                prenot.addProperty("idUtente", idUtente);
+                prenot.addProperty("stato", stato);
                 allPrenotazioni.add(prenot);
+
             }
             out.print(allPrenotazioni);
         }else if(s.isNew()){

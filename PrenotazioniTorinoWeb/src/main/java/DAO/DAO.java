@@ -177,9 +177,9 @@ public class DAO {
 
 
             Statement st1 = conn1.createStatement();
-            ResultSet rs1 = st1.executeQuery("SELECT d.cognome AS docente, c.nome AS corso, u.nome AS utente,p.data,p.ora FROM (((prenotazione p JOIN docente d ON (d.id=p.docente))JOIN corso c ON (c.id=p.corso))JOIN utente u ON u.id=p.utente);");
+            ResultSet rs1 = st1.executeQuery("SELECT d.cognome AS docente, c.nome AS corso, u.nome AS utente,p.data,p.ora, d.id AS idDocente, c.id AS idCorso, u.id AS idUtente, p.stato AS stato FROM (((prenotazione p JOIN docente d ON (d.id=p.docente))JOIN corso c ON (c.id=p.corso))JOIN utente u ON u.id=p.utente);");
             while (rs1.next()) {
-                RipetizioniPrenotate rp = new RipetizioniPrenotate(rs1.getString("docente"),rs1.getString("corso"),rs1.getString("utente"), rs1.getString("data"), rs1.getInt("ora") );
+                RipetizioniPrenotate rp = new RipetizioniPrenotate(rs1.getString("docente"),rs1.getString("corso"),rs1.getString("utente"), rs1.getString("data"), rs1.getString("stato"),rs1.getInt("ora"),rs1.getInt("idCorso"),rs1.getInt("idDocente"),rs1.getInt("idUtente") );
                 out.add(rp);
             }
         } catch (SQLException e) {
@@ -277,9 +277,9 @@ public class DAO {
 
 
             Statement st1 = conn1.createStatement();
-            ResultSet rs1 = st1.executeQuery("SELECT d.nome AS nome_docente,d.cognome AS cognome_docente,d.id AS id_docente, c.nome AS corso, c.id AS id_corso FROM (docente d JOIN insegnamento i ON (d.id=i.docente)) JOIN corso c ON(c.id=i.corso);");
+            ResultSet rs1 = st1.executeQuery("SELECT d.nome AS nome_docente,d.cognome AS cognome_docente,d.id AS id_docente, c.nome AS corso, c.id AS id_corso,i.giorno AS giorno, i.ora AS ora FROM (docente d JOIN insegnamento i ON (d.id=i.docente)) JOIN corso c ON(c.id=i.corso) WHERE stato=0;");
             while (rs1.next()) {
-                Ripetizioni ripetizioni = new Ripetizioni(rs1.getString("nome_docente"),rs1.getString("cognome_docente"),rs1.getInt("id_docente"),rs1.getString("corso"),rs1.getInt("id_corso") );
+                Ripetizioni ripetizioni = new Ripetizioni(rs1.getString("nome_docente"),rs1.getString("cognome_docente"),rs1.getString("corso"),rs1.getString("giorno"),rs1.getInt("ora"),rs1.getInt("id_corso"),rs1.getInt("id_docente") );
                 out.add(ripetizioni);
             }
         } catch (SQLException e) {
@@ -303,7 +303,8 @@ public class DAO {
         try {
             conn1 = DriverManager.getConnection(url1, user, password);
             Statement st = conn1.createStatement();
-            st.executeUpdate("INSERT INTO prenotazione (docente,corso,utente,data,ora) VALUES ('"+docente+"','"+corso+"','"+utente+"','"+giorno+"','"+ora+"')");
+            st.executeUpdate("INSERT INTO prenotazione (id,docente,corso,utente,data,ora,stato) VALUES (0,'"+docente+"','"+corso+"','"+utente+"','"+giorno+"','"+ora+"','prenotata')");
+            st.executeUpdate("UPDATE insegnamento SET stato= 1 WHERE insegnamento.corso='"+corso+"' AND insegnamento.docente='"+docente+"' AND   insegnamento.giorno='"+giorno+"' AND insegnamento.ora='"+ora+"'   " );
             System.out.println("Prenotazione effettuata");
             st.close();
         } catch (SQLException e) {
@@ -386,6 +387,31 @@ public class DAO {
         }
     }
 
+    public static void deletePrenotazione(int docente,int corso, int utente, String data, int ora){
+        Connection conn1 = null;
+        try {
+            conn1 = DriverManager.getConnection(url1, user, password);
+            Statement st = conn1.createStatement();
+            st.executeUpdate("DELETE FROM prenotazione WHERE docente='"+docente+"' && corso='"+corso+"' && utente='"+utente+"' && data='"+data+"' && ora='"+ora+"'");
+            st.executeUpdate("UPDATE insegnamento SET stato= 0 WHERE insegnamento.corso='"+corso+"' AND insegnamento.docente='"+docente+"' AND   insegnamento.giorno='"+data+"' AND insegnamento.ora='"+ora+"'   " );
+            System.out.println("prenotazione Eliminata");
+            st.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        finally {
+            if (conn1 != null) {
+                try {
+                    conn1.close();
+                } catch (SQLException e2) {
+                    System.out.println(e2.getMessage());
+                }
+            }
+        }
+    }
+
+
+
     public static ArrayList<RipetizioniPrenotate> getRipetizioniUtente(int id){
         Connection conn1 = null;
         ArrayList<RipetizioniPrenotate> out = new ArrayList<>();
@@ -394,9 +420,9 @@ public class DAO {
 
 
             Statement st1 = conn1.createStatement();
-            ResultSet rs1 = st1.executeQuery("SELECT d.cognome AS docente, c.nome AS corso, u.email AS utente, p.data AS data, p.ora AS ora FROM ((corso c JOIN prenotazione p ON(c.id=p.corso))JOIN utente u ON (u.id=p.utente))JOIN docente d ON (d.id=p.docente) WHERE u.id='"+id+"';");
+            ResultSet rs1 = st1.executeQuery("SELECT d.cognome AS docente, c.nome AS corso, u.email AS utente, p.data AS data, p.ora AS ora, d.id AS idDocente, c.id AS idCorso, u.id AS idUtente, p.stato AS stato  FROM ((corso c JOIN prenotazione p ON(c.id=p.corso))JOIN utente u ON (u.id=p.utente))JOIN docente d ON (d.id=p.docente) WHERE u.id='"+id+"';");
             while (rs1.next()) {
-                RipetizioniPrenotate ripetizioni = new RipetizioniPrenotate(rs1.getString("docente"),rs1.getString("corso"),rs1.getString("utente"),rs1.getString("data"),rs1.getInt("ora") );
+                RipetizioniPrenotate ripetizioni = new RipetizioniPrenotate(rs1.getString("docente"),rs1.getString("corso"),rs1.getString("utente"),rs1.getString("data"),rs1.getString("stato"),rs1.getInt("ora"),rs1.getInt("idCorso"),rs1.getInt("idDocente"),rs1.getInt("idUtente") );
                 out.add(ripetizioni);
             }
         } catch (SQLException e) {
@@ -413,6 +439,53 @@ public class DAO {
         }
         return out;
 
+    }
+
+    public static void conferma(int docente,int corso, String giorno, int ora,int utente ){
+        Connection conn1 = null;
+        try {
+            conn1 = DriverManager.getConnection(url1, user, password);
+            Statement st = conn1.createStatement();
+            st.executeUpdate("UPDATE prenotazione SET stato='effettuata' WHERE prenotazione.utente='"+utente+"' AND prenotazione.docente='"+docente+"' AND prenotazione.corso='"+corso+"' AND prenotazione.data='"+giorno+"' AND prenotazione.ora='"+ora+"'; " );
+            System.out.println("conferma effettuata");
+            st.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        finally {
+            if (conn1 != null) {
+                try {
+                    conn1.close();
+                } catch (SQLException e2) {
+                    System.out.println(e2.getMessage());
+                }
+            }
+        }
+    }
+
+    public static void disdetta(int docente,int corso, String giorno, int ora,int utente ){
+        Connection conn1 = null;
+        try {
+            conn1 = DriverManager.getConnection(url1, user, password);
+            Statement st = conn1.createStatement();
+            st.executeUpdate("UPDATE prenotazione SET stato='disdetta' WHERE prenotazione.utente='"+utente+"' AND prenotazione.docente='"+docente+"' AND prenotazione.corso='"+corso+"' AND prenotazione.data='"+giorno+"' AND prenotazione.ora='"+ora+"';  " );
+            st.executeUpdate("UPDATE insegnamento SET stato= 0 WHERE insegnamento.corso='"+corso+"' AND insegnamento.docente='"+docente+"' AND   insegnamento.giorno='"+giorno+"' AND insegnamento.ora='"+ora+"'   " );
+
+            System.out.println("conferma effettuata");
+            st.close();
+        } catch (SQLException e) {
+
+            System.out.println(e.getMessage());
+        }
+        finally {
+            if (conn1 != null) {
+                try {
+                    conn1.close();
+                } catch (SQLException e2) {
+                    System.out.println(e2.getMessage());
+                }
+            }
+        }
     }
 
 }

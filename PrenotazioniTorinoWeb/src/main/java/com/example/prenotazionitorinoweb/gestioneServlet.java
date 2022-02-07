@@ -12,21 +12,30 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
 
-@WebServlet(name = "prenotaservlet", value = "/prenota-servlet")
-public class prenotaServlet extends HttpServlet {
+@WebServlet(name = "gestioneservet", value = "/gestione-servlet")
+public class gestioneServlet extends HttpServlet {
     public void init() {
         DAO.registerDriver();
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession s = request.getSession();
+        String post=request.getParameter("post");
         int id= Integer.parseInt(s.getAttribute("id").toString());
         int docente= Integer.parseInt(request.getParameter("id_docente"));
         int corso= Integer.parseInt(request.getParameter("id_corso"));
-        String giorno= request.getParameter("giorno");
+        String data= request.getParameter("data");
         int ora= Integer.parseInt(request.getParameter("ora"));
-        DAO.setPrenotazione(docente,corso,giorno,ora,id);
-        System.out.println("uscito da prenota servlet");
+        if(post.equals("conferma")){
+            DAO.conferma(docente,corso,data,ora,id);
+            System.out.println(data);
+
+
+        }else if(post.equals("disdici")){
+            System.out.println("disdetta");
+            DAO.disdetta(docente,corso,data,ora,id);
+        }
+
 
 
 

@@ -157,11 +157,7 @@
                             Prenotazioni
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item btn" v-on:click="this.passCatalogo">Catalogo</a></li>
-                            <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item btn" v-on:click="this.passPrenota">Prenotazione</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item btn" v-on:click="this.passRipetPrenotat">Visualizza</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -226,18 +222,19 @@
             <table class="table" style="width: 100%">
                 <thead>
                 <tr>
-                    <th> docente</th> <th>utente</th>  <th>corso</th> <th>data</th> <th>ora</th>
+                    <th> docente</th> <th>utente</th>  <th>corso</th> <th>data</th> <th>ora</th> <th>stato</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr v-for="item in resultJson" style="width: 100%">
-                    <td style="width: 15%">{{item.docente}}</td>
-                    <td style="width: 15%">{{item.utente}}</td>
-                    <td style="width: 15%">{{item.corso}}</td>
-                    <td style="width: 15%">{{item.data}}</td>
-                    <td style="width: 15%">{{item.ora}}</td>
-                    <td style="width: 10%"></td>
-                    <td style="width: 15%; text-align: right">Elimina</td>
+                    <td >{{item.docente}}</td>
+                    <td >{{item.utente}}</td>
+                    <td >{{item.corso}}</td>
+                    <td >{{item.data}}</td>
+                    <td >{{item.ora}}</td>
+                    <td >{{item.stato}}</td>
+                    <td ></td>
+                    <td ><button type="button" class="btn btn-sm"  v-on:click="visualizzaprenotazioni.delete(item.idDocente,item.idCorso,item.idUtente,item.data,item.ora)">Elimina</button></td>
                 </tr>
                 </tbody>
             </table>
@@ -348,119 +345,77 @@
 </div>
 
 
-<!-- catalogo ripetizioni possibili -->
-<div id="catalogo-ripetizioni" v-show="administrator.catalogo" class="text-center container-fluid" style="margin-top: 3%">
-    <div class="container ">
-        <div class="card">
-            <div class="card-head">
-                <h3 class="text-center">possibili ripetizioni</h3>
-            </div>
-            <div class="card-body ">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>Nome Docente</th> <th>Cognome Docente</th> <th>Id Docente</th> <th>Corso</th> <th>Id Corso</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr v-for="item in resultJson" style="width: 100%">
-                        <td style="width: 20%">{{item.nome_docente}}</td>
-                        <td style="width: 20%">{{item.cognome_docente}}</td>
-                        <td style="width: 20%">{{item.id_docente}}</td>
-                        <td style="width: 20%">{{item.corso}}</td>
-                        <td style="width: 20%">{{item.id_corso}}</td>
-
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-
-
 <!-- prenota ripetizione -->
 <div id="prenota-ripetizioni" v-show="administrator.prenota" class="text-center container-fluid" style="margin-top: 3%">
     <h1>prenota ripetizioni</h1>
-    <div class="container mt-2" style="width: 50%">
-        <form >
-            <div class="row" >
-                <div class="col">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <input v-model="id_docente" class="form-control" placeholder="id_docente" type="text">
-                        </div>
-                    </div>
-                </div>
 
-
-
-                <div class="col">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <input v-model="id_corso" class="form-control" placeholder="id_corso" type="text">
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <div class="row"  style="margin-top: 2%">
-                <div class="col">
-                    <select v-model="giorno" class="form-select" aria-label="Default select example">
-                        <option selected>Seleziona giorno</option>
-                        <option value="Lunedì">Lunedì</option>
-                        <option value="Martedì">Martedì</option>
-                        <option value="Mercoledì">Mercoledì</option>
-                        <option value="Giovedì">Giovedì</option>
-                        <option value="Venerdì">Venerdì</option>
-                    </select>
-                </div>
-
-                <div class="col">
-                    <select v-model="ora" class="form-select" aria-label="Default select example" >
-                        <option selected>Seleziona orario</option>
-                        <option value="15">15-16</option>
-                        <option value="16">16-17</option>
-                        <option value="17">17-18</option>
-                        <option value="18">18-19</option>
-
-                    </select>
-                </div>
-            </div>
-            <div class=" text-center " style="margin-top: 2%">
-                <button class="btn btn-primary" type="button" v-on:click="this.prenota">Prenota</button>
-            </div>
-        </form>
-    </div>
 
 
     <!-- catalogo -->
-    <div class="container " style="margin-top: 3%">
-        <div class="card">
-            <div class="card-head">
-                <h3 class="text-center">Catalogo ripetizioni</h3>
+    <!-- TODO:pulsanti disdetta prenotazione e conferma ripetizione effettuata -->
+    <div class="container mt-3">
+        <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" v-on:click="catalogoRipetizioni.getRipetizioni">
+                        Catalogo
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Nome Docente</th> <th>Cognome Docente</th>  <th>Corso</th><th>Giorno</th> <th>Orario</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="item in catalogoRipetizioni.resultJson" style="width: 100%">
+                                <td style="width: 20%">{{item.nome_docente}}</td>
+                                <td style="width: 20%">{{item.cognome_docente}}</td>
+                                <td style="width: 20%">{{item.corso}}</td>
+                                <td style="width: 20%">{{item.giorno}}</td>
+                                <td style="width: 10%">{{item.ora}}</td>
+                                <td style="width: 10%; text-align: right"><button type="button" class="btn btn-sm"  v-on:click="prenotaRipetizioniAdmin.prenota(item.id_docente,item.id_corso,item.ora,item.giorno)">Prenota</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-            <div class="card-body ">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>Nome Docente</th> <th>Cognome Docente</th> <th>Id Docente</th> <th>Corso</th> <th>Id Corso</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr v-for="item in catalogoRipetizioni.resultJson" style="width: 100%">
-                        <td style="width: 20%">{{item.nome_docente}}</td>
-                        <td style="width: 20%">{{item.cognome_docente}}</td>
-                        <td style="width: 20%">{{item.id_docente}}</td>
-                        <td style="width: 20%">{{item.corso}}</td>
-                        <td style="width: 20%">{{item.id_corso}}</td>
-
-                    </tr>
-                    </tbody>
-                </table>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" v-on:click="this.ripetizioni">
+                        Le tue prenotazioni
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Docente</th> <th>corso</th> <th>utente</th> <th>data</th> <th>ora</th> <th>stato</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="item in resultJson2" style="width: 100%">
+                                <td style="width: 20%">{{item.docente}}</td>
+                                <td style="width: 20%">{{item.corso}}</td>
+                                <td style="width: 10%">{{item.utente}}</td>
+                                <td style="width: 10%">{{item.data}}</td>
+                                <td style="width: 10%">{{item.ora}}</td>
+                                <td style="width: 10%">{{item.stato}}</td>
+                                <td style="width: 10%; text-align: right"><button type="button" class="btn btn-sm"  v-on:click="prenotaRipetizioniAdmin.conferma(item.idDocente,item.idCorso,item.ora,item.data)">Conferma</button></td>
+                                <td style="width: 10%; text-align: right"><button type="button" class="btn btn-sm"  v-on:click="prenotaRipetizioniAdmin.disdici(item.idDocente,item.idCorso,item.ora,item.data)">Disdici</button></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
 
 
 
@@ -477,36 +432,7 @@
 
 </div>
 
-<!-- visualizza prenotazioni --> <!-- TODO:pulsanti disdetta prenotazione e conferma ripetizione effettuata -->
-<div id="visualizza-ripetizioni-prenotate" v-show="administrator.ripPrenot" class="text-center mt-3">
-    <h1>ripetizioni prenotate</h1>
-    <div class="container mt-5 ">
-        <div class="card">
-            <div class="card-head">
-                <h3 class="text-center">Le tue ripetizioni</h3>
-            </div>
-            <div class="card-body ">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>Docente</th> <th>corso</th> <th>utente</th> <th>data</th> <th>ora</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr v-for="item in resultJson" style="width: 100%">
-                        <td style="width: 20%">{{item.docente}}</td>
-                        <td style="width: 20%">{{item.corso}}</td>
-                        <td style="width: 20%">{{item.utente}}</td>
-                        <td style="width: 20%">{{item.data}}</td>
-                        <td style="width: 20%">{{item.ora}}</td>
 
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- Student Page -->
 <div id="homepage-student" v-show="this.show">
@@ -520,14 +446,6 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent2">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-
-                    <li class="nav-item">
-                        <a class="nav-link btn" aria-current="page" v-on:click="this.passToPrenota" >Prenota Ripetizioni</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link btn" aria-current="page" v-on:click="this.passToVisualizza" >Visualizza Ripetizioni</a>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -537,119 +455,76 @@
    <div class="container text-center mt-5" v-show="this.prenotaRip">
        <h1>prenota ripetizioni</h1>
 
-       <!-- form prenotazione -->
-       <div class="container mt-2" style="width: 50%">
-           <form >
-               <div class="row" >
-                   <div class="col">
-                       <div class="form-group">
-                           <div class="input-group">
-                               <input v-model="id_docente" class="form-control" placeholder="id_docente" type="text">
-                           </div>
-                       </div>
-                   </div>
-
-
-
-                   <div class="col">
-                       <div class="form-group">
-                           <div class="input-group">
-                               <input v-model="id_corso" class="form-control" placeholder="id_corso" type="text">
-                           </div>
-                       </div>
-                   </div>
-
-               </div>
-               <div class="row"  style="margin-top: 2%">
-                   <div class="col">
-                       <select v-model="giorno" class="form-select" aria-label="Default select example">
-                           <option selected>Seleziona giorno</option>
-                           <option value="Lunedì">Lunedì</option>
-                           <option value="Martedì">Martedì</option>
-                           <option value="Mercoledì">Mercoledì</option>
-                           <option value="Giovedì">Giovedì</option>
-                           <option value="Venerdì">Venerdì</option>
-                       </select>
-                   </div>
-
-                   <div class="col">
-                       <select v-model="ora" class="form-select" aria-label="Default select example" >
-                           <option selected>Seleziona orario</option>
-                           <option value="15">15-16</option>
-                           <option value="16">16-17</option>
-                           <option value="17">17-18</option>
-                           <option value="18">18-19</option>
-
-                       </select>
-                   </div>
-               </div>
-               <div class=" text-center mt-2" >
-                   <button class="btn btn-primary" type="button" v-on:click="this.prenota">Prenota</button>
-               </div>
-           </form>
-       </div>
-
-
-       <!-- catalogo -->
+       <!-- catalogo e ripetizioni prenotate-->
+       <!-- TODO:pulsanti per disdetta e conferma -->
        <div class="container " style="margin-top: 3%">
-           <div class="card">
-               <div class="card-head">
-                   <h3 class="text-center">Catalogo ripetizioni</h3>
+           <div class="accordion" id="accordionExample2">
+               <div class="accordion-item">
+                   <h2 class="accordion-header" id="headingOne2">
+                       <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne2" aria-expanded="true" aria-controls="collapseOne2">
+                           Catalogo
+                       </button>
+                   </h2>
+                   <div id="collapseOne2" class="accordion-collapse collapse show" aria-labelledby="headingOne2" data-bs-parent="#accordionExample2">
+                       <div class="accordion-body">
+                           <table class="table">
+                               <thead>
+                               <tr>
+                                   <th>Nome Docente</th> <th>Cognome Docente</th>  <th>Corso</th> <th>Giorno</th> <th>Orario</th>
+                               </tr>
+                               </thead>
+                               <tbody>
+                               <tr v-for="item in catalogoRipetizioni.resultJson" style="width: 100%">
+                                   <td style="width: 20%">{{item.nome_docente}}</td>
+                                   <td style="width: 20%">{{item.cognome_docente}}</td>
+                                   <td style="width: 10%">{{item.corso}}</td>
+                                   <td style="width: 10%">{{item.giorno}}</td>
+                                   <td style="width: 10%">{{item.ora}}</td>
+                                   <td style="width: 10%; text-align: right"><button type="button" class="btn btn-sm"  v-on:click="student.prenota(item.id_docente,item.id_corso,item.ora,item.giorno)">Prenota</button></td>
+                               </tr>
+                               </tbody>
+                           </table>
+                       </div>
+                   </div>
                </div>
-               <div class="card-body ">
-                   <table class="table">
-                       <thead>
-                       <tr>
-                           <th>Nome Docente</th> <th>Cognome Docente</th> <th>Id Docente</th> <th>Corso</th> <th>Id Corso</th>
-                       </tr>
-                       </thead>
-                       <tbody>
-                       <tr v-for="item in catalogoRipetizioni.resultJson" style="width: 100%">
-                           <td style="width: 20%">{{item.nome_docente}}</td>
-                           <td style="width: 20%">{{item.cognome_docente}}</td>
-                           <td style="width: 20%">{{item.id_docente}}</td>
-                           <td style="width: 20%">{{item.corso}}</td>
-                           <td style="width: 20%">{{item.id_corso}}</td>
+               <div class="accordion-item">
+                   <h2 class="accordion-header" id="headingTwo2">
+                       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo2" aria-expanded="false" aria-controls="collapseTwo2" v-on:click="this.ripetizioni">
+                           Le tue prenotazioni
+                       </button>
+                   </h2>
+                   <div id="collapseTwo2" class="accordion-collapse collapse" aria-labelledby="headingTwo2" data-bs-parent="#accordionExample2">
+                       <div class="accordion-body">
+                           <table class="table">
+                               <thead>
+                               <tr>
+                                   <th>Docente</th> <th>corso</th> <th>utente</th> <th>data</th> <th>ora</th> <th>stato</th>
+                               </tr>
+                               </thead>
+                               <tbody>
+                               <tr v-for="item in resultJson" style="width: 100%">
+                                   <td style="width: 20%">{{item.docente}}</td>
+                                   <td style="width: 20%">{{item.corso}}</td>
+                                   <td style="width: 10%">{{item.utente}}</td>
+                                   <td style="width: 10%">{{item.data}}</td>
+                                   <td style="width: 10%">{{item.ora}}</td>
+                                   <td style="width: 10%">{{item.stato}}</td>
+                                   <td style="width: 10%; text-align: right"><button type="button" class="btn btn-sm"  v-on:click="student.conferma(item.idDocente,item.idCorso,item.ora,item.data)">Conferma</button></td>
+                                   <td style="width: 10%; text-align: right"><button type="button" class="btn btn-sm"  v-on:click="student.disdici(item.idDocente,item.idCorso,item.ora,item.data)">Disdici</button></td>
 
-                       </tr>
-                       </tbody>
-                   </table>
+                               </tr>
+                               </tbody>
+                           </table>
+                       </div>
+                   </div>
                </div>
            </div>
        </div>
+
+
+
    </div>
 
-    <!-- TODO:pulsanti per disdetta e conferma -->
-    <div class="container text-center" v-show="this.visualizza">
-        <h1>Visualizza Prenotazioni</h1>
-
-        <div class="container mt-5 ">
-            <div class="card">
-                <div class="card-head">
-                    <h3 class="text-center">Le tue ripetizioni</h3>
-                </div>
-                <div class="card-body ">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>Docente</th> <th>corso</th> <th>utente</th> <th>data</th> <th>ora</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr v-for="item in resultJson" style="width: 100%">
-                            <td style="width: 20%">{{item.docente}}</td>
-                            <td style="width: 20%">{{item.corso}}</td>
-                            <td style="width: 20%">{{item.utente}}</td>
-                            <td style="width: 20%">{{item.data}}</td>
-                            <td style="width: 20%">{{item.ora}}</td>
-
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 
 <!-- Guest Page -->
@@ -677,16 +552,16 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>Nome Docente</th> <th>Cognome Docente</th> <th>Id Docente</th> <th>Corso</th> <th>Id Corso</th>
+                        <th>Nome Docente</th> <th>Cognome Docente</th>  <th>Corso</th> <th>Giorno</th> <th>Orario</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr v-for="item in resultJson" style="width: 100%">
                         <td style="width: 20%">{{item.nome_docente}}</td>
                         <td style="width: 20%">{{item.cognome_docente}}</td>
-                        <td style="width: 20%">{{item.id_docente}}</td>
                         <td style="width: 20%">{{item.corso}}</td>
-                        <td style="width: 20%">{{item.id_corso}}</td>
+                        <td style="width: 20%">{{item.giorno}}</td>
+                        <td style="width: 20%">{{item.ora}}</td>
 
                     </tr>
                     </tbody>
@@ -697,7 +572,7 @@
 
     <!-- TODO: il pulsante log out da problemi se si prova a riloggare  -->
     <div class="container text-center mt-2">
-        <button type="button" class="btn btn-primary" v-on:click="this.passtologin">Log out</button>
+        <button type="button" class="btn btn-primary" v-on:click="this.logout_guest">Log out</button>
     </div>
 
 
@@ -739,7 +614,6 @@
                         let i = 0;
                         console.log(i++);
                     }
-                    console.log("sono uscito dalla trappola infernale");
                     $.get(this.link,{utente: this.email, password: this.password},function(data){
                         let jsonResponse=JSON.parse(JSON.stringify(data));
                         self.resultJson = jsonResponse.ruolo;
@@ -820,9 +694,7 @@
             prenotazioni:false,
             corsi:false,
             docenti:false,
-            catalogo:false,
             prenota:false,
-            ripPrenot:false,
             sessione: '',
             studenti: '',
             resultJson:'',
@@ -869,9 +741,8 @@
                 this.prenotazioni=false;
                 this.corsi=false;
                 this.docenti=false;
-                this.catalogo=false;
                 this.prenota=false;
-                this.ripPrenot=false;
+
 
             },
 
@@ -881,9 +752,8 @@
                 this.corsi=false;
                 this.docenti=false;
                 visualizzaprenotazioni.getRipetizioniPrenotate();
-                this.catalogo=false;
                 this.prenota=false;
-                this.ripPrenot=false;
+
             },
 
             passCorsi:function (){
@@ -892,9 +762,8 @@
                 this.corsi=true;
                 this.docenti=false;
                 visualizzaCorsi.getCorso();
-                this.catalogo=false;
                 this.prenota=false;
-                this.ripPrenot=false;
+
 
             },
 
@@ -904,45 +773,24 @@
                 this.corsi=false;
                 this.docenti=true;
                 visualizzaDocenti.getProf();
-                this.catalogo=false;
                 this.prenota=false;
-                this.ripPrenot=false;
+
 
             },
 
-            passCatalogo:function(){
-                this.home= false;
-                this.prenotazioni=false;
-                this.corsi=false;
-                this.docenti=false;
-                this.catalogo=true;
-                catalogoRipetizioni.getRipetizioni();
-                this.prenota=false;
-                this.ripPrenot=false;
-            },
+
 
             passPrenota:function (){
                 this.home= false;
                 this.prenotazioni=false;
                 this.corsi=false;
                 this.docenti=false;
-                this.catalogo=false;
                 catalogoRipetizioni.getRipetizioni();
                 this.prenota=true;
-                this.ripPrenot=false;
+
             },
 
 
-            passRipetPrenotat:function (){
-                this.home= false;
-                this.prenotazioni=false;
-                this.corsi=false;
-                this.docenti=false;
-                this.catalogo=false;
-                this.prenota=false;
-                ripetizPrenotate.ripetizioni();
-                this.ripPrenot=true;
-            },
 
             delete:async function (id){
                 await $.post('student-servlet',{post:'eliminastudenti',id:id});
@@ -974,9 +822,24 @@
                     login.sessione = 'sessione inesistente';
                 }else {
                     self.resultJson = jsonResponse;
+                    console.log(self.resultJson);
                 }
              });
           } ,
+
+
+          delete:async function (docente, corso, utente, data, ora) {
+              await $.post('prenotazioni-servlet', {
+                  post: 'elimina',
+                  docente: docente,
+                  corso: corso,
+                  utente: utente,
+                  data: data,
+                  ora: ora
+              });
+              await catalogoRipetizioni.getRipetizioni();
+              await administrator.passRipetizioni();
+          }
         },
 
     })
@@ -994,16 +857,11 @@
 
         methods:{
             //TODO: Testare sessione invalidata.
-            addCorso: async function () {
+            addCorso: function () {
                 let self = this;
-                await $.post('corso-servlet', {nome: this.nome, sessione : login.sessione, post:'aggiungi'}, function (data) {
-                    let jsonResponde = JSON.parse(JSON.stringify(data));
-                    if(jsonResponde === null){
-                        window.alert("Sessione scaduta, riaccedi.");
-                        window.location.reload();
-                        login.sessione = "sessione inesistente";
-                    }
-                    //TODO
+                $.post('corso-servlet', {nome: this.nome, sessione : login.sessione, post:'aggiungi'}, function (data) {
+
+                    //TODO:gestire sessione con txt e non json
                     console.log(data);
                     if(data === 'Corso aggiunto'){
                         window.alert("Corso aggiunto con successo");
@@ -1129,9 +987,9 @@
             resultJson:'',
         },
         methods:{
-            getRipetizioni:function (){
+            getRipetizioni:async function (){
                 let self=this;
-                $.get('guest-servlet', {},function (data){
+                await $.get('guest-servlet', {},function (data){
                     let jsonResponse=JSON.parse(JSON.stringify(data));
                     if(jsonResponse===null){
                         window.alert("Sessione scaduta, riaccedi.");
@@ -1142,8 +1000,12 @@
                         console.log(self.resultJson);
                     }
                 } )
+            },
+
             }
-        }
+
+
+
     })
 
     //vue prenota ripetizioni admin
@@ -1155,41 +1017,49 @@
             ora:'Seleziona orario',
             giorno:'Seleziona giorno',
             utente: '',
+            resultJson2:'',
 
         },
         methods:{
-            prenota: function (){
+            prenota:function (id_docente,id_corso,ora,giorno){
                 let self=this;
-
-                $.post('prenota-servlet',{id_docente:this.id_docente, id_corso:this.id_corso, ora:this.ora,giorno:this.giorno,utente:this.utente},function (data){
-
-
+                $.post('prenota-servlet',{id_docente:id_docente, id_corso:id_corso, ora:ora,giorno:giorno},function (data){
+                    console.log("prenotata");
+                    administrator.passPrenota();
                 });
 
 
+            },
 
-
-            }
-        }
-    })
-
-    //vue ripetiz preontate admin
-    var ripetizPrenotate=new Vue({
-        el:'#visualizza-ripetizioni-prenotate',
-        data:{
-            resultJson:'',
-        },
-        methods:{
-            ripetizioni:function (){
+            ripetizioni:async function (){
                 let self=this;
-                $.get('ripetizioni-prenotate-servlet',{},function (data){
-                    self.resultJson=JSON.parse(JSON.stringify(data));
-                     console.log("sono entrato");
-                     console.log(self.resultJson);
-                })
-            }
+                await $.get('ripetizioni-prenotate-servlet',{},function (data){
+                    self.resultJson2=JSON.parse(JSON.stringify(data));
+                    console.log("sono entrato");
+                    console.log(self.resultJson2);
+                });
+
+            },
+
+            conferma:function (id_docente,id_corso,ora,data){
+                $.post('gestione-servlet',{id_docente:id_docente, id_corso:id_corso, ora:ora,data:data,post:'conferma'},function (data){
+                    console.log("ripetizione confermata");
+                    catalogoRipetizioni.getRipetizioni();
+                    prenotaRipetizioniAdmin.ripetizioni();
+                });
+            },
+            disdici:function (id_docente,id_corso,ora,data){
+                $.post('gestione-servlet',{id_docente:id_docente, id_corso:id_corso, ora:ora,data:data,post:'disdici'},function (data){
+                    console.log("disdetta effettuata");
+                    catalogoRipetizioni.getRipetizioni();
+                    prenotaRipetizioniAdmin.ripetizioni();
+                });
+            },
+
+
         }
     })
+
 
     //STUDENT VUE
     var student = new Vue({
@@ -1197,36 +1067,18 @@
         data:{
             show: false,
             prenotaRip:true,
-            visualizza:false,
-            id_docente:'',
-            id_corso:'',
-            utente:'',
-            giorno:'Seleziona giorno',
-            ora:'Seleziona orario',
             resultJson:'',
 
         },
         methods:{
-            passToPrenota:function (){
-                this.prenotaRip=true;
-                this.visualizza=false;
-            },
 
-            passToVisualizza:function (){
-                this.ripetizioni();
-                this.prenotaRip=false;
-                this.visualizza=true;
-            },
-
-            prenota:function (){
+            prenota:function (id_docente,id_corso,ora,giorno){
                 let self=this;
-                $.post('prenota-servlet',{id_docente:this.id_docente, id_corso:this.id_corso, ora:this.ora,giorno:this.giorno},function (data){
-
+                $.post('prenota-servlet',{id_docente:id_docente, id_corso:id_corso, ora:ora,giorno:giorno},function (data){
+                    console.log("prenotata student");
+                    catalogoRipetizioni.getRipetizioni();
                 });
-                self.id_docente="";
-                self.id_corso="";
-                self.giorno="seleziona giorno";
-                self.ora="seleziona orario";
+
             },
             ripetizioni:function (){
                 let self=this;
@@ -1235,7 +1087,23 @@
                     console.log("sono entrato");
                     console.log(self.resultJson);
                 })
-            }
+            },
+
+            conferma:function (id_docente,id_corso,ora,data){
+                $.post('gestione-servlet',{id_docente:id_docente, id_corso:id_corso, ora:ora,data:data,post:'conferma'},function (data){
+                    console.log("ripetizione confermata");
+                    catalogoRipetizioni.getRipetizioni();
+                    student.ripetizioni();
+                });
+            },
+
+            disdici:function (id_docente,id_corso,ora,data){
+                $.post('gestione-servlet',{id_docente:id_docente, id_corso:id_corso, ora:ora,data:data,post:'disdici'},function (data){
+                    console.log("disdetta effettuata");
+                    catalogoRipetizioni.getRipetizioni();
+                    student.ripetizioni();
+                });
+            },
         }
     })
 
@@ -1261,10 +1129,11 @@
                     }
                 } )
             },
-            passtologin:function (){
-                this.show = !this;
-                login.show = !login.show;
-            },
+
+            logout_guest:function (){
+                window.location.reload();
+
+            }
 
         }
     })
