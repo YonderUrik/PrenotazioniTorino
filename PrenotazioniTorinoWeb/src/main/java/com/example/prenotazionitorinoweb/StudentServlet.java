@@ -24,11 +24,21 @@ public class StudentServlet extends HttpServlet {
         DAO.registerDriver();
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
         String post=request.getParameter("post");
-        if(Objects.equals(post, "eliminastudenti")){
-            int id=Integer.parseInt(request.getParameter("id"));
-            DAO.deleteStudente(id);
+        PrintWriter out = response.getWriter();
+        String sessione = request.getParameter("sessione");
+        HttpSession s = request.getSession();
+        if(sessione.equals(s.getId())){
+            if(Objects.equals(post, "eliminastudenti")){
+                int id=Integer.parseInt(request.getParameter("id"));
+                DAO.deleteStudente(id);
+            }
+        }else{
+            s.invalidate();
+            out.print("sessione scaduta");
         }
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -658,7 +658,6 @@
             signup:async function (){
                 let self=this;
                await $.post(this.link,{nome: this.nome, cognome: this.cognome, email: this.email, password:this.password},function(data){
-                   console.log(data);
                    if(data==='Utente registrato'){
                        window.alert("Utente Registrato");
                        this.passToLogin();
@@ -777,9 +776,17 @@
 
 
             delete:async function (id){
-                await $.post('student-servlet',{post:'eliminastudenti',id:id});
-                await administrator.mostrastudenti();
-                administrator.passHome();
+                await $.post('student-servlet',{post:'eliminastudenti',id:id, sessione:login.sessione}, async function (data) {
+                    if (data === "sessione scaduta") {
+                        window.alert("Sessione scaduta : riaccedi");
+                        window.location.reload();
+                        login.sessione = "sessione inesistente";
+                    } else {
+                        await administrator.mostrastudenti();
+                        administrator.passHome();
+                    }
+                });
+
             }
 
 
