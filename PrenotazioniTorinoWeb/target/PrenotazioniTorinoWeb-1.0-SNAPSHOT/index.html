@@ -603,7 +603,6 @@
                     window.alert("Inserire un'email ed una password");
                     controllo=false;
                 }
-                //TODO: Il controllo dei dati non funziona sempre bene.
                 if(self.sessione === 'sessione inesistente' && controllo) {
                     $.post(this.link, {utente: this.email, password: this.password, sessione: this.sessione}, function (data) {
                         controllo = false;
@@ -663,7 +662,6 @@
                 let self=this;
                await $.post(this.link,{nome: this.nome, cognome: this.cognome, email: this.email, password:this.password},function(data){
                    console.log(data);
-                   //TODO
                    if(data==='Utente registrato'){
                        window.alert("Utente Registrato");
                        this.passToLogin();
@@ -799,7 +797,6 @@
             resultJson:'',
         },
         methods:{
-            //TODO: Testare sessione invalidata.
           getRipetizioniPrenotate:function (){
              let self=this;
              $.get('prenotazioni-servlet',{sessione : login.sessione},function (data){

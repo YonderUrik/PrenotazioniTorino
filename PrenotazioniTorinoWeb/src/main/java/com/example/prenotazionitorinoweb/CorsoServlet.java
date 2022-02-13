@@ -26,7 +26,7 @@ public class CorsoServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         String sessione = request.getParameter("sessione");
         HttpSession s = request.getSession();
-        if(sessione.equals(s.getId())) {
+        if(sessione.equals(s.getId())){
             if (Objects.equals(post, "aggiungi")) {
                 String nome = request.getParameter("nome");
                 if (DAO.setCorso(nome)) {
@@ -34,7 +34,7 @@ public class CorsoServlet extends HttpServlet {
                 } else {
                     out.print("Corso non aggiunto");
                 }
-            } else if (Objects.equals(post, "elimina")) {
+            }else if (Objects.equals(post, "elimina")) {
                 int id = Integer.parseInt(request.getParameter("id"));
                 DAO.deleteCorso(id);
             }
