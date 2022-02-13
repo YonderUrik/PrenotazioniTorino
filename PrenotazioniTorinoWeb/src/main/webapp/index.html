@@ -814,7 +814,7 @@
                     console.log(self.resultJson);
                 }
              });
-          } ,
+          },
 
 
           delete:async function (docente, corso, utente, data, ora) {
@@ -1045,7 +1045,6 @@
         }
     })
 
-
     //STUDENT VUE
     var student = new Vue({
         el:'#homepage-student',
@@ -1053,15 +1052,19 @@
             show: false,
             prenotaRip:true,
             resultJson:'',
-
         },
         methods:{
 
             prenota:function (id_docente,id_corso,ora,giorno){
-                let self=this;
-                $.post('prenota-servlet',{id_docente:id_docente, id_corso:id_corso, ora:ora,giorno:giorno},function (data){
+                $.post('prenota-servlet',{id_docente:id_docente, id_corso:id_corso, ora:ora,giorno:giorno,sessione:login.sessione},function (data){
                     console.log("prenotata student");
-                    catalogoRipetizioni.getRipetizioni();
+                    if(data === 'sessione scaduta'){
+                        window.alert("Sessione scaduta, riaccedi.");
+                        window.location.reload();
+                        login.sessione = 'sessione inesistente';
+                    }else{
+                        catalogoRipetizioni.getRipetizioni();
+                    }
                 });
 
             },
@@ -1075,18 +1078,30 @@
             },
 
             conferma:function (id_docente,id_corso,ora,data){
-                $.post('gestione-servlet',{id_docente:id_docente, id_corso:id_corso, ora:ora,data:data,post:'conferma'},function (data){
-                    console.log("ripetizione confermata");
-                    catalogoRipetizioni.getRipetizioni();
-                    student.ripetizioni();
+                $.post('gestione-servlet',{id_docente:id_docente, id_corso:id_corso, ora:ora,data:data,post:'conferma',sessione:login.sessione},function (data){
+                    if(data === 'sessione scaduta'){
+                        window.alert("Sessione scaduta, riaccedi.");
+                        window.location.reload();
+                        login.sessione = 'sessione inesistente';
+                    }else {
+                        console.log("ripetizione confermata");
+                        catalogoRipetizioni.getRipetizioni();
+                        student.ripetizioni();
+                    }
                 });
             },
 
             disdici:function (id_docente,id_corso,ora,data){
-                $.post('gestione-servlet',{id_docente:id_docente, id_corso:id_corso, ora:ora,data:data,post:'disdici'},function (data){
-                    console.log("disdetta effettuata");
-                    catalogoRipetizioni.getRipetizioni();
-                    student.ripetizioni();
+                $.post('gestione-servlet',{id_docente:id_docente, id_corso:id_corso, ora:ora,data:data,post:'disdici',sessione:login.sessione},function (data){
+                    if(data === 'sessione scaduta'){
+                        window.alert("Sessione scaduta, riaccedi.");
+                        window.location.reload();
+                        login.sessione = 'sessione inesistente';
+                    }else{
+                        console.log("disdetta effettuata");
+                        catalogoRipetizioni.getRipetizioni();
+                        student.ripetizioni();
+                    }
                 });
             },
         }
