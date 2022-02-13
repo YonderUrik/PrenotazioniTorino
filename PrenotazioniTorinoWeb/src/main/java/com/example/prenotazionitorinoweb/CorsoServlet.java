@@ -24,16 +24,23 @@ public class CorsoServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String post=request.getParameter("post");
         PrintWriter out = response.getWriter();
-        if(Objects.equals(post, "aggiungi")){
-            String nome= request.getParameter("nome");
-            if(DAO.setCorso(nome)){
-                out.print("Corso aggiunto");
-            }else{
-                out.print("Corso non aggiunto");
+        String sessione = request.getParameter("sessione");
+        HttpSession s = request.getSession();
+        if(sessione.equals(s.getId())) {
+            if (Objects.equals(post, "aggiungi")) {
+                String nome = request.getParameter("nome");
+                if (DAO.setCorso(nome)) {
+                    out.print("Corso aggiunto");
+                } else {
+                    out.print("Corso non aggiunto");
+                }
+            } else if (Objects.equals(post, "elimina")) {
+                int id = Integer.parseInt(request.getParameter("id"));
+                DAO.deleteCorso(id);
             }
-        } else if(Objects.equals(post, "elimina")){
-            int id=Integer.parseInt(request.getParameter("id"));
-            DAO.deleteCorso(id);
+        }else{
+            s.invalidate();
+            out.print("sessione scaduta");
         }
 
     }
@@ -52,7 +59,7 @@ public class CorsoServlet extends HttpServlet {
         String sessione = request.getParameter("sessione");
         HttpSession s = request.getSession();
         String sessionID = s.getId();
-        if(sessione.equals(sessionID)) {
+        if(sessione.equals(sessionID)){
             allCourses = new JsonArray();
             for (int i = 0; i < corsi.size(); i++) {
                 int id = corsi.get(i).getId();
@@ -61,7 +68,6 @@ public class CorsoServlet extends HttpServlet {
                 course.addProperty("id", id);
                 course.addProperty("nome", nome);
                 allCourses.add(course);
-
             }
         }
         out.print(allCourses);
