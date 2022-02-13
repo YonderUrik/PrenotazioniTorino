@@ -13,9 +13,8 @@ public class DAO {
     public static void  registerDriver() {
         try {
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-            System.out.println("Driver correttamente registrato");
         } catch (SQLException e) {
-            System.out.println("Errore: " + e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 
@@ -56,9 +55,7 @@ public class DAO {
             conn1 = DriverManager.getConnection(url1, user, password);
             Statement st1 = conn1.createStatement();
             ResultSet rs1 = st1.executeQuery("SELECT email FROM utente WHERE email='"+email+"'");
-            System.out.println("query presa");
             while(rs1.next()){
-                System.out.println("utente : "+rs1.getString("email"));
                 utente user = new utente(rs1.getString("email"));
                 users.add(user);
             }
@@ -72,13 +69,11 @@ public class DAO {
             if (conn1 != null) {
                 try {
                     conn1.close();
-                    System.out.println("connesione chiusa");
                 } catch (SQLException e2) {
                     System.out.println(e2.getMessage());
                 }
             }
         }
-        System.out.println("out : "+out);
         return out;
     }
 
@@ -229,7 +224,6 @@ public class DAO {
             conn1 = DriverManager.getConnection(url1, user, password);
             Statement st = conn1.createStatement();
             st.executeUpdate("INSERT INTO corso (id,nome) VALUES (0,'"+nome+"')");
-            System.out.println("Corso aggiunto");
             result = true;
             st.close();
         } catch (SQLException e) {
@@ -253,7 +247,6 @@ public class DAO {
             conn1 = DriverManager.getConnection(url1, user, password);
             Statement st = conn1.createStatement();
             st.executeUpdate("INSERT INTO docente (id,nome,cognome) VALUES (0,'"+nome+"','"+cognome+"')");
-            System.out.println("Docente aggiunto");
             st.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -305,7 +298,6 @@ public class DAO {
             Statement st = conn1.createStatement();
             st.executeUpdate("INSERT INTO prenotazione (id,docente,corso,utente,data,ora,stato) VALUES (0,'"+docente+"','"+corso+"','"+utente+"','"+giorno+"','"+ora+"','prenotata')");
             st.executeUpdate("UPDATE insegnamento SET stato= 1 WHERE insegnamento.corso='"+corso+"' AND insegnamento.docente='"+docente+"' AND   insegnamento.giorno='"+giorno+"' AND insegnamento.ora='"+ora+"'   " );
-            System.out.println("Prenotazione effettuata");
             st.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -328,7 +320,6 @@ public class DAO {
             conn1 = DriverManager.getConnection(url1, user, password);
             Statement st = conn1.createStatement();
             st.executeUpdate("DELETE FROM docente WHERE id='"+id+"'");
-            System.out.println("Docente aggiunto");
             value = true;
             st.close();
         } catch (SQLException e) {
@@ -353,7 +344,6 @@ public class DAO {
             conn1 = DriverManager.getConnection(url1, user, password);
             Statement st = conn1.createStatement();
             st.executeUpdate("DELETE FROM corso WHERE id='"+id+"'");
-            System.out.println("Corso Eliminato");
             value = true;
             st.close();
         } catch (SQLException e) {
@@ -377,7 +367,6 @@ public class DAO {
             conn1 = DriverManager.getConnection(url1, user, password);
             Statement st = conn1.createStatement();
             st.executeUpdate("DELETE FROM utente WHERE id='"+id+"'");
-            System.out.println("utente Eliminato");
             st.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -400,7 +389,6 @@ public class DAO {
             Statement st = conn1.createStatement();
             st.executeUpdate("DELETE FROM prenotazione WHERE docente='"+docente+"' && corso='"+corso+"' && utente='"+utente+"' && data='"+data+"' && ora='"+ora+"'");
             st.executeUpdate("UPDATE insegnamento SET stato= 0 WHERE insegnamento.corso='"+corso+"' AND insegnamento.docente='"+docente+"' AND   insegnamento.giorno='"+data+"' AND insegnamento.ora='"+ora+"'   " );
-            System.out.println("prenotazione Eliminata");
             st.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -453,7 +441,6 @@ public class DAO {
             conn1 = DriverManager.getConnection(url1, user, password);
             Statement st = conn1.createStatement();
             st.executeUpdate("UPDATE prenotazione SET stato='effettuata' WHERE prenotazione.utente='"+utente+"' AND prenotazione.docente='"+docente+"' AND prenotazione.corso='"+corso+"' AND prenotazione.data='"+giorno+"' AND prenotazione.ora='"+ora+"'; " );
-            System.out.println("conferma effettuata");
             st.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -476,8 +463,6 @@ public class DAO {
             Statement st = conn1.createStatement();
             st.executeUpdate("UPDATE prenotazione SET stato='disdetta' WHERE prenotazione.utente='"+utente+"' AND prenotazione.docente='"+docente+"' AND prenotazione.corso='"+corso+"' AND prenotazione.data='"+giorno+"' AND prenotazione.ora='"+ora+"';  " );
             st.executeUpdate("UPDATE insegnamento SET stato= 0 WHERE insegnamento.corso='"+corso+"' AND insegnamento.docente='"+docente+"' AND   insegnamento.giorno='"+giorno+"' AND insegnamento.ora='"+ora+"'   " );
-
-            System.out.println("conferma effettuata");
             st.close();
         } catch (SQLException e) {
 

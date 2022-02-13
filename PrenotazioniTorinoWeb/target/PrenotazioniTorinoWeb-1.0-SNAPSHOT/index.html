@@ -348,8 +348,6 @@
 <div id="prenota-ripetizioni" v-show="administrator.prenota" class="text-center container-fluid" style="margin-top: 3%">
     <h1>Prenota ripetizioni</h1>
 
-
-
     <!-- catalogo -->
     <div class="container mt-3">
         <div class="accordion" id="accordionExample">
@@ -413,21 +411,6 @@
             </div>
         </div>
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </div>
 
 <!-- Student Page -->
@@ -786,10 +769,7 @@
                         administrator.passHome();
                     }
                 });
-
             }
-
-
         },
 
     })
@@ -947,6 +927,8 @@
                       window.alert("Sessione scaduta, riaccedi");
                       window.location.reload();
                       login.sessione = "sessione inesistente";
+                  }else{
+                      window.alert("Docente aggiunto con successo");
                   }
               });
               this.topage1();

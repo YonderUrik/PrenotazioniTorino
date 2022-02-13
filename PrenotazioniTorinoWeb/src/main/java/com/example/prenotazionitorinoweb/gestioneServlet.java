@@ -31,9 +31,7 @@ public class gestioneServlet extends HttpServlet {
             int ora = Integer.parseInt(request.getParameter("ora"));
             if (post.equals("conferma")) {
                 DAO.conferma(docente, corso, data, ora, id);
-                System.out.println(data);
             } else if (post.equals("disdici")) {
-                System.out.println("disdetta");
                 DAO.disdetta(docente, corso, data, ora, id);
             }
         }else{

@@ -38,7 +38,6 @@ public class RipetizioniPrenotateServlet extends HttpServlet {
         PrintWriter out=response.getWriter();
         HttpSession s = request.getSession();
         int id= Integer.parseInt(s.getAttribute("id").toString());
-        System.out.println(id);
         String sessione = request.getParameter("sessione");
         String sessionID = s.getId();
         ArrayList<RipetizioniPrenotate> rip=DAO.getRipetizioniUtente(id);

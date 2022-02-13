@@ -348,8 +348,6 @@
 <div id="prenota-ripetizioni" v-show="administrator.prenota" class="text-center container-fluid" style="margin-top: 3%">
     <h1>Prenota ripetizioni</h1>
 
-
-
     <!-- catalogo -->
     <div class="container mt-3">
         <div class="accordion" id="accordionExample">
@@ -413,21 +411,6 @@
             </div>
         </div>
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </div>
 
 <!-- Student Page -->
@@ -590,7 +573,6 @@
 
         },
         mounted: function () {
-            console.log("MOUNTED")
         },
         methods: {
              login:function(){
@@ -606,7 +588,6 @@
                     });
                     while (controllo === false){
                         let i = 0;
-                        console.log(i++);
                     }
                     $.get(this.link,{utente: this.email, password: this.password},function(data){
                         let jsonResponse=JSON.parse(JSON.stringify(data));
@@ -620,11 +601,9 @@
             },
 
             passtocorrectvue:function(){
-                console.log("pass: "+this.resultJson);
                 if(this.resultJson==='ospite'){
                     this.show = !this;
                     guest.getRipetizioni();
-                    console.log("ciao")
                     guest.show = !guest.show;
                 }else if(this.resultJson==='admin'){
                     this.show = !this;
@@ -712,9 +691,7 @@
                         window.location.reload();
                         login.sessione = "sessione inesistente";
                     }else{
-                        console.log(jsonResponse);
                         self.resultJson=jsonResponse;
-                        console.log(self.resultJson);
                         self.stampaStudenti();
                     }
 
@@ -723,7 +700,6 @@
 
             stampaStudenti:function (){
                 let self=this;
-                console.log("risultato:"+self.resultJson.toString());
                 administrator.passHome();
             },
 
@@ -786,10 +762,7 @@
                         administrator.passHome();
                     }
                 });
-
             }
-
-
         },
 
     })
@@ -811,7 +784,6 @@
                     login.sessione = 'sessione inesistente';
                 }else {
                     self.resultJson = jsonResponse;
-                    console.log(self.resultJson);
                 }
              });
           },
@@ -848,7 +820,6 @@
             addCorso: function (){
                 let self = this;
                 $.post('corso-servlet', {nome: this.nome, sessione : login.sessione, post:'aggiungi'}, function (data) {
-                    console.log(data);
                     if(data === 'Corso aggiunto'){
                         window.alert("Corso aggiunto con successo");
                         self.topage1();
@@ -923,7 +894,6 @@
                         login.sessione = "sessione inesistente";
                     }else {
                         self.resultJson = jsonResponse;
-                        console.log(self.resultJson);
                     }
                 });
             },
@@ -947,14 +917,14 @@
                       window.alert("Sessione scaduta, riaccedi");
                       window.location.reload();
                       login.sessione = "sessione inesistente";
+                  }else{
+                      window.alert("Docente aggiunto con successo");
                   }
               });
               this.topage1();
             },
-            //TODO:Dubbio
             delete:function (id){
                 let self=this;
-                console.log("elimina docente");
                 $.post('docente-servlet',{id:id,post:'elimina', sessione:login.sessione}, function (data){
                     if(data === 'false'){
                         window.alert("Controllare che il docente non sia collegato ad un corso");
@@ -982,7 +952,6 @@
                         login.sessione = 'sessione inesistente';
                     }else{
                         self.resultJson = jsonResponse;
-                        console.log(self.resultJson);
                     }
                 } )
             },
@@ -1025,8 +994,6 @@
                 let self=this;
                 await $.get('ripetizioni-prenotate-servlet',{},function (data){
                     self.resultJson2=JSON.parse(JSON.stringify(data));
-                    console.log("sono entrato");
-                    console.log(self.resultJson2);
                 });
 
             },
@@ -1072,7 +1039,6 @@
 
             prenota:function (id_docente,id_corso,ora,giorno){
                 $.post('prenota-servlet',{id_docente:id_docente, id_corso:id_corso, ora:ora,giorno:giorno,sessione:login.sessione},function (data){
-                    console.log("prenotata student");
                     if(data === 'sessione scaduta'){
                         window.alert("Sessione scaduta, riaccedi.");
                         window.location.reload();
@@ -1087,8 +1053,6 @@
                 let self=this;
                 $.get('ripetizioni-prenotate-servlet',{},function (data){
                     self.resultJson=JSON.parse(JSON.stringify(data));
-                    console.log("sono entrato");
-                    console.log(self.resultJson);
                 })
             },
 
@@ -1099,7 +1063,6 @@
                         window.location.reload();
                         login.sessione = 'sessione inesistente';
                     }else {
-                        console.log("ripetizione confermata");
                         catalogoRipetizioni.getRipetizioni();
                         student.ripetizioni();
                     }
@@ -1113,7 +1076,6 @@
                         window.location.reload();
                         login.sessione = 'sessione inesistente';
                     }else{
-                        console.log("disdetta effettuata");
                         catalogoRipetizioni.getRipetizioni();
                         student.ripetizioni();
                     }
@@ -1140,7 +1102,6 @@
                         login.sessione = 'sessione inesistente';
                     }else{
                         self.resultJson = jsonResponse;
-                        console.log(self.resultJson);
                     }
                 } )
             },

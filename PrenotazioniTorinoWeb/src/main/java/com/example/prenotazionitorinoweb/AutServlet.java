@@ -17,16 +17,11 @@ public class AutServlet extends HttpServlet {
         DAO.registerDriver();
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("post");
         processRequest(request, response);
-        System.out.println("uscito post");
-
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("get");
         processRequest(request, response);
-        System.out.println("uscito get");
     }
 
 
@@ -39,9 +34,6 @@ public class AutServlet extends HttpServlet {
         String sessione=request.getParameter("sessione");
         HttpSession s = request.getSession(); //estraggo il session ID
         String jsessionID = s.getId();
-        System.out.println("JSessionID:" + jsessionID);
-        System.out.println("email ricevuto:" + email);
-        System.out.println("password ricevuta:" + password);
 
 
        if (Objects.equals(email, "guest")){
@@ -52,7 +44,6 @@ public class AutServlet extends HttpServlet {
            JsonObject ospite=new JsonObject();
            ospite.addProperty("email",email);
            ospite.addProperty("ruolo",role);
-           System.out.println(ospite.get("ruolo"));
            out.print(ospite);
        }else if(jsessionID!=null && !jsessionID.equals(sessione)){
             //VERIFICO L'UTENTE
@@ -69,11 +60,7 @@ public class AutServlet extends HttpServlet {
                 utente2.addProperty("nome", utente.get(0).getNome());
                 utente2.addProperty("cognome", utente.get(0).getCognome());
                 utente2.addProperty("id",utente.get(0).getId());
-                System.out.println("stampa: "+utente2.get("ruolo"));
-                System.out.println(utente2);
                 out.print(utente2);
-            }else{
-                System.out.println("Utente errato");
             }
        }
     }
