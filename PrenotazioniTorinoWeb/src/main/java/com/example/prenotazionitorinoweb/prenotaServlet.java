@@ -1,15 +1,14 @@
 package com.example.prenotazionitorinoweb;
 
 
-import DAO.*;
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Objects;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
+import DAO.DAO;
 import javax.servlet.ServletException;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 
 @WebServlet(name = "prenotaservlet", value = "/prenota-servlet")
@@ -33,17 +32,5 @@ public class prenotaServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processRequest(request, response);
     }
-
-
-    private void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-
-
-
-    }
-
-
 }

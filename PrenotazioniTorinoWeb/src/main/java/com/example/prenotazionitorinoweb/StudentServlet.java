@@ -1,18 +1,21 @@
 package com.example.prenotazionitorinoweb;
 
 
-import DAO.*;
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Objects;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
-import com.google.gson.Gson;
+import DAO.DAO;
+import DAO.utente;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Objects;
 
 
 @WebServlet(name = "studentservlet", value = "/student-servlet")
@@ -34,32 +37,32 @@ public class StudentServlet extends HttpServlet {
 
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws IOException {
         response.setContentType("application/json");
         PrintWriter out=response.getWriter();
         ArrayList<utente> studenti= DAO.getAllUtente();
 
-        JsonArray allStudent = null;
+        JsonArray allStudent;
         String sessione = request.getParameter("sessione");
         HttpSession s = request.getSession();
         String sessionID = s.getId();
         if(sessione.equals(sessionID)) {
             allStudent = new JsonArray();
-            for (int i = 0; i < studenti.size(); i++) {
-                String nome = studenti.get(i).getNome();
-                String cognome = studenti.get(i).getCognome();
-                String ruolo = studenti.get(i).getRuolo();
-                int id=studenti.get(i).getId();
+            for (utente utente : studenti) {
+                String nome = utente.getNome();
+                String cognome = utente.getCognome();
+                String ruolo = utente.getRuolo();
+                int id = utente.getId();
                 JsonObject studente = new JsonObject();
                 studente.addProperty("nome", nome);
                 studente.addProperty("cognome", cognome);
                 studente.addProperty("ruolo", ruolo);
-                studente.addProperty("id",id);
+                studente.addProperty("id", id);
                 allStudent.add(studente);
             }
             out.print(allStudent);
         }else if(s.isNew()){
-            out.print(allStudent);
+            out.print((Object) null);
             s.invalidate();
 
         }

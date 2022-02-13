@@ -321,13 +321,15 @@ public class DAO {
         }
     }
 
-    public static void deleteDocente(int id){
+    public static boolean deleteDocente(int id){
         Connection conn1 = null;
+        boolean value = false;
         try {
             conn1 = DriverManager.getConnection(url1, user, password);
             Statement st = conn1.createStatement();
             st.executeUpdate("DELETE FROM docente WHERE id='"+id+"'");
             System.out.println("Docente aggiunto");
+            value = true;
             st.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -341,15 +343,18 @@ public class DAO {
                 }
             }
         }
+        return value;
     }
 
-    public static void deleteCorso(int id){
+    public static boolean deleteCorso(int id){
         Connection conn1 = null;
+        boolean value = false;
         try {
             conn1 = DriverManager.getConnection(url1, user, password);
             Statement st = conn1.createStatement();
             st.executeUpdate("DELETE FROM corso WHERE id='"+id+"'");
             System.out.println("Corso Eliminato");
+            value = true;
             st.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -363,6 +368,7 @@ public class DAO {
                 }
             }
         }
+        return value;
     }
 
     public static void deleteStudente(int id){

@@ -5,12 +5,9 @@ import DAO.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Objects;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -36,7 +33,9 @@ public class CorsoServlet extends HttpServlet {
                 }
             }else if (Objects.equals(post, "elimina")) {
                 int id = Integer.parseInt(request.getParameter("id"));
-                DAO.deleteCorso(id);
+                if(!DAO.deleteCorso(id)){
+                    out.print("false");
+                }
             }
         }else{
             s.invalidate();
@@ -50,20 +49,19 @@ public class CorsoServlet extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws IOException {
         response.setContentType("application/json");
         PrintWriter out=response.getWriter();
         ArrayList<corsi> corsi= DAO.getAllCorsi();
-
         JsonArray allCourses=null;
         String sessione = request.getParameter("sessione");
         HttpSession s = request.getSession();
         String sessionID = s.getId();
         if(sessione.equals(sessionID)){
             allCourses = new JsonArray();
-            for (int i = 0; i < corsi.size(); i++) {
-                int id = corsi.get(i).getId();
-                String nome = corsi.get(i).getNome();
+            for (corsi value : corsi){
+                int id = value.getId();
+                String nome = value.getNome();
                 JsonObject course = new JsonObject();
                 course.addProperty("id", id);
                 course.addProperty("nome", nome);

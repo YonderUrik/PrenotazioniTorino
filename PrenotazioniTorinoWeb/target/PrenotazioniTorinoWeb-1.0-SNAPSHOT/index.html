@@ -351,7 +351,6 @@
 
 
     <!-- catalogo -->
-    <!-- TODO:pulsanti disdetta prenotazione e conferma ripetizione effettuata -->
     <div class="container mt-3">
         <div class="accordion" id="accordionExample">
             <div class="accordion-item">
@@ -453,7 +452,6 @@
        <h1>prenota ripetizioni</h1>
 
        <!-- catalogo e ripetizioni prenotate-->
-       <!-- TODO:pulsanti per disdetta e conferma -->
        <div class="container " style="margin-top: 3%">
            <div class="accordion" id="accordionExample2">
                <div class="accordion-item">
@@ -567,7 +565,6 @@
         </div>
     </div>
 
-    <!-- TODO: il pulsante log out da problemi se si prova a riloggare  -->
     <div class="container text-center mt-2">
         <button type="button" class="btn btn-primary" v-on:click="this.logout_guest">Log out</button>
     </div>
@@ -841,11 +838,9 @@
         },
 
         methods:{
-            //TODO: Testare sessione invalidata.
             addCorso: function (){
                 let self = this;
                 $.post('corso-servlet', {nome: this.nome, sessione : login.sessione, post:'aggiungi'}, function (data) {
-                    //TODO:gestire sessione con txt e non json
                     console.log(data);
                     if(data === 'Corso aggiunto'){
                         window.alert("Corso aggiunto con successo");
@@ -859,9 +854,6 @@
                     }
                 });
             },
-
-
-
             topage1: function () {
                 let self = this;
                 self.getCorso();
@@ -870,14 +862,10 @@
                 self.nome = '';
                 administrator.passCorsi();
             },
-
-
             topage2:function (){
               this.page1= false;
               this.page2=true;
             },
-
-            //TODO: Testare sessione invalidata:
             getCorso: function (){
                 let self=this;
                 $.get('corso-servlet',{sessione: login.sessione},function (data){
@@ -891,13 +879,15 @@
                     }
                 });
             },
-
             delete:function (id){
-                $.post('corso-servlet',{post:'elimina', id:id})
+                $.post('corso-servlet',{post:'elimina', id:id, sessione: login.sessione},function (data){
+                    if(data === 'false'){
+                        window.alert("Controllare che il corso non sia collegato a qualche docente")
+                    }
+                });
                 visualizzaCorsi.topage1();
             }
         },
-
     })
 
     //vue visualizzazione docenti
@@ -912,7 +902,6 @@
             id:'',
         },
         methods:{
-            // TODO: Testare sessione invalidata.
             getProf:function(){
                 let self=this;
                 $.get('docente-servlet',{sessione:login.sessione},function (data){
@@ -941,8 +930,6 @@
                 this.page1= false;
                 this.page2= true;
             },
-            //TODO: Testare sessione invalidata.
-            //      Dubbio su cosa fa questa funzione.
             addDocente:function (){
               $.post('docente-servlet', {nome:this.nome,cognome:this.cognome,sessione:login.sessione,post:'aggiungi'}, function (data){
                   let jsonResponse = JSON.parse(JSON.stringify(data));
@@ -960,7 +947,11 @@
             delete:function (id){
                 let self=this;
                 console.log("elimina docente");
-                $.post('docente-servlet',{id:id,post:'elimina'});
+                $.post('docente-servlet',{id:id,post:'elimina', sessione:login.sessione}, function (data){
+                    if(data === 'false'){
+                        window.alert("Controllare che il docente non sia collegato ad un corso");
+                    }
+                });
                 visualizzaDocenti.topage1();
             }
 

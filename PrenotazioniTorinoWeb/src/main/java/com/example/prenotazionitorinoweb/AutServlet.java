@@ -8,8 +8,6 @@ import java.util.Objects;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 
@@ -33,7 +31,7 @@ public class AutServlet extends HttpServlet {
 
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws IOException {
         response.setContentType("application/json");
         PrintWriter out=response.getWriter();
         String email = request.getParameter("utente");
@@ -77,8 +75,6 @@ public class AutServlet extends HttpServlet {
             }else{
                 System.out.println("Utente errato");
             }
-       }else{
-           //SESSIONE GIA AUTENTICATA
        }
     }
 

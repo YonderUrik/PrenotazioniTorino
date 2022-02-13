@@ -1,18 +1,19 @@
 package com.example.prenotazionitorinoweb;
 
 
-import DAO.*;
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Objects;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
-import com.google.gson.Gson;
+import DAO.DAO;
+import DAO.RipetizioniPrenotate;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 
 
 @WebServlet(name = "ripetizioniprenotateservlet", value = "/ripetizioni-prenotate-servlet")
@@ -31,8 +32,8 @@ public class RipetizioniPrenotateServlet extends HttpServlet {
 
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
+            throws IOException {
+        //TODO
         response.setContentType("application/json");
         PrintWriter out=response.getWriter();
         HttpSession s = request.getSession();

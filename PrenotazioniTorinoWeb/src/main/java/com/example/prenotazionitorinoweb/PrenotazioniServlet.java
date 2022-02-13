@@ -1,18 +1,20 @@
 package com.example.prenotazionitorinoweb;
 
 
-import DAO.*;
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Objects;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
-import com.google.gson.Gson;
+import DAO.DAO;
+import DAO.RipetizioniPrenotate;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Objects;
 
 
 @WebServlet(name = "prenotazioniservlet", value = "/prenotazioni-servlet")
@@ -23,9 +25,6 @@ public class PrenotazioniServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String post=request.getParameter("post");
-        PrintWriter out = response.getWriter();
-
-
         if(Objects.equals(post, "elimina")){
             int docente=Integer.parseInt(request.getParameter("docente"));
             int corso=Integer.parseInt(request.getParameter("corso"));
@@ -45,27 +44,27 @@ public class PrenotazioniServlet extends HttpServlet {
 
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws IOException {
         response.setContentType("application/json");
         PrintWriter out=response.getWriter();
         ArrayList<RipetizioniPrenotate> prenotazioni= DAO.getAllPrenotazioni();
 
-        JsonArray allPrenotazioni=null;
+        JsonArray allPrenotazioni;
         String sessione = request.getParameter("sessione");
         HttpSession s = request.getSession();
         String sessionID = s.getId();
         if(sessione.equals(sessionID)){
             allPrenotazioni = new JsonArray();
-            for (int i = 0; i < prenotazioni.size(); i++) {
-                String docente = prenotazioni.get(i).getDocente();
-                String corso = prenotazioni.get(i).getCorso();
-                String utente = prenotazioni.get(i).getUtente();
-                String data = prenotazioni.get(i).getData();
-                int ora = prenotazioni.get(i).getOra();
-                int idCorso = prenotazioni.get(i).getIdCorso();
-                int idDocente = prenotazioni.get(i).getIdDocente();
-                int idUtente = prenotazioni.get(i).getIdUtente();
-                String stato=prenotazioni.get(i).getStato();
+            for (RipetizioniPrenotate ripetizioniPrenotate : prenotazioni) {
+                String docente = ripetizioniPrenotate.getDocente();
+                String corso = ripetizioniPrenotate.getCorso();
+                String utente = ripetizioniPrenotate.getUtente();
+                String data = ripetizioniPrenotate.getData();
+                int ora = ripetizioniPrenotate.getOra();
+                int idCorso = ripetizioniPrenotate.getIdCorso();
+                int idDocente = ripetizioniPrenotate.getIdDocente();
+                int idUtente = ripetizioniPrenotate.getIdUtente();
+                String stato = ripetizioniPrenotate.getStato();
                 JsonObject prenot = new JsonObject();
                 prenot.addProperty("docente", docente);
                 prenot.addProperty("corso", corso);
@@ -81,7 +80,7 @@ public class PrenotazioniServlet extends HttpServlet {
             }
             out.print(allPrenotazioni);
         }else if(s.isNew()){
-            out.print(allPrenotazioni);
+            out.print((Object) null);
             s.invalidate();
         }
 
