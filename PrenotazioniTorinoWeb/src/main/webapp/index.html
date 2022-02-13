@@ -883,6 +883,10 @@
                 $.post('corso-servlet',{post:'elimina', id:id, sessione: login.sessione},function (data){
                     if(data === 'false'){
                         window.alert("Controllare che il corso non sia collegato a qualche docente")
+                    }else if(data === 'sessione scaduta'){
+                        login.sessione = 'sessione inesistente';
+                        window.alert("Sessione scaduta, riaccedi");
+                        window.location.reload();
                     }
                 });
                 visualizzaCorsi.topage1();
@@ -930,8 +934,9 @@
             },
             addDocente:function (){
               $.post('docente-servlet', {nome:this.nome,cognome:this.cognome,sessione:login.sessione,post:'aggiungi'}, function (data){
-                  let jsonResponse = JSON.parse(JSON.stringify(data));
-                  if(jsonResponse === null){
+                  if(data === "false"){
+                      window.alert("Controllare che il docente non sia collegato a qualche corso");
+                  }else if(data === "sessione scaduta"){
                       window.alert("Sessione scaduta, riaccedi");
                       window.location.reload();
                       login.sessione = "sessione inesistente";

@@ -1,6 +1,5 @@
 package com.example.prenotazionitorinoweb;
 
-
 import DAO.*;
 import java.io.*;
 import java.util.ArrayList;
@@ -10,7 +9,6 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-
 
 @WebServlet(name = "corsoservlet", value = "/corso-servlet")
 public class CorsoServlet extends HttpServlet {

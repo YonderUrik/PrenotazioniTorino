@@ -1,6 +1,5 @@
 package com.example.prenotazionitorinoweb;
 
-
 import DAO.*;
 import java.io.*;
 import java.util.ArrayList;
@@ -17,18 +16,25 @@ public class DocenteServlet extends HttpServlet {
         DAO.registerDriver();
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("application/json");
+        response.setContentType("text/html;charset=UTF-8");
         String post=request.getParameter("post");
         PrintWriter out = response.getWriter();
-        if(Objects.equals(post, "aggiungi")){
-            String nome= request.getParameter("nome");
-            String cognome= request.getParameter("cognome");
-            DAO.setDocente(nome,cognome);
-        }else if(Objects.equals(post, "elimina")){
-            int id= Integer.parseInt(request.getParameter("id"));
-            if(!DAO.deleteDocente(id)){
-                out.print("false");
+        String sessione = request.getParameter("sessione");
+        HttpSession s = request.getSession();
+        if(sessione.equals(s.getId())) {
+            if (Objects.equals(post, "aggiungi")) {
+                String nome = request.getParameter("nome");
+                String cognome = request.getParameter("cognome");
+                DAO.setDocente(nome, cognome);
+            }else if (Objects.equals(post, "elimina")) {
+                int id = Integer.parseInt(request.getParameter("id"));
+                if (!DAO.deleteDocente(id)) {
+                    out.print("false");
+                }
             }
+        }else{
+            s.invalidate();
+            out.print("sessione scaduta");
         }
     }
 
