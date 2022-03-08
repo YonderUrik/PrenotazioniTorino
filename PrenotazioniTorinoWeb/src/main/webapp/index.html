@@ -438,6 +438,55 @@
             </form>
         </div>
     </div>
+    <div class="row mt-5">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table" style="width: 100%">
+                        <thead>
+                        <tr>
+                            <th> id</th> <th style="text-align: left">nome</th> <th style="text-align: left">cognome</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="item in visualizzaDocenti.resultJson" style="width: 100%">
+                            <td style="width: 10%" >{{item.id}}</td>
+                            <td style="width: 15%; text-align: left">{{item.nome}}</td>
+                            <td style="width: 20%; text-align: left">{{item.cognome}}</td>
+
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table" style="width: 100%">
+                        <thead>
+                        <tr>
+                            <th> id</th> <th>nome</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="item in visualizzaCorsi.resultJson" style="width: 100%">
+                            <td style="width: 5%">{{item.id}}</td>
+                            <td style="width: 30%">{{item.nome}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
 </div>
 
 <!-- Student Page -->
@@ -787,8 +836,9 @@
                 this.prenotazioni=false;
                 this.corsi=false;
                 this.docenti=false;
-                catalogoRipetizioni.getRipetizioni();
                 this.prenota=false;
+                visualizzaCorsi.getCorso();
+                visualizzaDocenti.getProf();
                 this.associa=true;
             },
 
@@ -852,7 +902,7 @@
     var visualizzaCorsi=new Vue({
         el:'#vis-corsi',
         data:{
-            resultJson:'funziona',
+            resultJson:'',
             page1: true,
             page2:false,
             nome:'',
@@ -996,7 +1046,9 @@
                     }else{
                         self.resultJson = jsonResponse;
                     }
-                } )
+                },
+
+                )
             },
 
             }
