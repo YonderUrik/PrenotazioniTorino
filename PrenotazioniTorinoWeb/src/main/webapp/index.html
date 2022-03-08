@@ -148,6 +148,8 @@
                             <li><a class="dropdown-item btn" v-on:click="this.passCorsi">Corsi</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item btn" v-on:click="this.passDocenti">Docenti</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item btn" v-on:click="this.passAssocia">Associazione</a></li>
                         </ul>
                     </li>
 
@@ -413,6 +415,31 @@
     </div>
 </div>
 
+<!-- aggiunta associazione corso-docente -->
+<div class="container text-center" id="associazione-c-d" v-show="administrator.associa">
+    <div class="card mt-2" >
+        <div class="card-body">
+            <form name="myform3">
+
+                <div class="row g-3">
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="id corso" />
+
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="id docente" />
+                    </div>
+                </div>
+
+                <div>
+                    <input type="button" value="Aggiugi associazione" class="btn btn-primary mt-3" />
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
 <!-- Student Page -->
 <div id="homepage-student" v-show="this.show">
     <!-- nav -->
@@ -666,6 +693,7 @@
             corsi:false,
             docenti:false,
             prenota:false,
+            associa:false,
             sessione: '',
             studenti: '',
             resultJson:'',
@@ -709,6 +737,7 @@
                 this.corsi=false;
                 this.docenti=false;
                 this.prenota=false;
+                this.associa=false;
             },
 
             passRipetizioni:function (){
@@ -718,6 +747,7 @@
                 this.docenti=false;
                 visualizzaprenotazioni.getRipetizioniPrenotate();
                 this.prenota=false;
+                this.associa=false;
             },
 
             passCorsi:function (){
@@ -727,6 +757,7 @@
                 this.docenti=false;
                 visualizzaCorsi.getCorso();
                 this.prenota=false;
+                this.associa=false;
             },
 
             passDocenti:function (){
@@ -736,6 +767,7 @@
                 this.docenti=true;
                 visualizzaDocenti.getProf();
                 this.prenota=false;
+                this.associa=false;
             },
 
 
@@ -747,6 +779,17 @@
                 this.docenti=false;
                 catalogoRipetizioni.getRipetizioni();
                 this.prenota=true;
+                this.associa=false;
+            },
+
+            passAssocia:function (){
+                this.home= false;
+                this.prenotazioni=false;
+                this.corsi=false;
+                this.docenti=false;
+                catalogoRipetizioni.getRipetizioni();
+                this.prenota=false;
+                this.associa=true;
             },
 
 
@@ -1025,6 +1068,14 @@
 
 
         }
+    })
+
+    //vue associazione
+    var assocaizione=new Vue({
+        el:'#associazione-c-d',
+        data:{},
+        methods:{}
+
     })
 
     //STUDENT VUE
