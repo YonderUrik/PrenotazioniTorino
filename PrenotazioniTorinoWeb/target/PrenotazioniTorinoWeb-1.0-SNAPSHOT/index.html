@@ -429,6 +429,18 @@
                     <div class="col">
                         <input type="text" class="form-control" placeholder="id docente" />
                     </div>
+
+                    <div class="col">
+                        <select class="form-select" aria-label="Default select example" >
+                            <option selected disabled>Disponibilità</option>
+                            <option value="1">Lunedì</option>
+                            <option value="2">Martedì</option>
+                            <option value="3">Mercoledì</option>
+                            <option value="4">Giovedì</option>
+                            <option value="5">Venerdì</option>
+                            <option value="6">Sempre</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div>
@@ -1045,7 +1057,6 @@
                         login.sessione = 'sessione inesistente';
                     }else{
                         self.resultJson = jsonResponse;
-                        console.log(self.resultJson);
                     }
                 },
 
