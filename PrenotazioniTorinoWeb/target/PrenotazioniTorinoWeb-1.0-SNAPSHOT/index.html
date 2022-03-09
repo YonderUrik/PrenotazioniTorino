@@ -423,15 +423,15 @@
 
                 <div class="row g-3">
                     <div class="col">
-                        <input type="text" class="form-control" placeholder="id corso" />
+                        <input type="text" class="form-control" placeholder="id corso" v-model="corso"/>
 
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control" placeholder="id docente" />
+                        <input type="text" class="form-control" placeholder="id docente" v-model="docente"/>
                     </div>
 
                     <div class="col">
-                        <select class="form-select" aria-label="Default select example" >
+                        <select class="form-select" aria-label="Default select example" v-model="disp">
                             <option selected disabled>Disponibilità</option>
                             <option value="1">Lunedì</option>
                             <option value="2">Martedì</option>
@@ -444,7 +444,7 @@
                 </div>
 
                 <div>
-                    <input type="button" value="Aggiugi associazione" class="btn btn-primary mt-3" />
+                    <input type="button" value="Aggiugi associazione" class="btn btn-primary mt-3" v-on:click="this.addAssociazione"/>
                 </div>
 
             </form>
@@ -1137,8 +1137,20 @@
     //vue associazione
     var assocaizione=new Vue({
         el:'#associazione-c-d',
-        data:{},
-        methods:{}
+        data:{
+            corso:'',
+            docente:'',
+            disp:'Disponibilità',
+        },
+        methods:{
+            addAssociazione: function (){
+                console.log(this.corso,  this.docente, this.disp);
+                let self=this;
+                $.post('associazione-servlet',{corso:this.corso,docente:this.docente,disp:this.disp,sessione:login.sessione},function (data){
+
+                })
+            }
+        }
 
     })
 
