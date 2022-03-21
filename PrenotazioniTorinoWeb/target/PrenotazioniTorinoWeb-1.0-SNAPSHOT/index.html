@@ -16,52 +16,50 @@
 
 </head>
 <body>
-<!--Login Page-->
+<!--Lgin Page-->
 <div id="login" v-show = "this.show">
     <div class="card">
         <article class="card-body ">
             <h4 class="card-title text-center mb-4 mt-1">Prenotazioni Torino</h4>
             <hr>
             <p class="text-success text-center">Accedi</p>
-
             <div class="container-fluid align-items-center" style="width: 50%">
                 <form name="myform">
-                    <!-- EMAIL -->
+                    <!-- Email Form -->
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <i class="fa fa-user">
-                                <img src="img/email.webp" height="24" width="24" alt="email icon"/>
-                                </i>
-                            </span>
+                                <span class="input-group-text">
+                                    <i class="fa fa-user">
+                                        <img src="img/email.webp" height="24" width="24" alt="email icon"/>
+                                    </i>
+                                </span>
                             </div>
                             <input v-model="email" class="form-control" placeholder="Username" type="text">
                         </div>
                     </div>
-                    <!-- PASSWORD -->
+                    <!-- Password Form -->
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <i class="fa fa-lock">
-                                    <img src="img/password.webp" height="24" width="24" alt="password icon"/>
-                                </i>
-                            </span>
+                                <span class="input-group-text">
+                                    <i class="fa fa-lock">
+                                        <img src="img/password.webp" height="24" width="24" alt="password icon"/>
+                                    </i>
+                                </span>
                             </div>
                             <input class="form-control" v-model="password" placeholder="******" type="password">
                         </div>
                     </div>
+
                     <!-- LOGIN BUTTON -->
-
-
                     <div class="form-row text-center mt-1">
                         <div class="col-12">
                             <input type="sbumit" v-on:click="this.login" value="Accedi" class="btn btn-primary btn-block "/>
                         </div>
                     </div>
 
-                    <!-- REGISTRATI -->
+                    <!-- REGISTRATI TEXT -->
                     <p class="text-center"><a v-on:click="this.passtosignup" class="btn">Registrati</a></p>
                 </form>
             </div>
@@ -76,7 +74,6 @@
             <h4 class="card-title text-center mb-4 mt-1">Prenotazioni Torino</h4>
             <hr>
             <p class="text-success text-center">Registrati</p>
-
             <div class="container-fluid align-items-center" style="width: 50%;">
                 <form>
                     <!-- NOME SIGNUP -->
@@ -104,16 +101,13 @@
                         </div>
                     </div>
                     <!-- SIGNUP BUTTON -->
-
                     <div class="form-row text-center mt-1">
                         <div class="col-12">
                             <button type="submit" v-on:click="this.signup" class="btn btn-primary btn-block">Registrati</button>
                         </div>
                     </div>
-
-
                     <!-- RITORNO LOGIN -->
-                    <p class="text-center"><a v-on:click="this.passToLogin" class="btn">Ritorna al login.</a></p>
+                    <p class="text-center"><a v-on:click="this.passToLogin" class="btn">Ritorna Al Login</a></p>
                 </form>
             </div>
         </article>
@@ -132,18 +126,12 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <!-- HOMEPAGE -->
-
-                    <li class="nav-item">
-                        <a class="nav-link active btn" aria-current="page" v-on:click="this.passHome" >Home</a>
-                    </li>
-
+                    <li class="nav-item"><a class="nav-link active btn" aria-current="page" v-on:click="this.passHome" >Home</a></li>
                     <!-- SEZIONE AMMINISTRAZIONE -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Amministrazione
-                        </a>
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false">Amministrazione</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item btn" v-on:click="this.passRipetizioni">Visualizza prenotazioni</a></li>
+                            <li><a class="dropdown-item btn" v-on:click="this.passRipetizioni">Visualizza Prenotazioni</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item btn" v-on:click="this.passCorsi">Corsi</a></li>
                             <li><hr class="dropdown-divider"></li>
@@ -152,12 +140,9 @@
                             <li><a class="dropdown-item btn" v-on:click="this.passAssocia">Associazione</a></li>
                         </ul>
                     </li>
-
                     <!-- SEZIONE PRENOTAZIONI -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Prenotazioni
-                        </a>
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">Prenotazioni</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item btn" v-on:click="this.passPrenota">Prenotazione</a></li>
                         </ul>
@@ -166,15 +151,12 @@
             </div>
         </div>
     </nav>
-    <!-- Homepage admin -->
+    <!-- ADMING HOMEPAGE -->
     <div class="container-fluid" id="homepage-amministrator" style=" width: 80%;margin-top: 5%" v-show="this.home">
-
         <div class="accordion" id="accordionPanelsStayOpenExample" >
             <div class="accordion-item" >
                 <h2 class="accordion-header" id="panelsStayOpen-headingOne" >
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne" >
-                        Informazioni Utente
-                    </button>
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne" >Informazioni Utente</button>
                 </h2>
                 <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
                     <div class="accordion-body">
@@ -186,47 +168,38 @@
             </div>
             <div class="accordion-item">
                 <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo" v-on:click="this.mostrastudenti">
-                        Studenti
-                    </button>
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo" v-on:click="this.mostrastudenti">Studenti</button>
                 </h2>
                 <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
                     <div class="accordion-body">
                         <table class="table" style="width: 100%">
                             <tr v-for="item in resultJson" style="width: 100%">
-                                <td style="width: 10%">    {{item.nome}}</td>
+                                <td style="width: 10%">{{item.nome}}</td>
                                 <td style="width: 10%">{{item.cognome}}</td>
                                 <td style="width: 10%">{{item.ruolo}}</td>
                                 <td style="width: 60%"></td>
                                 <td style="width: 10%; text-align: right"><button type="button" class="btn" v-on:click="administrator.delete(item.id)">Elimina</button></td>
                             </tr>
                         </table>
-
-
                     </div>
                 </div>
             </div>
         </div>
         <div class="form-row text-center mt-1">
             <div class="col-12">
-                <button type="button" class="btn btn-primary " v-on:click="this.logout_admin">Log out</button>
+                <button type="button" class="btn btn-primary " v-on:click="this.logout_admin">Logout</button>
             </div>
         </div>
     </div>
-
 </div>
 
-<!-- Pagina delle prenotazioni -->
+<!-- Pagina Prenotazioni (ADMIN) -->
 <div id="visualizza-prenotazioni"  v-show="administrator.prenotazioni" style="width: 60%; text-align: center;" class="container-fluid">
     <h1>Ripetizioni prenotate</h1>
     <div class="card">
         <div class="card-body">
             <table class="table" style="width: 100%">
-                <thead>
-                <tr>
-                    <th> docente</th> <th>utente</th>  <th>corso</th> <th>data</th> <th>ora</th> <th>stato</th>
-                </tr>
-                </thead>
+                <thead><tr><th>Docente</th><th>Utente</th><th>Corso</th><th>Data</th><th>Ora</th><th>Stato</th></tr></thead>
                 <tbody>
                 <tr v-for="item in resultJson" style="width: 100%">
                     <td >{{item.docente}}</td>
@@ -244,7 +217,7 @@
     </div>
 </div>
 
-<!-- pagina corsi -->
+<!-- Pagina Corsi (ADMIN) -->
 <div id="vis-corsi" v-show="administrator.corsi" style="width: 60%; text-align: center;" class="container-fluid" >
     <div class="card mt-2" v-show="this.page1" >
         <div class="card-header" style="background: white">
@@ -253,9 +226,7 @@
         <div class="card-body">
             <table class="table" style="width: 100%">
                 <thead>
-                <tr>
-                    <th> id</th> <th>nome</th>
-                </tr>
+                <tr><th>ID</th> <th>Nome</th></tr>
                 </thead>
                 <tbody>
                 <tr v-for="item in resultJson" style="width: 100%">
@@ -267,44 +238,28 @@
                 </tbody>
             </table>
         </div>
-        <div class="card-footer" style="background: white">
-            <button type="button" class="btn btn-primary mt-3" v-on:click="this.topage2">Aggiungi corso</button>
-        </div>
+        <div class="card-footer" style="background: white"><button type="button" class="btn btn-primary mt-3" v-on:click="this.topage2">Aggiungi Corso</button></div>
     </div >
-
-
     <div class="card mt-2" v-show="this.page2">
         <div class="card-body">
             <form name="myform2">
-
                 <div class="row g-3">
-                    <div class="col">
-                        <input type="text" class="form-control" placeholder="Nome corso" v-model="nome"/>
-                    </div>
-
+                    <div class="col"><input type="text" class="form-control" placeholder="Nome corso" v-model="nome"/></div>
                 </div>
-
-                <div>
-                    <input type="button" value="Aggiugi corso" class="btn btn-primary mt-3" v-on:click="this.addCorso"/>
-                </div>
-
+                <div><input type="button" value="Aggiugi corso" class="btn btn-primary mt-3" v-on:click="this.addCorso"/></div>
             </form>
         </div>
     </div>
-
-
 </div>
 
-<!-- pagina docenti -->
+<!-- Pagina Docenti (ADMIN) -->
 <div id="visualizza-docenti" v-show="administrator.docenti" style="width: 60%; text-align: center;" class="container-fluid">
     <h1>Docenti</h1>
     <div class="card" v-show="this.page1">
         <div class="card-body" >
             <table class="table" style="width: 100%">
                 <thead>
-                <tr>
-                    <th> id</th> <th style="text-align: left">nome</th> <th style="text-align: left">cognome</th>
-                </tr>
+                <tr><th>ID</th> <th style="text-align: left">Nome</th> <th style="text-align: left">Cognome</th></tr>
                 </thead>
                 <tbody>
                 <tr v-for="item in resultJson" style="width: 100%">
@@ -318,53 +273,117 @@
             </table>
         </div>
         <div class="card-footer">
-            <button type="button" class="btn btn-primary mt-3" v-on:click="this.topage2">Aggiungi docente</button>
+            <button type="button" class="btn btn-primary mt-3" v-on:click="this.topage2">Aggiungi Docente</button>
         </div>
     </div>
-
     <div class="card mt-2" v-show="this.page2">
         <div class="card-body">
             <form name="myform2">
-
                 <div class="row g-3">
                     <div class="col">
-                        <input type="text" class="form-control" placeholder="Nome docente" v-model="nome"/>
+                        <input type="text" class="form-control" placeholder="Nome Docente" v-model="nome"/>
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control" placeholder="cognome docente" v-model="cognome"/>
+                        <input type="text" class="form-control" placeholder="Cognome Docente" v-model="cognome"/>
                     </div>
-
                 </div>
-
                 <div>
-                    <input type="button" value="Aggiugi docente" class="btn btn-primary mt-3" v-on:click="this.addDocente"/>
+                    <input type="button" value="Aggiugi Docente" class="btn btn-primary mt-3" v-on:click="this.addDocente"/>
                 </div>
-
             </form>
         </div>
     </div>
-
 </div>
 
-<!-- prenota ripetizione -->
-<div id="prenota-ripetizioni" v-show="administrator.prenota" class="text-center container-fluid" style="margin-top: 3%">
-    <h1>Prenota ripetizioni</h1>
+<!-- Pagina Associazioni Corso/Docente (ADMIN) -->
+<div class="container text-center" id="associazione-c-d" v-show="administrator.associa">
+    <div class="card mt-2" >
+        <div class="card-body">
+            <form name="myform3">
+                <div class="row g-3">
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="id corso" v-model="corso"/>
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="id docente" v-model="docente"/>
+                    </div>
+                    <div class="col">
+                        <select class="form-select" aria-label="Default select example" v-model="disp">
+                            <option selected disabled>Disponibilità</option>
+                            <option value="1">Lunedì</option>
+                            <option value="2">Martedì</option>
+                            <option value="3">Mercoledì</option>
+                            <option value="4">Giovedì</option>
+                            <option value="5">Venerdì</option>
+                            <option value="6">Sempre</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <input type="button" value="Aggiugi Associazione" class="btn btn-primary mt-3" v-on:click="this.addAssociazione"/>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table" style="width: 100%">
+                        <thead>
+                        <tr>
+                            <th>ID</th> <th style="text-align: left">Nome</th> <th style="text-align: left">Cognome</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="item in visualizzaDocenti.resultJson" style="width: 100%">
+                            <td style="width: 10%" >{{item.id}}</td>
+                            <td style="width: 15%; text-align: left">{{item.nome}}</td>
+                            <td style="width: 20%; text-align: left">{{item.cognome}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table" style="width: 100%">
+                        <thead>
+                        <tr>
+                            <th>ID</th> <th>Nome</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="item in visualizzaCorsi.resultJson" style="width: 100%">
+                            <td style="width: 5%">{{item.id}}</td>
+                            <td style="width: 30%">{{item.nome}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <!-- catalogo -->
+<!-- Pagina Prenotazioni (ADMIN) -->
+<div id="prenota-ripetizioni" v-show="administrator.prenota" class="text-center container-fluid" style="margin-top: 3%">
+    <h1>Prenota Ripetizioni</h1>
+    <!-- Catalogo -->
     <div class="container mt-3">
         <div class="accordion" id="accordionExample">
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingTwo">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" v-on:click="this.ripetizioni">
-                        Le tue prenotazioni
-                    </button>
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" v-on:click="this.ripetizioni">Le tue prenotazioni</button>
                 </h2>
                 <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
                         <table class="table">
                             <thead>
                             <tr>
-                                <th>Docente</th> <th>corso</th> <th>utente</th> <th>data</th> <th>ora</th> <th>stato</th>
+                                <th>Docente</th> <th>Corso</th> <th>Utente</th> <th>Data</th> <th>Ora</th> <th>Stato</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -405,7 +424,7 @@
                                 <td style="width: 20%">{{item.giorno}}</td>
                                 <td style="width: 10%">{{item.ora}}</td>
                                 <td style="width: 10%; text-align: right"><button type="button" class="btn btn-sm"  v-on:click="prenotaRipetizioniAdmin.prenota(item.id_docente,item.id_corso,item.ora,item.giorno)">Prenota</button></td>
-                                </tr>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -413,92 +432,6 @@
             </div>
         </div>
     </div>
-</div>
-
-<!-- aggiunta associazione corso-docente -->
-<div class="container text-center" id="associazione-c-d" v-show="administrator.associa">
-    <div class="card mt-2" >
-        <div class="card-body">
-            <form name="myform3">
-
-                <div class="row g-3">
-                    <div class="col">
-                        <input type="text" class="form-control" placeholder="id corso" v-model="corso"/>
-
-                    </div>
-                    <div class="col">
-                        <input type="text" class="form-control" placeholder="id docente" v-model="docente"/>
-                    </div>
-
-                    <div class="col">
-                        <select class="form-select" aria-label="Default select example" v-model="disp">
-                            <option selected disabled>Disponibilità</option>
-                            <option value="1">Lunedì</option>
-                            <option value="2">Martedì</option>
-                            <option value="3">Mercoledì</option>
-                            <option value="4">Giovedì</option>
-                            <option value="5">Venerdì</option>
-                            <option value="6">Sempre</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div>
-                    <input type="button" value="Aggiugi associazione" class="btn btn-primary mt-3" v-on:click="this.addAssociazione"/>
-                </div>
-
-            </form>
-        </div>
-    </div>
-    <div class="row mt-5">
-        <div class="col">
-            <div class="card">
-                <div class="card-body">
-                    <table class="table" style="width: 100%">
-                        <thead>
-                        <tr>
-                            <th> id</th> <th style="text-align: left">nome</th> <th style="text-align: left">cognome</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr v-for="item in visualizzaDocenti.resultJson" style="width: 100%">
-                            <td style="width: 10%" >{{item.id}}</td>
-                            <td style="width: 15%; text-align: left">{{item.nome}}</td>
-                            <td style="width: 20%; text-align: left">{{item.cognome}}</td>
-
-
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <div class="col">
-            <div class="card">
-                <div class="card-body">
-                    <table class="table" style="width: 100%">
-                        <thead>
-                        <tr>
-                            <th> id</th> <th>nome</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr v-for="item in visualizzaCorsi.resultJson" style="width: 100%">
-                            <td style="width: 5%">{{item.id}}</td>
-                            <td style="width: 30%">{{item.nome}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-
-
-
 </div>
 
 <!-- Student Page -->
@@ -511,17 +444,12 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent2">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-                </ul>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
             </div>
         </div>
     </nav>
-
-
    <div class="container text-center mt-5" v-show="this.prenotaRip">
-       <h1>prenota ripetizioni</h1>
-
+       <h1>Prenota Ripetizioni</h1>
        <!-- catalogo e ripetizioni prenotate-->
        <div class="container " style="margin-top: 3%">
            <div class="accordion" id="accordionExample2">
@@ -564,7 +492,7 @@
                            <table class="table">
                                <thead>
                                <tr>
-                                   <th>Docente</th> <th>corso</th> <th>utente</th> <th>data</th> <th>ora</th> <th>stato</th>
+                                   <th>Docente</th> <th>Corso</th> <th>Utente</th> <th>Data</th> <th>Ora</th> <th>Stato</th>
                                </tr>
                                </thead>
                                <tbody>
@@ -603,16 +531,14 @@
             </button>
         </div>
     </nav>
-
     <div class="text-center">
         <h1>Benvenuto Ospite</h1>
         <p>Essendo loggato come ospite puoi solo visualizzare questa pagina.</p>
     </div>
-
     <div class="container ">
         <div class="card">
             <div class="card-head">
-                <h3 class="text-center">possibili ripetizioni</h3>
+                <h3 class="text-center">Possibili Ripetizioni</h3>
             </div>
             <div class="card-body ">
                 <table class="table">
@@ -628,19 +554,15 @@
                         <td style="width: 20%">{{item.corso}}</td>
                         <td style="width: 20%">{{item.giorno}}</td>
                         <td style="width: 20%">{{item.ora}}</td>
-
                     </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-
     <div class="container text-center mt-2">
-        <button type="button" class="btn btn-primary" v-on:click="this.logout_guest">Log out</button>
+        <button type="button" class="btn btn-primary" v-on:click="this.logout_guest">Logout</button>
     </div>
-
-
 </div>
 
 <script>
