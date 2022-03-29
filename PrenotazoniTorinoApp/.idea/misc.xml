@@ -4,10 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/seraf/Desktop/PrenotazoniTorinoApp/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/seraf/Desktop/PrenotazoniTorinoApp/app/src/main/res/layout/content_guest.xml" value="0.25" />
         <entry key="..\:/Users/seraf/Desktop/PrenotazoniTorinoApp/app/src/main/res/layout/fragment_dashboard.xml" value="0.25" />
+        <entry key="..\:/Users/seraf/Desktop/PrenotazoniTorinoApp/app/src/main/res/layout/fragment_first.xml" value="0.25" />
         <entry key="..\:/Users/seraf/Desktop/PrenotazoniTorinoApp/app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="..\:/Users/seraf/Desktop/PrenotazoniTorinoApp/app/src/main/res/layout/fragment_second.xml" value="0.25" />
         <entry key="..\:/Users/seraf/Desktop/PrenotazoniTorinoApp/app/src/main/res/layout/guest.xml" value="0.25" />
         <entry key="..\:/Users/seraf/Desktop/PrenotazoniTorinoApp/app/src/main/res/layout/login.xml" value="0.25" />
+        <entry key="..\:/Users/seraf/Desktop/PrenotazoniTorinoApp/app/src/main/res/layout/priva.xml" value="0.25" />
       </map>
     </option>
   </component>

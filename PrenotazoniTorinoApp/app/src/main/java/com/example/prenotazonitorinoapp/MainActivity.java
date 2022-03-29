@@ -14,6 +14,7 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.prenotazonitorinoapp.ui.guestpage;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
     EditText emailBox, passwordBox,nome, cognome;
     Button  loginbutton;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 RequestQueue queue=Volley.newRequestQueue(MainActivity.this);
                 String sessione2="sessione";
-                String URL = "http://192.168.60.120:8080/PrenotazioniTorinoWeb_war_exploded/aut-servlet";
+                String URL = "http://192.168.1.54:8080/PrenotazioniTorinoWeb_war_exploded/aut-servlet";
                 StringRequest request=new StringRequest(Request.Method.POST, URL,  new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -119,8 +121,56 @@ public class MainActivity extends AppCompatActivity {
                                 NavController navController = Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment_activity_main);
                                 NavigationUI.setupActionBarWithNavController(MainActivity.this, navController, appBarConfiguration);
                                 NavigationUI.setupWithNavController(binding.navView, navController);
+
+                                final ListView textView = (ListView)findViewById(R.id.text);
+                                RequestQueue queue= Volley.newRequestQueue(MainActivity.this);
+                                String URL2 = "http://192.168.1.54:8080/PrenotazioniTorinoWeb_war_exploded/guest-servlet";
+                                JsonArrayRequest request=new JsonArrayRequest(Request.Method.GET, URL2, null, new Response.Listener<JSONArray>() {
+                                    @Override
+                                    public void onResponse(JSONArray response) {
+                                        final ArrayList<String> listp = new ArrayList<String>();
+                                        for (int i = 0; i < response.length(); ++i) {
+                                            JSONObject temp = null;
+                                            try {
+                                                temp = response.getJSONObject(i);
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+
+
+                                            try {
+                                                assert temp != null;
+                                                listp.add(temp.getString("cognome_docente")+ "  "+ temp.getString("corso")+" "+ temp.getString("giorno")+" "+ temp.getInt("ora"));
+
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+
+
+
+                                        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_expandable_list_item_1, listp);
+                                        textView.setAdapter(adapter);
+                                    }
+                                }, new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+
+                                    }
+                                }){
+                                    @Override
+                                    public Map<String, String> getHeaders() throws AuthFailureError {
+                                        Map<String, String> params = new HashMap<String, String>();
+                                        params.put("Content-Type", "application/json");
+
+                                        return params;
+                                    }
+                                };
+                                queue.add(request);
                             }else if(temp.get("ruolo").equals("ospite")){
-                                setContentView(R.layout.guest);
+                                Intent ApriGuest = new Intent(MainActivity.this,GuestActivity.class);
+                                startActivity(ApriGuest);
+
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -145,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
                         // and value pair to our parameters.
                         params.put("utente",emailBox.getText().toString());
                         params.put("password", passwordBox.getText().toString());
-                        params.put("sessione", "password2");
+                        params.put("sessione", "sessione");
 
 
                         // at last we are
@@ -156,10 +206,17 @@ public class MainActivity extends AppCompatActivity {
                 };
 
 
-                queue.add(request);;
+                queue.add(request);
+
+
+
 
             }
         });
+
+
+
+
 
 
     }

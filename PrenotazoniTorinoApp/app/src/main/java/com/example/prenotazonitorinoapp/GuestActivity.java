@@ -1,77 +1,54 @@
-package com.example.prenotazonitorinoapp.ui;
-import android.annotation.SuppressLint;
-import android.content.Context;
+package com.example.prenotazonitorinoapp;
+
 import android.os.Bundle;
-
-import com.android.volley.Cache;
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Network;
-import com.android.volley.NetworkResponse;
-import com.android.volley.RetryPolicy;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.BasicNetwork;
-import com.android.volley.toolbox.DiskBasedCache;
-import com.android.volley.toolbox.HttpHeaderParser;
-import com.android.volley.toolbox.HurlStack;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.example.prenotazonitorinoapp.R;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import android.content.Intent;
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.view.textclassifier.TextLinks;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import android.os.Bundle;
-import android.widget.ListView;
+import com.example.prenotazonitorinoapp.ui.guestpage;
+import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class guestpage extends AppCompatActivity {
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 
-    public static Context xml;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+public class GuestActivity extends AppCompatActivity {
+
+    private AppBarConfiguration appBarConfiguration;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.guest);
+        System.out.println("ci sono");
         final ListView textView = (ListView)findViewById(R.id.text);
-        RequestQueue queue=Volley.newRequestQueue(guestpage.this);
+        RequestQueue queue= Volley.newRequestQueue(GuestActivity.this);
         String URL2 = "http://192.168.1.54:8080/PrenotazioniTorinoWeb_war_exploded/guest-servlet";
         JsonArrayRequest request=new JsonArrayRequest(Request.Method.GET, URL2, null, new Response.Listener<JSONArray>() {
             @Override
@@ -87,7 +64,8 @@ public class guestpage extends AppCompatActivity {
 
 
                     try {
-                        listp.add(temp.getString("nome_docente")+ " "+temp.getString("cognome_docente")+ "  "+ temp.getString("corso")+" "+ temp.getString("giorno")+" "+ temp.getInt("ora"));
+                        assert temp != null;
+                        listp.add(temp.getString("cognome_docente")+ "  "+ temp.getString("corso")+" "+ temp.getString("giorno")+" "+ temp.getInt("ora"));
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -96,7 +74,7 @@ public class guestpage extends AppCompatActivity {
 
 
 
-                final ArrayAdapter<String> adapter = new ArrayAdapter<String>(guestpage.this, android.R.layout.simple_expandable_list_item_1, listp);
+                final ArrayAdapter<String> adapter = new ArrayAdapter<String>(GuestActivity.this, android.R.layout.simple_expandable_list_item_1, listp);
                 textView.setAdapter(adapter);
             }
         }, new Response.ErrorListener() {
