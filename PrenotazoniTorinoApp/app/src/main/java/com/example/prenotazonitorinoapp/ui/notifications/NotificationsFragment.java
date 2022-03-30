@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,8 +14,25 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.prenotazonitorinoapp.MainActivity;
 import com.example.prenotazonitorinoapp.R;
 import com.example.prenotazonitorinoapp.databinding.FragmentNotificationsBinding;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class NotificationsFragment extends Fragment {
 
@@ -35,6 +54,57 @@ public class NotificationsFragment extends Fragment {
                 textView.setText(s);
             }
         });
+
+        final ListView List = binding.prenotazionieffettuate;
+        String sessione2= "sessione";
+        String id2=MainActivity.id;
+        RequestQueue queue= Volley.newRequestQueue(getActivity().getApplicationContext());
+        String URL2 = "http://172.21.49.125:8080/PrenotazioniTorinoWeb_war_exploded/ripetizioni-prenotate-servlet";
+        StringRequest request= new StringRequest(Request.Method.POST, URL2, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                final ArrayList<String> listp = new ArrayList<String>();
+                try {
+
+                    JSONArray temp= new JSONArray(response);
+                    for(int i=0;i<response.length();i++){
+                        listp.add(temp.getJSONObject(i).getString("docente")+" "+ temp.getJSONObject(i).getString("corso")+" "+temp.getJSONObject(i).getString("data")+" "+temp.getJSONObject(i).getInt("ora")+" "+temp.getJSONObject(i).getString("stato"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_expandable_list_item_1, listp);
+                List.setAdapter(adapter);
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() {
+                // below line we are creating a map for
+                // storing our values in key and value pair.
+                Map<String, String> params = new HashMap<String, String>();
+
+                // on below line we are passing our key
+                // and value pair to our parameters.
+                params.put("id", id2);
+                params.put("sessione", sessione2);
+
+
+                // at last we are
+                // returning our params.
+                return params;
+            }
+        };
+        queue.add(request);
+
+
+
         return root;
     }
 

@@ -55,6 +55,56 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        final ListView List = binding.text;
+        RequestQueue queue= Volley.newRequestQueue(getActivity().getApplicationContext());
+        String URL2 = "http://172.21.49.125:8080/PrenotazioniTorinoWeb_war_exploded/guest-servlet";
+        JsonArrayRequest request=new JsonArrayRequest(Request.Method.GET, URL2, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                final ArrayList<String> listp = new ArrayList<String>();
+                for (int i = 0; i < response.length(); ++i) {
+                    JSONObject temp = null;
+                    try {
+                        temp = response.getJSONObject(i);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    try {
+                        assert temp != null;
+                        listp.add(temp.getString("cognome_docente")+ "  "+ temp.getString("corso")+" "+ temp.getString("giorno")+" "+ temp.getInt("ora"));
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+
+                final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_expandable_list_item_1, listp);
+                List.setAdapter(adapter);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/json");
+
+                return params;
+            }
+        };
+        queue.add(request);
+
+
+        /* continuare qui */
+
+
         return root;
     }
 

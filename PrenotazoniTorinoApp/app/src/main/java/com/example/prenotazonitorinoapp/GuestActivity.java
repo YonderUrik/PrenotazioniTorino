@@ -49,7 +49,7 @@ public class GuestActivity extends AppCompatActivity {
         System.out.println("ci sono");
         final ListView textView = (ListView)findViewById(R.id.text);
         RequestQueue queue= Volley.newRequestQueue(GuestActivity.this);
-        String URL2 = "http://192.168.1.54:8080/PrenotazioniTorinoWeb_war_exploded/guest-servlet";
+        String URL2 = "http://172.21.49.125:8080/PrenotazioniTorinoWeb_war_exploded/guest-servlet";
         JsonArrayRequest request=new JsonArrayRequest(Request.Method.GET, URL2, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
