@@ -23,6 +23,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.prenotazonitorinoapp.MainActivity;
+import com.example.prenotazonitorinoapp.Myadapter;
 import com.example.prenotazonitorinoapp.R;
 import com.example.prenotazonitorinoapp.databinding.FragmentNotificationsBinding;
 
@@ -31,6 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -64,10 +66,11 @@ public class NotificationsFragment extends Fragment {
             @Override
             public void onResponse(String response) {
                 final ArrayList<String> listp = new ArrayList<String>();
+                JSONArray temp=null;
                 try {
 
-                    JSONArray temp= new JSONArray(response);
-                    for(int i=0;i<response.length();i++){
+                    temp= new JSONArray(response);
+                    for(int i=0;i<temp.length();i++){
                         listp.add(temp.getJSONObject(i).getString("docente")+" "+ temp.getJSONObject(i).getString("corso")+" "+temp.getJSONObject(i).getString("data")+" "+temp.getJSONObject(i).getInt("ora")+" "+temp.getJSONObject(i).getString("stato"));
                     }
                 } catch (JSONException e) {
@@ -81,7 +84,7 @@ public class NotificationsFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                System.out.println("qualcosa non va");
             }
         }){
             @Override
@@ -94,6 +97,7 @@ public class NotificationsFragment extends Fragment {
                 // and value pair to our parameters.
                 params.put("id", id2);
                 params.put("sessione", sessione2);
+                params.put("android", "android");
 
 
                 // at last we are

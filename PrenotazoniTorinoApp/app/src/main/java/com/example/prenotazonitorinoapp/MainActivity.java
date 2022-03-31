@@ -98,9 +98,8 @@ public class MainActivity extends AppCompatActivity {
 
                         try {
                             JSONObject respObj = new JSONObject(response);
-                            String utente = respObj.getString(emailBox.getText().toString());
-                            String password = respObj.getString(passwordBox.getText().toString());
-                            String sessione = respObj.getString(sessione2);
+                            String utente = respObj.getString("email");
+                            String sessione = respObj.getString("sessione");
                         } catch (JSONException e) {
                             System.out.println("valore"+response);
                             e.printStackTrace();
@@ -110,11 +109,12 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             JSONObject temp= new JSONObject(response);
                             System.out.println("oggetto: "+temp.get("ruolo"));
-                            id=  temp.get("id").toString();
-                            System.out.println("Valore ID: "+ id);
+
                             if(temp.get("ruolo").equals("admin") || temp.get("ruolo").equals("studente") ){
                                 binding = ActivityMainBinding.inflate(getLayoutInflater());
                                 setContentView(binding.getRoot());
+                                id=  temp.get("id").toString();
+                                System.out.println("Valore ID: "+ id);
 
                                 BottomNavigationView navView = findViewById(R.id.nav_view);
                                 // Passing each menu ID as a set of Ids because each

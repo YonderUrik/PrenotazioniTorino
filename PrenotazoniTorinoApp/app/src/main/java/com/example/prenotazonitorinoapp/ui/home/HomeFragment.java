@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.prenotazonitorinoapp.GuestActivity;
 import com.example.prenotazonitorinoapp.MainActivity;
+import com.example.prenotazonitorinoapp.Myadapter;
 import com.example.prenotazonitorinoapp.R;
 import com.example.prenotazonitorinoapp.databinding.FragmentHomeBinding;
 
@@ -35,9 +37,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HomeFragment extends Fragment {
-
+    public int idcorso, iddocente;
     private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
+    Button prenota;
+    final ArrayList<String> listid = new ArrayList<String>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -56,12 +60,14 @@ public class HomeFragment extends Fragment {
         });
 
         final ListView List = binding.text;
+
         RequestQueue queue= Volley.newRequestQueue(getActivity().getApplicationContext());
         String URL2 = "http://172.21.49.125:8080/PrenotazioniTorinoWeb_war_exploded/guest-servlet";
         JsonArrayRequest request=new JsonArrayRequest(Request.Method.GET, URL2, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 final ArrayList<String> listp = new ArrayList<String>();
+
                 for (int i = 0; i < response.length(); ++i) {
                     JSONObject temp = null;
                     try {
@@ -73,7 +79,7 @@ public class HomeFragment extends Fragment {
 
                     try {
                         assert temp != null;
-                        listp.add(temp.getString("cognome_docente")+ "  "+ temp.getString("corso")+" "+ temp.getString("giorno")+" "+ temp.getInt("ora"));
+                        listp.add(temp.getString("id_docente")+" "+temp.getString("id_corso")+" "+temp.getString("cognome_docente")+ "  "+ temp.getString("corso")+" "+ temp.getString("giorno")+" "+ temp.getInt("ora")+" ");
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -81,9 +87,9 @@ public class HomeFragment extends Fragment {
                 }
 
 
-
+                System.out.println("listp: "+ listp);
                 final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_expandable_list_item_1, listp);
-                List.setAdapter(adapter);
+                List.setAdapter(new Myadapter(listp,getActivity().getApplicationContext()));
             }
         }, new Response.ErrorListener() {
             @Override
