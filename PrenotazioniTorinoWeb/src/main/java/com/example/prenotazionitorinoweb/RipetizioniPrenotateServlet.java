@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 @WebServlet(name = "ripetizioniprenotateservlet", value = "/ripetizioni-prenotate-servlet")
@@ -37,7 +38,15 @@ public class RipetizioniPrenotateServlet extends HttpServlet {
         response.setContentType("application/json");
         PrintWriter out=response.getWriter();
         HttpSession s = request.getSession();
-        int id= Integer.parseInt(s.getAttribute("id").toString());
+        String controllo= request.getParameter("android");
+        int id;
+        System.out.println(controllo);
+        if(Objects.equals(request.getParameter("android"), "android")){
+            id= Integer.parseInt(request.getParameter("id"));
+        }else{
+            id= Integer.parseInt(s.getAttribute("id").toString());
+        }
+
         String sessione = request.getParameter("sessione");
         String sessionID = s.getId();
         ArrayList<RipetizioniPrenotate> rip=DAO.getRipetizioniUtente(id);
