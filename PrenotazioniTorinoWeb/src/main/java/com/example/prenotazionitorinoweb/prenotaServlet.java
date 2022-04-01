@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Objects;
 
 
 @WebServlet(name = "prenotaservlet", value = "/prenota-servlet")
@@ -23,7 +24,12 @@ public class prenotaServlet extends HttpServlet {
         String sessione = request.getParameter("sessione");
         HttpSession s = request.getSession();
         if(sessione.equals(s.getId())) {
-            int id = Integer.parseInt(s.getAttribute("id").toString());
+            int id;
+            if(Objects.equals(request.getParameter("android"), "android")){
+                id= Integer.parseInt(request.getParameter("id"));
+            }else{
+                id= Integer.parseInt(s.getAttribute("id").toString());
+            }
             int docente = Integer.parseInt(request.getParameter("id_docente"));
             int corso = Integer.parseInt(request.getParameter("id_corso"));
             String giorno = request.getParameter("giorno");
