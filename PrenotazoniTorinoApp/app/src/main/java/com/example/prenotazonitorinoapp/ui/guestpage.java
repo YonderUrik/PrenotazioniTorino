@@ -72,7 +72,7 @@ public class guestpage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         final ListView textView = (ListView)findViewById(R.id.text);
         RequestQueue queue=Volley.newRequestQueue(guestpage.this);
-        String URL2 = "http://192.168.1.54:8080/PrenotazioniTorinoWeb_war_exploded/guest-servlet";
+        String URL2 = "http://192.168.1.19:8080/PrenotazioniTorinoWeb_war_exploded/guest-servlet";
         JsonArrayRequest request=new JsonArrayRequest(Request.Method.GET, URL2, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
