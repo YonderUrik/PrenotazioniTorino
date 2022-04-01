@@ -61,7 +61,7 @@ public class NotificationsFragment extends Fragment {
         String sessione2= "sessione";
         String id2=MainActivity.id;
         RequestQueue queue= Volley.newRequestQueue(getActivity().getApplicationContext());
-        String URL2 = "http://172.21.49.125:8080/PrenotazioniTorinoWeb_war_exploded/ripetizioni-prenotate-servlet";
+        String URL2 = "http://192.168.1.54:8080/PrenotazioniTorinoWeb_war_exploded/ripetizioni-prenotate-servlet";
         StringRequest request= new StringRequest(Request.Method.POST, URL2, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

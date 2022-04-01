@@ -9,11 +9,19 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.prenotazonitorinoapp.ui.home.HomeFragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Myadapter extends BaseAdapter implements ListAdapter {
     private ArrayList<String> list = new ArrayList<String>();
@@ -58,17 +66,52 @@ public class Myadapter extends BaseAdapter implements ListAdapter {
         callbtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                String sessione;
                 String  id= MainActivity.id;
                 String id_docente= text.getText().toString().substring(0,1);
                 String id_corso= text.getText().toString().substring(2,3);
                 String giorno= text.getText().toString().substring(32,39);
                 String ora= text.getText().toString().substring(40,42);
-                System.out.println("ora:"+ora+"asdas");
-                System.out.println("giorno:"+giorno+"dasdas");
-                System.out.println("valore id:" + id_docente);
-                System.out.println("valore id:" + id_corso);
-                System.out.println("id utente:"+id);
-                
+                String URL = "http://192.168.1.54:8080/PrenotazioniTorinoWeb_war_exploded/prenota-servlet";
+                RequestQueue queue= Volley.newRequestQueue(context.getApplicationContext());
+                StringRequest request= new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        System.out.println("response: "+ response);
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("errore");
+
+                    }
+                }){
+                    @Override
+                    protected Map<String, String> getParams() {
+                        // below line we are creating a map for
+                        // storing our values in key and value pair.
+                        Map<String, String> params = new HashMap<String, String>();
+
+                        // on below line we are passing our key
+                        // and value pair to our parameters.
+                        params.put("id",id);
+                        params.put("id_docente",id_docente);
+                        params.put("id_corso",id_corso);
+                        params.put("giorno",giorno);
+                        params.put("ora",ora);
+                        params.put("sessione", MainActivity.sessione);
+                        params.put("android","android");
+
+
+
+                        // at last we are
+                        // returning our params.
+                        return params;
+                    }
+                };
+                queue.add(request);
+                System.out.println(MainActivity.sessione);
+
             }
         });
         

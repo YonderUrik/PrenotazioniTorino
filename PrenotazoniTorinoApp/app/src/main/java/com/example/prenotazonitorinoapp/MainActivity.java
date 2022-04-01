@@ -71,6 +71,7 @@ import org.json.JSONObject;
 public class MainActivity extends AppCompatActivity {
 
     public static String id;
+    public static String sessione;
     private ActivityMainBinding binding;
     EditText emailBox, passwordBox,nome, cognome;
     Button  loginbutton;
@@ -90,8 +91,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 RequestQueue queue=Volley.newRequestQueue(MainActivity.this);
-                String sessione2="sessione";
-                String URL = "http://172.21.49.125:8080/PrenotazioniTorinoWeb_war_exploded/aut-servlet";
+
+                String URL = "http://192.168.1.54:8080/PrenotazioniTorinoWeb_war_exploded/aut-servlet";
                 StringRequest request=new StringRequest(Request.Method.POST, URL,  new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -105,10 +106,11 @@ public class MainActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
-                        System.out.println("valore " + response);
+
                         try {
                             JSONObject temp= new JSONObject(response);
-                            System.out.println("oggetto: "+temp.get("ruolo"));
+                            sessione=temp.get("sessione").toString();
+
 
                             if(temp.get("ruolo").equals("admin") || temp.get("ruolo").equals("studente") ){
                                 binding = ActivityMainBinding.inflate(getLayoutInflater());
