@@ -24,7 +24,7 @@ public class gestioneServlet extends HttpServlet {
         String sessione = request.getParameter("sessione");
         HttpSession s = request.getSession();
         int id;
-
+        if(sessione.equals(s.getId())){
             String post = request.getParameter("post");
             if(Objects.equals(request.getParameter("android"), "android")){
                 id= Integer.parseInt(request.getParameter("id"));
@@ -40,6 +40,9 @@ public class gestioneServlet extends HttpServlet {
             } else if (post.equals("disdici")) {
                 DAO.disdetta(docente, corso, data, ora, id);
             }
+        }else{
+            out.print("sessione scaduta");
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
