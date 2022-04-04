@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 RequestQueue queue=Volley.newRequestQueue(MainActivity.this);
 
-                String URL = "http://192.168.1.19:8080/PrenotazioniTorinoWeb_war_exploded/aut-servlet";
+                String URL = "http://172.21.32.145:8080/PrenotazioniTorinoWeb_war_exploded/aut-servlet";
                 StringRequest request=new StringRequest(Request.Method.POST, URL,  new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -109,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
 
                         try {
                             JSONObject temp= new JSONObject(response);
+
 
 
                             if(temp.get("ruolo").equals("admin") || temp.get("ruolo").equals("studente") ){

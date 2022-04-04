@@ -68,11 +68,13 @@ public class Myadapter extends BaseAdapter implements ListAdapter {
             public void onClick(View v) {
                 String sessione;
                 String  id= MainActivity.id;
-                String id_docente= text.getText().toString().substring(0,1);
-                String id_corso= text.getText().toString().substring(2,3);
-                String giorno= text.getText().toString().substring(32,39);
-                String ora= text.getText().toString().substring(40,42);
-                String URL = "http://192.168.1.19:8080/PrenotazioniTorinoWeb_war_exploded/prenota-servlet";
+                String stringa=text.getText().toString();
+                String[] split = stringa.split("\\s+");
+                String id_docente= split[0];
+                String id_corso= split[1];
+                String giorno= split[5];
+                String ora= split[6];
+                String URL = "http://172.21.32.145:8080/PrenotazioniTorinoWeb_war_exploded/prenota-servlet";
                 RequestQueue queue= Volley.newRequestQueue(context.getApplicationContext());
                 StringRequest request= new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
                     @Override
@@ -102,6 +104,8 @@ public class Myadapter extends BaseAdapter implements ListAdapter {
                         params.put("sessione", MainActivity.sessione);
                         params.put("android","android");
 
+
+
                         // at last we are
                         // returning our params.
                         return params;
@@ -112,6 +116,8 @@ public class Myadapter extends BaseAdapter implements ListAdapter {
 
             }
         });
+        
+
         return view;
     }
 }

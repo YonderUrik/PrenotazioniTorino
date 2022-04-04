@@ -25,6 +25,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.prenotazonitorinoapp.MainActivity;
 import com.example.prenotazonitorinoapp.Myadapter;
 import com.example.prenotazonitorinoapp.R;
+import com.example.prenotazonitorinoapp.adapter2;
 import com.example.prenotazonitorinoapp.databinding.FragmentNotificationsBinding;
 
 import org.json.JSONArray;
@@ -61,7 +62,7 @@ public class NotificationsFragment extends Fragment {
         String sessione2= "sessione";
         String id2=MainActivity.id;
         RequestQueue queue= Volley.newRequestQueue(getActivity().getApplicationContext());
-        String URL2 = "http://192.168.1.19:8080/PrenotazioniTorinoWeb_war_exploded/ripetizioni-prenotate-servlet";
+        String URL2 = "http://172.21.32.145:8080/PrenotazioniTorinoWeb_war_exploded/ripetizioni-prenotate-servlet";
         StringRequest request= new StringRequest(Request.Method.POST, URL2, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -71,14 +72,14 @@ public class NotificationsFragment extends Fragment {
 
                     temp= new JSONArray(response);
                     for(int i=0;i<temp.length();i++){
-                        listp.add(temp.getJSONObject(i).getString("docente")+" "+ temp.getJSONObject(i).getString("corso")+" "+temp.getJSONObject(i).getString("data")+" "+temp.getJSONObject(i).getInt("ora")+" "+temp.getJSONObject(i).getString("stato"));
+                        listp.add(temp.getJSONObject(i).getString("idDocente")+" "+temp.getJSONObject(i).getString("idCorso")+" "+temp.getJSONObject(i).getString("docente")+" "+ temp.getJSONObject(i).getString("corso")+" "+temp.getJSONObject(i).getString("data")+" "+temp.getJSONObject(i).getInt("ora")+" "+temp.getJSONObject(i).getString("stato"));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
                 final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_expandable_list_item_1, listp);
-                List.setAdapter(adapter);
+                List.setAdapter(new adapter2(listp,getActivity().getApplicationContext()));
 
             }
         }, new Response.ErrorListener() {
