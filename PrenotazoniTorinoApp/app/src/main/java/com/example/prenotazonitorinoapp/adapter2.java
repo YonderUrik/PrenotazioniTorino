@@ -83,6 +83,43 @@ public class adapter2 extends BaseAdapter implements ListAdapter {
                 System.out.println("ora: "+ ora);
                 System.out.println("giorno: "+ giorno);
 
+                RequestQueue queue= Volley.newRequestQueue(context.getApplicationContext());
+                StringRequest request= new StringRequest(Request.Method.POST, URL2, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        System.out.println("response: "+ response);
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }){
+                    @Override
+                    protected Map<String, String> getParams() {
+                        // below line we are creating a map for
+                        // storing our values in key and value pair.
+                        Map<String, String> params = new HashMap<String, String>();
+
+                        // on below line we are passing our key
+                        // and value pair to our parameters.
+                        params.put("id",id);
+                        params.put("id_docente",id_docente);
+                        params.put("id_corso",id_corso);
+                        params.put("data",giorno);
+                        params.put("ora",ora);
+                        params.put("sessione", MainActivity.sessione);
+                        params.put("android","android");
+                        params.put("post","conferma");
+
+
+
+                        // at last we are
+                        // returning our params.
+                        return params;
+                    }
+                };
+                queue.add(request);
             }
         });
 
@@ -103,7 +140,7 @@ public class adapter2 extends BaseAdapter implements ListAdapter {
                 System.out.println("id utente: "+id+ " docente: " + id_docente+" corso: "+ id_corso);
                 System.out.println("ora: "+ ora);
                 System.out.println("giorno: "+ giorno);
-                
+
 
             }
         });
