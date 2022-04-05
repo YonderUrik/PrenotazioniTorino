@@ -27,6 +27,7 @@ import com.example.prenotazonitorinoapp.MainActivity;
 import com.example.prenotazonitorinoapp.Myadapter;
 import com.example.prenotazonitorinoapp.R;
 import com.example.prenotazonitorinoapp.databinding.FragmentHomeBinding;
+import com.example.prenotazonitorinoapp.publicURL;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -57,8 +58,7 @@ public class HomeFragment extends Fragment {
         final ListView List = binding.text;
 
         RequestQueue queue= Volley.newRequestQueue(getActivity().getApplicationContext());
-        String URL2 = "http://192.168.1.54:8080/PrenotazioniTorinoWeb_war_exploded/guest-servlet";
-        JsonArrayRequest request=new JsonArrayRequest(Request.Method.GET, URL2, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest request=new JsonArrayRequest(Request.Method.GET, publicURL.url+"guest-servlet", null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 final ArrayList<String> listp = new ArrayList<String>();

@@ -16,6 +16,7 @@ import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.prenotazonitorinoapp.R;
+import com.example.prenotazonitorinoapp.publicURL;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -72,8 +73,7 @@ public class guestpage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         final ListView textView = (ListView)findViewById(R.id.text);
         RequestQueue queue=Volley.newRequestQueue(guestpage.this);
-        String URL2 = "http://192.168.1.54:8080/PrenotazioniTorinoWeb_war_exploded/guest-servlet";
-        JsonArrayRequest request=new JsonArrayRequest(Request.Method.GET, URL2, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest request=new JsonArrayRequest(Request.Method.GET, publicURL.url+"guest-servlet", null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 final ArrayList<String> listp = new ArrayList<String>();

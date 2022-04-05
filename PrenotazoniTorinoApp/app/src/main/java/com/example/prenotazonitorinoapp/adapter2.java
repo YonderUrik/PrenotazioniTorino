@@ -65,7 +65,6 @@ public class adapter2 extends BaseAdapter implements ListAdapter {
         //Handle buttons and add onClickListeners
         Button conferma= (Button)view.findViewById(R.id.conferma);
         Button disdici=(Button)view.findViewById(R.id.disdici);
-        String URL2 = "http://192.168.1.54:8080/PrenotazioniTorinoWeb_war_exploded/gestione-servlet";
         conferma.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -84,7 +83,7 @@ public class adapter2 extends BaseAdapter implements ListAdapter {
                 System.out.println("giorno: "+ giorno);
 
                 RequestQueue queue= Volley.newRequestQueue(context.getApplicationContext());
-                StringRequest request= new StringRequest(Request.Method.POST, URL2, new Response.Listener<String>() {
+                StringRequest request= new StringRequest(Request.Method.POST, publicURL.url+"gestione-servlet", new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         System.out.println("response: "+ response);
@@ -143,7 +142,7 @@ public class adapter2 extends BaseAdapter implements ListAdapter {
                 System.out.println("ora: "+ ora);
                 System.out.println("giorno: "+ giorno);
                 RequestQueue queue= Volley.newRequestQueue(context.getApplicationContext());
-                StringRequest request= new StringRequest(Request.Method.POST, URL2, new Response.Listener<String>() {
+                StringRequest request= new StringRequest(Request.Method.POST, publicURL.url+"gestione-servlet", new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         System.out.println("response: "+ response);
