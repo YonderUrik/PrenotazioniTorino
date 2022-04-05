@@ -65,7 +65,7 @@ public class adapter2 extends BaseAdapter implements ListAdapter {
         //Handle buttons and add onClickListeners
         Button conferma= (Button)view.findViewById(R.id.conferma);
         Button disdici=(Button)view.findViewById(R.id.disdici);
-        String URL2 = "http://172.21.32.145:8080/PrenotazioniTorinoWeb_war_exploded/gestione-servlet";
+        String URL2 = "http://192.168.1.54:8080/PrenotazioniTorinoWeb_war_exploded/gestione-servlet";
         conferma.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -120,6 +120,8 @@ public class adapter2 extends BaseAdapter implements ListAdapter {
                     }
                 };
                 queue.add(request);
+
+
             }
         });
 
@@ -184,4 +186,5 @@ public class adapter2 extends BaseAdapter implements ListAdapter {
 
         return view;
     }
+    
 }

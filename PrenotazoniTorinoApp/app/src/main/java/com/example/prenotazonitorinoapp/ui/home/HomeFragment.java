@@ -51,18 +51,13 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+
+
 
         final ListView List = binding.text;
 
         RequestQueue queue= Volley.newRequestQueue(getActivity().getApplicationContext());
-        String URL2 = "http://172.21.32.145:8080/PrenotazioniTorinoWeb_war_exploded/guest-servlet";
+        String URL2 = "http://192.168.1.54:8080/PrenotazioniTorinoWeb_war_exploded/guest-servlet";
         JsonArrayRequest request=new JsonArrayRequest(Request.Method.GET, URL2, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {

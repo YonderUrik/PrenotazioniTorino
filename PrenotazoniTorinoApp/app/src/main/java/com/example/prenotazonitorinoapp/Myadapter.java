@@ -74,7 +74,7 @@ public class Myadapter extends BaseAdapter implements ListAdapter {
                 String id_corso= split[1];
                 String giorno= split[5];
                 String ora= split[6];
-                String URL = "http://172.21.32.145:8080/PrenotazioniTorinoWeb_war_exploded/prenota-servlet";
+                String URL = "http://192.168.1.54:8080/PrenotazioniTorinoWeb_war_exploded/prenota-servlet";
                 RequestQueue queue= Volley.newRequestQueue(context.getApplicationContext());
                 StringRequest request= new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
                     @Override

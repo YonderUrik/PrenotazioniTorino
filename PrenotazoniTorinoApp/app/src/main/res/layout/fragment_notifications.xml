@@ -28,5 +28,6 @@
         android:layout_marginTop="15dp"
         android:gravity="center"
         android:id="@+id/prenotazionieffettuate"
+        android:paddingBottom="200px"
         tools:ignore="InvalidId,MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>
