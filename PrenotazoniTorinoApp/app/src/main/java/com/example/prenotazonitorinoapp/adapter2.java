@@ -1,6 +1,7 @@
 package com.example.prenotazonitorinoapp;
 
 import android.content.Context;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,8 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import androidx.navigation.fragment.NavHostFragment;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -16,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.prenotazonitorinoapp.ui.home.HomeFragment;
+import com.example.prenotazonitorinoapp.ui.notifications.NotificationsFragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -120,6 +124,14 @@ public class adapter2 extends BaseAdapter implements ListAdapter {
                 };
                 queue.add(request);
 
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        // yourMethod();
+                        refreshFragment();
+                    }
+                }, 1000);
+
 
             }
         });
@@ -179,11 +191,25 @@ public class adapter2 extends BaseAdapter implements ListAdapter {
                 };
                 queue.add(request);
 
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        // yourMethod();
+                        refreshFragment();
+                    }
+                }, 1000);
+
             }
         });
 
 
         return view;
+    }
+
+    private void refreshFragment(){
+        // This method refreshes the fragment
+        NavHostFragment.findNavController(NotificationsFragment.getAppContext())
+                .navigate(R.id.navigation_notifications);
     }
     
 }

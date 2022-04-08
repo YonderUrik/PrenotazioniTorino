@@ -1,6 +1,8 @@
 package com.example.prenotazonitorinoapp.ui.home;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.view.ContentInfo;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -41,22 +44,26 @@ public class HomeFragment extends Fragment {
     public int idcorso, iddocente;
     private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
+    private static Fragment fragment;
     Button prenota;
     final ArrayList<String> listid = new ArrayList<String>();
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
-
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        fragment = HomeFragment.this;
+        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
-
-
-
         final ListView List = binding.text;
+        extracted(List);
 
+
+        /* continuare qui */
+
+
+        return root;
+    }
+
+    public void extracted(ListView List) {
         RequestQueue queue= Volley.newRequestQueue(getActivity().getApplicationContext());
         JsonArrayRequest request=new JsonArrayRequest(Request.Method.GET, publicURL.url+"guest-servlet", null, new Response.Listener<JSONArray>() {
             @Override
@@ -101,12 +108,10 @@ public class HomeFragment extends Fragment {
             }
         };
         queue.add(request);
+    }
 
-
-        /* continuare qui */
-
-
-        return root;
+    public static Fragment getAppContext() {
+        return fragment;
     }
 
     @Override

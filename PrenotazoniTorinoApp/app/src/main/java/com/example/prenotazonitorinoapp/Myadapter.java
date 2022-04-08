@@ -1,6 +1,7 @@
 package com.example.prenotazonitorinoapp;
 
 import android.content.Context;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -74,6 +77,7 @@ public class Myadapter extends BaseAdapter implements ListAdapter {
                 String id_corso= split[1];
                 String giorno= split[5];
                 String ora= split[6];
+                System.out.println("PRENOTAZIONE " + id_docente+ " " + id_corso);
                 RequestQueue queue= Volley.newRequestQueue(context.getApplicationContext());
                 StringRequest request= new StringRequest(Request.Method.POST, publicURL.url+"prenota-servlet", new Response.Listener<String>() {
                     @Override
@@ -83,7 +87,7 @@ public class Myadapter extends BaseAdapter implements ListAdapter {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        System.out.println("errore");
+                        System.out.println("ERRORE PRENOTAZIONE");
 
                     }
                 }){
@@ -103,8 +107,6 @@ public class Myadapter extends BaseAdapter implements ListAdapter {
                         params.put("sessione", MainActivity.sessione);
                         params.put("android","android");
 
-
-
                         // at last we are
                         // returning our params.
                         return params;
@@ -113,10 +115,21 @@ public class Myadapter extends BaseAdapter implements ListAdapter {
                 queue.add(request);
                 System.out.println(MainActivity.sessione);
 
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        // yourMethod();
+                        refreshFragment();
+                    }
+                }, 1000);
             }
         });
-        
-
         return view;
+    }
+
+    private void refreshFragment(){
+        // This method refreshes the fragment
+        NavHostFragment.findNavController(HomeFragment.getAppContext())
+                .navigate(R.id.navigation_home);
     }
 }
