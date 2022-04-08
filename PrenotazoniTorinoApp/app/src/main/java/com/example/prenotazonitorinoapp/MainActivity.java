@@ -44,6 +44,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import java.io.UnsupportedEncodingException;
+import java.net.CookieHandler;
+import java.net.CookieManager;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -86,7 +88,8 @@ public class MainActivity extends AppCompatActivity {
         emailBox = (EditText)findViewById(R.id.username);
         passwordBox = (EditText)findViewById(R.id.password);
         loginbutton = (Button)findViewById(R.id.loginbutton);
-
+        CookieManager cookieManager = new CookieManager();
+        CookieHandler.setDefault(cookieManager);
         loginbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,9 +110,6 @@ public class MainActivity extends AppCompatActivity {
 
                         try {
                             JSONObject temp= new JSONObject(response);
-
-
-
                             if(temp.get("ruolo").equals("admin") || temp.get("ruolo").equals("studente") ){
                                 sessione=temp.get("sessione").toString();
                                 binding = ActivityMainBinding.inflate(getLayoutInflater());
