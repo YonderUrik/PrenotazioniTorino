@@ -76,9 +76,18 @@ public class Myadapter extends BaseAdapter implements ListAdapter {
                 String id_docente= split[0];
                 String id_corso= split[1];
                 String giorno= split[5];
+                if(!giorno.equals("lunedì") && !giorno.equals("martedì") && !giorno.equals("mercoledì") && !giorno.equals("giovedì") && !giorno.equals("venerdì")){
+                    giorno=split[6];
+                }
                 String ora= split[6];
+                if(giorno.equals(split[6])){
+                    ora=split[7];
+                }
                 System.out.println("PRENOTAZIONE " + id_docente+ " " + id_corso);
+                System.out.println("giorno: "+ giorno + " ora "+ ora);
                 RequestQueue queue= Volley.newRequestQueue(context.getApplicationContext());
+                String finalGiorno = giorno;
+                String finalOra = ora;
                 StringRequest request= new StringRequest(Request.Method.POST, publicURL.url+"prenota-servlet", new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -102,8 +111,8 @@ public class Myadapter extends BaseAdapter implements ListAdapter {
                         params.put("id",id);
                         params.put("id_docente",id_docente);
                         params.put("id_corso",id_corso);
-                        params.put("giorno",giorno);
-                        params.put("ora",ora);
+                        params.put("giorno", finalGiorno);
+                        params.put("ora", finalOra);
                         params.put("sessione", MainActivity.sessione);
                         params.put("android","android");
 
