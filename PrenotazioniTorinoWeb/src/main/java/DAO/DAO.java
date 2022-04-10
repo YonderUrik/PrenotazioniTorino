@@ -403,7 +403,7 @@ public class DAO {
             }
         }
     }
-    
+
     public static ArrayList<RipetizioniPrenotate> getRipetizioniUtente(int id){
         Connection conn1 = null;
         ArrayList<RipetizioniPrenotate> out = new ArrayList<>();
