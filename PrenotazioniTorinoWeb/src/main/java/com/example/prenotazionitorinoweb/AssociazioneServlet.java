@@ -24,7 +24,12 @@ import com.google.gson.JsonObject;
                 int corso=Integer.parseInt(request.getParameter("corso"));
                 int docente=Integer.parseInt(request.getParameter("docente"));
                 int disp= Integer.parseInt(request.getParameter("disp"));
-                DAO.setAssociazione(corso,docente,disp);
+                if(DAO.setAssociazione(corso,docente,disp)){
+                    out.print("true");
+                }else{
+                    out.print("false");
+                }
+
             }else{
                 s.invalidate();
                 out.print("sessione scaduta");

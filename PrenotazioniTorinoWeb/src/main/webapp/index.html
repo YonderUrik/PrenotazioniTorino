@@ -302,10 +302,10 @@
             <form name="myform3">
                 <div class="row g-3">
                     <div class="col">
-                        <input type="text" class="form-control" placeholder="id corso" v-model="corso"/>
+                        <input id="course_associazione" type="text" class="form-control" placeholder="id corso" v-model="corso"/>
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control" placeholder="id docente" v-model="docente"/>
+                        <input id="docente_associazione" type="text" class="form-control" placeholder="id docente" v-model="docente"/>
                     </div>
                     <div class="col">
                         <select class="form-select" aria-label="Default select example" v-model="disp">
@@ -753,8 +753,6 @@
                 this.associa=false;
             },
 
-
-
             passPrenota:function (){
                 this.home= false;
                 this.prenotazioni=false;
@@ -1069,7 +1067,19 @@
                 console.log(this.corso,  this.docente, this.disp);
                 let self=this;
                 $.post('associazione-servlet',{corso:this.corso,docente:this.docente,disp:this.disp,sessione:login.sessione},function (data){
-
+                    if(data === 'sessione scaduta'){
+                        window.alert("Sessione scaduta, riaccedi.");
+                        window.location.reload();
+                        login.sessione = 'sessione inesistente';
+                    }else if(data === 'true'){
+                        window.alert("Associazione aggiunta con successo.");
+                        document.getElementById('docente_associazione').value = "";
+                        document.getElementById('course_associazione').value = "";
+                    }else if(data === 'false'){
+                        window.alert("Errore nell'aggiunta dell'associazione, controlla gli id o che non vi siano già associazioni esistenti.");
+                        document.getElementById('docente_associazione').value = "";
+                        document.getElementById('course_associazione').value = "";
+                    }
                 })
             }
         }

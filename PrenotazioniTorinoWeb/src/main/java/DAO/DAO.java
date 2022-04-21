@@ -477,8 +477,9 @@ public class DAO {
         }
     }
 
-    public static void setAssociazione(int corso,int docente, int disp){
+    public static boolean setAssociazione(int corso,int docente, int disp){
         Connection conn1 = null;
+        boolean result = false;
         try {
             conn1 = DriverManager.getConnection(url1, user, password);
             Statement st = conn1.createStatement();
@@ -488,30 +489,35 @@ public class DAO {
                 st.executeUpdate("INSERT INTO insegnamento (corso,docente,giorno,ora,stato) VALUES ('"+corso+"','"+docente+"','lunedì','17',0)");
                 st.executeUpdate("INSERT INTO insegnamento (corso,docente,giorno,ora,stato) VALUES ('"+corso+"','"+docente+"','lunedì','18',0)");
                 st.close();
+                result = true;
             }else if(disp==2){
                 st.executeUpdate("INSERT INTO insegnamento (corso,docente,giorno,ora,stato) VALUES ('"+corso+"','"+docente+"','martedì','15',0)");
                 st.executeUpdate("INSERT INTO insegnamento (corso,docente,giorno,ora,stato) VALUES ('"+corso+"','"+docente+"','martedì','16',0)");
                 st.executeUpdate("INSERT INTO insegnamento (corso,docente,giorno,ora,stato) VALUES ('"+corso+"','"+docente+"','martedì','17',0)");
                 st.executeUpdate("INSERT INTO insegnamento (corso,docente,giorno,ora,stato) VALUES ('"+corso+"','"+docente+"','martedì','18',0)");
                 st.close();
+                result = true;
             }else if(disp==3){
                 st.executeUpdate("INSERT INTO insegnamento (corso,docente,giorno,ora,stato) VALUES ('"+corso+"','"+docente+"','mercoledì','15',0)");
                 st.executeUpdate("INSERT INTO insegnamento (corso,docente,giorno,ora,stato) VALUES ('"+corso+"','"+docente+"','mercoledì','16',0)");
                 st.executeUpdate("INSERT INTO insegnamento (corso,docente,giorno,ora,stato) VALUES ('"+corso+"','"+docente+"','mercoledì','17',0)");
                 st.executeUpdate("INSERT INTO insegnamento (corso,docente,giorno,ora,stato) VALUES ('"+corso+"','"+docente+"','mercoledì','18',0)");
                 st.close();
+                result = true;
             }else if(disp==4){
                 st.executeUpdate("INSERT INTO insegnamento (corso,docente,giorno,ora,stato) VALUES ('"+corso+"','"+docente+"','giovedì','15',0)");
                 st.executeUpdate("INSERT INTO insegnamento (corso,docente,giorno,ora,stato) VALUES ('"+corso+"','"+docente+"','giovedì','16',0)");
                 st.executeUpdate("INSERT INTO insegnamento (corso,docente,giorno,ora,stato) VALUES ('"+corso+"','"+docente+"','giovedì','17',0)");
                 st.executeUpdate("INSERT INTO insegnamento (corso,docente,giorno,ora,stato) VALUES ('"+corso+"','"+docente+"','giovedì','18',0)");
                 st.close();
+                result = true;
             }else if(disp==5){
                 st.executeUpdate("INSERT INTO insegnamento (corso,docente,giorno,ora,stato) VALUES ('"+corso+"','"+docente+"','venerdì','15',0)");
                 st.executeUpdate("INSERT INTO insegnamento (corso,docente,giorno,ora,stato) VALUES ('"+corso+"','"+docente+"','venerdì','16',0)");
                 st.executeUpdate("INSERT INTO insegnamento (corso,docente,giorno,ora,stato) VALUES ('"+corso+"','"+docente+"','venerdì','17',0)");
                 st.executeUpdate("INSERT INTO insegnamento (corso,docente,giorno,ora,stato) VALUES ('"+corso+"','"+docente+"','venerdì','18',0)");
                 st.close();
+                result = true;
             }else if(disp==6){
                 st.executeUpdate("INSERT INTO insegnamento (corso,docente,giorno,ora,stato) VALUES ('"+corso+"','"+docente+"','lunedì','15',0)");
                 st.executeUpdate("INSERT INTO insegnamento (corso,docente,giorno,ora,stato) VALUES ('"+corso+"','"+docente+"','lunedì','16',0)");
@@ -534,6 +540,7 @@ public class DAO {
                 st.executeUpdate("INSERT INTO insegnamento (corso,docente,giorno,ora,stato) VALUES ('"+corso+"','"+docente+"','venerdì','17',0)");
                 st.executeUpdate("INSERT INTO insegnamento (corso,docente,giorno,ora,stato) VALUES ('"+corso+"','"+docente+"','venerdì','18',0)");
                 st.close();
+                result = true;
             }
 
         } catch (SQLException e) {
@@ -547,6 +554,7 @@ public class DAO {
                     System.out.println(e2.getMessage());
                 }
             }
+            return result;
         }
     }
 
