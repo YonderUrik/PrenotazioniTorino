@@ -308,7 +308,7 @@ public class DAO {
             }
             System.out.println(nome_d + nome_c);
             st.executeUpdate("INSERT INTO prenotazione (id,docente,corso,utente,data,ora,stato,n_docente,n_corso) VALUES (0,'"+docente+"','"+corso+"','"+utente+"','"+giorno+"','"+ora+"','prenotata','"+nome_d+"','"+nome_c+"')");
-            st.executeUpdate("UPDATE insegnamento SET stato= 1 WHERE insegnamento.corso='"+corso+"' AND insegnamento.docente='"+docente+"' AND   insegnamento.giorno='"+giorno+"' AND insegnamento.ora='"+ora+"'   " );
+            st.executeUpdate("UPDATE insegnamento SET stato= 1 WHERE insegnamento.docente='"+docente+"' AND   insegnamento.giorno='"+giorno+"' AND insegnamento.ora='"+ora+"'   " );
             st.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -471,7 +471,7 @@ public class DAO {
             conn1 = DriverManager.getConnection(url1, user, password);
             Statement st = conn1.createStatement();
             st.executeUpdate("UPDATE prenotazione SET stato='disdetta' WHERE prenotazione.utente='"+utente+"' AND prenotazione.docente='"+docente+"' AND prenotazione.corso='"+corso+"' AND prenotazione.data='"+giorno+"' AND prenotazione.ora='"+ora+"';  " );
-            st.executeUpdate("UPDATE insegnamento SET stato= 0 WHERE insegnamento.corso='"+corso+"' AND insegnamento.docente='"+docente+"' AND   insegnamento.giorno='"+giorno+"' AND insegnamento.ora='"+ora+"'   " );
+            st.executeUpdate("UPDATE insegnamento SET stato= 0 WHERE  insegnamento.docente='"+docente+"' AND   insegnamento.giorno='"+giorno+"' AND insegnamento.ora='"+ora+"'   " );
             st.close();
         } catch (SQLException e) {
 
