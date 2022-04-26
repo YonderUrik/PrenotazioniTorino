@@ -75,14 +75,9 @@ public class Myadapter extends BaseAdapter implements ListAdapter {
                 String[] split = stringa.split("\\s+");
                 String id_docente= split[0];
                 String id_corso= split[1];
-                String giorno= split[5];
-                if(!giorno.equals("lunedì") && !giorno.equals("martedì") && !giorno.equals("mercoledì") && !giorno.equals("giovedì") && !giorno.equals("venerdì")){
-                    giorno=split[6];
-                }
-                String ora= split[6];
-                if(giorno.equals(split[6])){
-                    ora=split[7];
-                }
+                String giorno= split[4];
+                String ora= split[5];
+
                 System.out.println("PRENOTAZIONE " + id_docente+ " " + id_corso);
                 System.out.println("giorno: "+ giorno + " ora "+ ora);
                 RequestQueue queue= Volley.newRequestQueue(context.getApplicationContext());
