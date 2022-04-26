@@ -774,8 +774,6 @@
                 this.associa=true;
             },
 
-
-
             delete:async function (id){
                 await $.post('student-servlet',{post:'eliminastudenti',id:id, sessione:login.sessione}, async function (data) {
                     if (data === "sessione scaduta") {
@@ -838,7 +836,6 @@
             page1: true,
             page2:false,
             nome:'',
-
         },
 
         methods:{
@@ -1172,11 +1169,6 @@
 
         }
     })
-
-
-
-
-
 </script>
 </body>
 </html>
