@@ -2,10 +2,72 @@ body{
     background-size: cover;
 }
 
+.w-50{
+    width: 50%;
+}
 
+#homepage-administrator{
+    width: 80%;
+    margin-top: 5%
+}
 
+#homepage-administrator td{
+    width: 10%;
+}
 
+.sep{
+    width: 60%;
+}
 
+.but{
+    width: 10%; text-align: right
+}
+
+#visualizza-prenotazioni{
+    width: 60%; text-align: center;
+}
+
+#vis-corsi{
+    width: 60%; text-align: center;
+}
+
+.white{
+    background: white
+}
+.w-5{
+    width: 5%;
+}
+
+.w-30{
+    width: 30%;
+}
+
+.w-55{
+ width: 55%;
+}
+
+#visualizza-docenti{
+    width: 60%; text-align: center;
+}
+
+.left{
+    text-align: left;
+}
+
+.w-10{
+    width: 10%;
+}
+
+.w-15{
+    width: 15%;
+}
+.w-20{
+    width: 20%;
+}
+
+.right{
+    text-align: right;
+}
 
 
 
@@ -25,7 +87,9 @@ body{
     margin-top: 18px;
 }
 
-
+.mt-3{
+    margin-top: 3%;
+}
 
 
 
