@@ -296,7 +296,18 @@ public class DAO {
         try {
             conn1 = DriverManager.getConnection(url1, user, password);
             Statement st = conn1.createStatement();
-            st.executeUpdate("INSERT INTO prenotazione (id,docente,corso,utente,data,ora,stato) VALUES (0,'"+docente+"','"+corso+"','"+utente+"','"+giorno+"','"+ora+"','prenotata')");
+            ResultSet rs = st.executeQuery("SELECT nome FROM docente WHERE id='"+docente+"'");
+            String nome_d=null;
+            while(rs.next()){
+                nome_d = rs.getString("nome");
+            }
+            rs = st.executeQuery("SELECT nome FROM corso WHERE id='"+corso+"'");
+            String nome_c=null;
+            while(rs.next()){
+                nome_c = rs.getString("nome");
+            }
+            System.out.println(nome_d + nome_c);
+            st.executeUpdate("INSERT INTO prenotazione (id,docente,corso,utente,data,ora,stato,n_docente,n_corso) VALUES (0,'"+docente+"','"+corso+"','"+utente+"','"+giorno+"','"+ora+"','prenotata','"+nome_d+"','"+nome_c+"')");
             st.executeUpdate("UPDATE insegnamento SET stato= 1 WHERE insegnamento.corso='"+corso+"' AND insegnamento.docente='"+docente+"' AND   insegnamento.giorno='"+giorno+"' AND insegnamento.ora='"+ora+"'   " );
             st.close();
         } catch (SQLException e) {
@@ -412,7 +423,7 @@ public class DAO {
 
 
             Statement st1 = conn1.createStatement();
-            ResultSet rs1 = st1.executeQuery("SELECT d.cognome AS docente, c.nome AS corso, u.email AS utente, p.data AS data, p.ora AS ora, d.id AS idDocente, c.id AS idCorso, u.id AS idUtente, p.stato AS stato  FROM ((corso c JOIN prenotazione p ON(c.id=p.corso))JOIN utente u ON (u.id=p.utente))JOIN docente d ON (d.id=p.docente) WHERE u.id='"+id+"';");
+            ResultSet rs1 = st1.executeQuery("SELECT p.n_docente AS docente, p.n_corso AS corso, u.email AS utente, p.data AS data, p.ora AS ora, p.docente AS idDocente, p.corso AS idCorso, u.id AS idUtente, p.stato AS stato  FROM utente u JOIN prenotazione p ON (u.id=p.utente) WHERE u.id='"+id+"';");
             while (rs1.next()) {
                 RipetizioniPrenotate ripetizioni = new RipetizioniPrenotate(rs1.getString("docente"),rs1.getString("corso"),rs1.getString("utente"),rs1.getString("data"),rs1.getString("stato"),rs1.getInt("ora"),rs1.getInt("idCorso"),rs1.getInt("idDocente"),rs1.getInt("idUtente") );
                 out.add(ripetizioni);
