@@ -1,73 +1,8 @@
 body{
-    background-image: linear-gradient(0deg, rgba(0,0,0,.4), rgba(0,0,0,0.9)),url("img/libreria.jpg") ;
     background-size: cover;
 }
 
-.logo{
 
-    text-align: center;
-    position: fixed;
-    background: url("img/sfondo-bianco.png") ;
-    height: 100%;
-    width: 50%;
-    float: left;
-    opacity: 0.6;
-    filter: alpha(opacity=40); /* For IE8 and earlier */
-
-}
-
-.regist{
-    height: 746px;
-    width: 50%;
-    float: right;
-    display: inline-block;
-    text-align: center;
-
-}
-
-.regist form{
-
-
-}
-
-
-
-.regist input[name="button"]{
-    width: 12%;
-    background-color: #ffffff;
-    font-weight: 400;
-    border: 1px solid ;
-    padding: 0.375rem 0.75rem;
-    border-radius: 0.25rem;
-}
-
-.regist h1{
-    color: white;
-    font-size: xxx-large;
-    padding-top: 24%;
-}
-
-.regist h2{
-    color: white;
-    font-size: xx-large;
-    margin-top: 6%;
-    margin-bottom: 2px;
-}
-.regist input[name="username"],input[name="password"]{
-    width: 50%;
-    font-size: 26px;
-    border-radius: 8px;
-    text-align: center;
-    border: 1px solid black;
-}
-
-.regist p{
-    color: white;
-}
-.regist p a{
-    color: white;
-    text-decoration: underline;
-}
 
 
 
@@ -90,24 +25,12 @@ body{
     margin-top: 18px;
 }
 
-.mt-15per{
-    margin-top: 15%;
-}
-
-.med{
-    width: 30%;
-}
 
 
 
-.header{
-    width: 100%;
-    position: fixed;
-    top:0;
-    padding: 30px;
-    display: flex;
-    max-width: 1350px;
-}
+
+
+
 
 li{
     display: inline-block;
