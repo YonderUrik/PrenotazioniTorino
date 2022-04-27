@@ -47,21 +47,24 @@ public class AutServlet extends HttpServlet {
            out.print(ospite);
        }else if(jsessionID!=null && !jsessionID.equals(sessione)){
             //VERIFICO L'UTENTE
-            ArrayList<utente> utente= DAO.getUtente(email,password);
-            if(utente.get(0).getEmail().equals(email) && utente.get(0).getPassword().equals(password)){
-                String role = utente.get(0).getRuolo();
-                s.setAttribute("email", email);
-                s.setAttribute("ruolo", role);
-                s.setAttribute("id",utente.get(0).getId());
-                JsonObject utente2=new JsonObject();
-                utente2.addProperty("email",email);
-                utente2.addProperty("ruolo",role);
-                utente2.addProperty("sessione", jsessionID);
-                utente2.addProperty("nome", utente.get(0).getNome());
-                utente2.addProperty("cognome", utente.get(0).getCognome());
-                utente2.addProperty("id",utente.get(0).getId());
-                out.print(utente2);
-            }
+
+                ArrayList<utente> utente= DAO.getUtente(email,password);
+                if(utente.get(0).getEmail().equals(email) && utente.get(0).getPassword().equals(password)){
+                    String role = utente.get(0).getRuolo();
+                    s.setAttribute("email", email);
+                    s.setAttribute("ruolo", role);
+                    s.setAttribute("id",utente.get(0).getId());
+                    JsonObject utente2=new JsonObject();
+                    utente2.addProperty("email",email);
+                    utente2.addProperty("ruolo",role);
+                    utente2.addProperty("sessione", jsessionID);
+                    utente2.addProperty("nome", utente.get(0).getNome());
+                    utente2.addProperty("cognome", utente.get(0).getCognome());
+                    utente2.addProperty("id",utente.get(0).getId());
+                    out.print(utente2);
+                }
+
+
        }
     }
 

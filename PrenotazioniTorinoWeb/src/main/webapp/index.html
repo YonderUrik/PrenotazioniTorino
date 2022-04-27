@@ -610,6 +610,7 @@
                         self.sessione = jsonResponse.sessione;
                         self.nome = jsonResponse.nome;
                         self.cognome = jsonResponse.cognome;
+                        console.log(self.resultJson);
                         self.passtocorrectvue();
                     });
                 }
@@ -629,6 +630,8 @@
                     student.show = !student.show;
                 }
             },
+
+            
             passtosignup:function (){
                 this.show = !this;
                 signup.show = !signup.show;

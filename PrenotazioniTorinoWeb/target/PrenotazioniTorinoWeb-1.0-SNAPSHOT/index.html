@@ -610,6 +610,7 @@
                         self.sessione = jsonResponse.sessione;
                         self.nome = jsonResponse.nome;
                         self.cognome = jsonResponse.cognome;
+                        console.log(self.resultJson);
                         self.passtocorrectvue();
                     });
                 }
@@ -628,6 +629,10 @@
                     this.show = !this;
                     student.show = !student.show;
                 }
+            },
+
+            wrongForm:function (){
+                alert("Campi errati, riprova o registrati");
             },
             passtosignup:function (){
                 this.show = !this;
