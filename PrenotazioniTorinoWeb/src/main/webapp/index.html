@@ -218,9 +218,9 @@
 </div>
 
 <!-- Pagina Corsi (ADMIN) -->
-<div id="vis-corsi" v-show="administrator.corsi"  class="container-fluid" >
+<div id="vis-corsi" v-show="administrator.corsi"  class="container-fluid w-75 " >
     <div class="card mt-2" v-show="this.page1" >
-        <div class="card-header white" >
+        <div class="card-header bg-white text-center" >
             <h1>Corsi</h1>
         </div>
         <div class="card-body">
@@ -238,7 +238,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="card-footer white" ><button type="button" class="btn btn-primary mt-3" v-on:click="this.topage2">Aggiungi Corso</button></div>
+        <div class="card-footer bg-white text-center" ><button type="button" class="btn btn-primary mt-3" v-on:click="this.topage2">Aggiungi Corso</button></div>
     </div >
     <div class="card mt-2" v-show="this.page2">
         <div class="card-body">
@@ -253,8 +253,8 @@
 </div>
 
 <!-- Pagina Docenti (ADMIN) -->
-<div id="visualizza-docenti" v-show="administrator.docenti"  class="container-fluid">
-    <h1>Docenti</h1>
+<div id="visualizza-docenti" v-show="administrator.docenti"  class="container-fluid w-75">
+    <h1 class="text-center mt-5">Docenti</h1>
     <div class="card" v-show="this.page1">
         <div class="card-body" >
             <table class="table w-100" >
@@ -272,8 +272,8 @@
                 </tbody>
             </table>
         </div>
-        <div class="card-footer">
-            <button type="button" class="btn btn-primary mt-3" v-on:click="this.topage2">Aggiungi Docente</button>
+        <div class="card-footer text-center bg-white">
+            <button type="button" class="btn btn-primary mt-3 " v-on:click="this.topage2">Aggiungi Docente</button>
         </div>
     </div>
     <div class="card mt-2" v-show="this.page2">
@@ -469,12 +469,12 @@
                                </thead>
                                <tbody>
                                <tr v-for="item in catalogoRipetizioni.resultJson" class="w-100">
-                                   <td style="width: 20%">{{item.nome_docente}}</td>
-                                   <td style="width: 20%">{{item.cognome_docente}}</td>
-                                   <td style="width: 10%">{{item.corso}}</td>
-                                   <td style="width: 10%">{{item.giorno}}</td>
-                                   <td style="width: 10%">{{item.ora}}</td>
-                                   <td style="width: 10%; text-align: right"><button type="button" class="btn btn-sm"  v-on:click="student.prenota(item.id_docente,item.id_corso,item.ora,item.giorno)">Prenota</button></td>
+                                   <td class="w-20">{{item.nome_docente}}</td>
+                                   <td class="w-20">{{item.cognome_docente}}</td>
+                                   <td class="w-10">{{item.corso}}</td>
+                                   <td class="w-10">{{item.giorno}}</td>
+                                   <td class="w-10">{{item.ora}}</td>
+                                   <td class="w-10 right"><button type="button" class="btn btn-sm"  v-on:click="student.prenota(item.id_docente,item.id_corso,item.ora,item.giorno)">Prenota</button></td>
                                </tr>
                                </tbody>
                            </table>
@@ -496,15 +496,15 @@
                                </tr>
                                </thead>
                                <tbody>
-                               <tr v-for="item in resultJson" style="width: 100%">
-                                   <td style="width: 20%">{{item.docente}}</td>
-                                   <td style="width: 20%">{{item.corso}}</td>
-                                   <td style="width: 10%">{{item.utente}}</td>
-                                   <td style="width: 10%">{{item.data}}</td>
-                                   <td style="width: 10%">{{item.ora}}</td>
-                                   <td style="width: 10%">{{item.stato}}</td>
-                                   <td style="width: 10%; text-align: right"><button type="button" class="btn btn-sm"  v-on:click="student.conferma(item.idDocente,item.idCorso,item.ora,item.data)">Conferma</button></td>
-                                   <td style="width: 10%; text-align: right"><button type="button" class="btn btn-sm"  v-on:click="student.disdici(item.idDocente,item.idCorso,item.ora,item.data)">Disdici</button></td>
+                               <tr v-for="item in resultJson" class="w-100">
+                                   <td class="w-20">{{item.docente}}</td>
+                                   <td class="w-20">{{item.corso}}</td>
+                                   <td class="w-10">{{item.utente}}</td>
+                                   <td class="w-10">{{item.data}}</td>
+                                   <td class="w-10">{{item.ora}}</td>
+                                   <td class="w-10">{{item.stato}}</td>
+                                   <td class="w-10 right"><button type="button" class="btn btn-sm"  v-on:click="student.conferma(item.idDocente,item.idCorso,item.ora,item.data)">Conferma</button></td>
+                                   <td class="w-10 right"><button type="button" class="btn btn-sm"  v-on:click="student.disdici(item.idDocente,item.idCorso,item.ora,item.data)">Disdici</button></td>
 
                                </tr>
                                </tbody>
@@ -548,12 +548,12 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="item in resultJson" style="width: 100%">
-                        <td style="width: 20%">{{item.nome_docente}}</td>
-                        <td style="width: 20%">{{item.cognome_docente}}</td>
-                        <td style="width: 20%">{{item.corso}}</td>
-                        <td style="width: 20%">{{item.giorno}}</td>
-                        <td style="width: 20%">{{item.ora}}</td>
+                    <tr v-for="item in resultJson" class="w-100">
+                        <td class="w-20">{{item.nome_docente}}</td>
+                        <td class="w-20">{{item.cognome_docente}}</td>
+                        <td class="w-20">{{item.corso}}</td>
+                        <td class="w-20">{{item.giorno}}</td>
+                        <td class="w-20">{{item.ora}}</td>
                     </tr>
                     </tbody>
                 </table>

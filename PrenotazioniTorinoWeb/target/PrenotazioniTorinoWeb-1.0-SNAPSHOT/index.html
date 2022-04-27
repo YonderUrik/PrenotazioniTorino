@@ -152,7 +152,7 @@
         </div>
     </nav>
     <!-- ADMING HOMEPAGE -->
-    <div class="container-fluid w-75 " id="homepage-amministrator" v-show="this.home">
+    <div class="container-fluid w-75 mt-5" id="homepage-amministrator" v-show="this.home">
         <div class="accordion" id="accordionPanelsStayOpenExample" >
             <div class="accordion-item" >
                 <h2 class="accordion-header" id="panelsStayOpen-headingOne" >
@@ -218,9 +218,9 @@
 </div>
 
 <!-- Pagina Corsi (ADMIN) -->
-<div id="vis-corsi" v-show="administrator.corsi"  class="container-fluid" >
+<div id="vis-corsi" v-show="administrator.corsi"  class="container-fluid w-75 " >
     <div class="card mt-2" v-show="this.page1" >
-        <div class="card-header white" >
+        <div class="card-header bg-white text-center" >
             <h1>Corsi</h1>
         </div>
         <div class="card-body">
@@ -238,7 +238,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="card-footer white" ><button type="button" class="btn btn-primary mt-3" v-on:click="this.topage2">Aggiungi Corso</button></div>
+        <div class="card-footer bg-white text-center" ><button type="button" class="btn btn-primary mt-3" v-on:click="this.topage2">Aggiungi Corso</button></div>
     </div >
     <div class="card mt-2" v-show="this.page2">
         <div class="card-body">
@@ -253,8 +253,8 @@
 </div>
 
 <!-- Pagina Docenti (ADMIN) -->
-<div id="visualizza-docenti" v-show="administrator.docenti"  class="container-fluid">
-    <h1>Docenti</h1>
+<div id="visualizza-docenti" v-show="administrator.docenti"  class="container-fluid w-75">
+    <h1 class="text-center mt-5">Docenti</h1>
     <div class="card" v-show="this.page1">
         <div class="card-body" >
             <table class="table w-100" >
@@ -273,7 +273,7 @@
             </table>
         </div>
         <div class="card-footer">
-            <button type="button" class="btn btn-primary mt-3" v-on:click="this.topage2">Aggiungi Docente</button>
+            <button type="button" class="btn btn-primary mt-3 text-center" v-on:click="this.topage2">Aggiungi Docente</button>
         </div>
     </div>
     <div class="card mt-2" v-show="this.page2">
