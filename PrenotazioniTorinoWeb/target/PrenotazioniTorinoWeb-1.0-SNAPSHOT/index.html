@@ -7,6 +7,7 @@
     <META HTTP-EQUIV="Expires" CONTENT="-1">
     <title>Ripetizioni Torino</title>
     <link rel="icon" href="img/logo_small_icon_only.png"  type="icon"/>
+    <link rel="stylesheet" href="style.css" type="text/css">
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
@@ -246,7 +247,7 @@
                 <div class="row g-3">
                     <div class="col"><input type="text" class="form-control" placeholder="Nome corso" v-model="nome"/></div>
                 </div>
-                <div><input type="button" value="Aggiugi corso" class="btn btn-primary mt-3" v-on:click="this.addCorso"/></div>
+                <div class="text-center"><input type="button" value="Aggiugi corso" class="btn btn-primary mt-3" v-on:click="this.addCorso"/></div>
             </form>
         </div>
     </div>
@@ -287,7 +288,7 @@
                         <input type="text" class="form-control" placeholder="Cognome Docente" v-model="cognome"/>
                     </div>
                 </div>
-                <div>
+                <div class="text-center">
                     <input type="button" value="Aggiugi Docente" class="btn btn-primary mt-3" v-on:click="this.addDocente"/>
                 </div>
             </form>
@@ -440,12 +441,16 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand">Studente</a>
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent2" aria-controls="navbarSupportedContent2" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent2">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
             </div>
+        </div>
+        <div class="right pr-3">
+            <button type="button" class="btn btn-primary" v-on:click="this.logout_student">Logout</button>
         </div>
     </nav>
    <div class="container text-center mt-5" v-show="this.prenotaRip">
@@ -1092,6 +1097,10 @@
             resultJson:'',
         },
         methods:{
+            logout_student:function (){
+                login.sessione = "sessione inesistente";
+                window.location.reload();
+            },
 
             prenota:function (id_docente,id_corso,ora,giorno){
                 $.post('prenota-servlet',{id_docente:id_docente, id_corso:id_corso, ora:ora,giorno:giorno,sessione:login.sessione},function (data){

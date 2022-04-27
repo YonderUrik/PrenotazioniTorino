@@ -6,14 +6,9 @@ body{
     width: 50%;
 }
 
-#homepage-administrator{
-    width: 80%;
-    margin-top: 5%
-}
 
-#homepage-administrator td{
-    width: 10%;
-}
+
+
 
 .sep{
     width: 60%;
@@ -23,13 +18,9 @@ body{
     width: 10%; text-align: right
 }
 
-#visualizza-prenotazioni{
-    width: 60%; text-align: center;
-}
 
-#vis-corsi{
-    width: 60%; text-align: center;
-}
+
+
 
 .white{
     background: white
@@ -46,9 +37,7 @@ body{
  width: 55%;
 }
 
-#visualizza-docenti{
-    width: 60%; text-align: center;
-}
+
 
 .left{
     text-align: left;
@@ -96,10 +85,6 @@ body{
 
 
 
-li{
-    display: inline-block;
-    padding-left: 10px;
-}
 
 
 .hide {
@@ -108,4 +93,8 @@ li{
 
 a{
     text-decoration: none  ;
+}
+
+.pr-3{
+    padding-right: 3%;
 }
