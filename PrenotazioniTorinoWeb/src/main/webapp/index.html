@@ -604,15 +604,17 @@
                     while (controllo === false){
                         let i = 0;
                     }
-                    $.get(this.link,{utente: this.email, password: this.password},function(data){
-                        let jsonResponse=JSON.parse(JSON.stringify(data));
-                        self.resultJson = jsonResponse.ruolo;
-                        self.sessione = jsonResponse.sessione;
-                        self.nome = jsonResponse.nome;
-                        self.cognome = jsonResponse.cognome;
-                        console.log(self.resultJson);
-                        self.passtocorrectvue();
-                    });
+
+                        $.get(this.link,{utente: this.email, password: this.password},function(data){
+                            let jsonResponse=JSON.parse(JSON.stringify(data));
+                            self.resultJson = jsonResponse.ruolo;
+                            self.sessione = jsonResponse.sessione;
+                            self.nome = jsonResponse.nome;
+                            self.cognome = jsonResponse.cognome;
+                            self.passtocorrectvue();
+                        });
+
+
                 }
             },
 
@@ -631,7 +633,7 @@
                 }
             },
 
-            
+
             passtosignup:function (){
                 this.show = !this;
                 signup.show = !signup.show;
