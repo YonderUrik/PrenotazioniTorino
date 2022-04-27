@@ -34,7 +34,7 @@ public class RipetizioniPrenotateServlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
-        //TODO
+       
         response.setContentType("application/json");
         PrintWriter out=response.getWriter();
         HttpSession s = request.getSession();
