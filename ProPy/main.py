@@ -1,5 +1,7 @@
+
 from distutils.cmd import Command
 from tkinter import *
+import tkinter as tk
 from random import randint
 from tkinter import messagebox
 count = 0
@@ -14,6 +16,7 @@ occ = 0
 ok90 = 0
 ok180 = 0
 ok270 = 0
+
 
 class FindPattern():
 
@@ -67,6 +70,7 @@ class FindPattern():
                 value = randint(0,1)
                 boton = Button(self.finestra.frame, text=value,fg="blue",width=2, height=2)
                 boton.grid(row=y, column=x)
+            
                 buttons_row.append( boton )
                 self.matrice3[y][x] = boton["text"]
                 dict.append(boton)
@@ -119,8 +123,9 @@ class FindPattern():
             for y in range(rows2):
                 btns_row = []
                 for x in range(cols2):
-                    botton2 = Button(self.finestra.frame, text=0, width=2, height=2, fg="blue", command=lambda a=x, b=y: self.onButtonMiniPressed(a, b))                
-                    botton2.grid(row=5+y, column=5+x)
+                    botton2 =Button(self.finestra.frame, text=0, width=2, height=2, fg="green", command=lambda a=x, b=y: self.onButtonMiniPressed(a, b))                
+                    botton2.grid(row=y, column=x+cols1)
+                
                     btns_row.append(botton2)
                     self.matrice2[y][x] = botton2["text"]
                     minidict.append(botton2)
