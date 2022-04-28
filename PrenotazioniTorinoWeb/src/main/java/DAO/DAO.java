@@ -569,4 +569,53 @@ public class DAO {
         }
     }
 
+
+    public static ArrayList<associazioni> getAssociazioni(){
+        Connection conn1 = null;
+        ArrayList<associazioni> out = new ArrayList<>();
+        try {
+            conn1 = DriverManager.getConnection(url1, user, password);
+            Statement st1 = conn1.createStatement();
+            ResultSet rs1 = st1.executeQuery("SELECT DISTINCT  docente,  corso FROM insegnamento ");
+            while (rs1.next()) {
+                associazioni a = new associazioni(rs1.getInt("docente"),rs1.getInt("corso") );
+                out.add(a);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        finally {
+            if (conn1 != null) {
+                try {
+                    conn1.close();
+                } catch (SQLException e2) {
+                    System.out.println(e2.getMessage());
+                }
+            }
+        }
+        return out;
+
+    }
+
+    public static void deleteAssociazione(int docente,int corso){
+        Connection conn1 = null;
+        try {
+            conn1 = DriverManager.getConnection(url1, user, password);
+            Statement st = conn1.createStatement();
+            st.executeUpdate("DELETE FROM insegnamento WHERE docente='"+docente+"' && corso='"+corso+"'");
+            st.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        finally {
+            if (conn1 != null) {
+                try {
+                    conn1.close();
+                } catch (SQLException e2) {
+                    System.out.println(e2.getMessage());
+                }
+            }
+        }
+    }
+
 }
