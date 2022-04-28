@@ -296,10 +296,10 @@ public class DAO {
         try {
             conn1 = DriverManager.getConnection(url1, user, password);
             Statement st = conn1.createStatement();
-            ResultSet rs = st.executeQuery("SELECT nome FROM docente WHERE id='"+docente+"'");
+            ResultSet rs = st.executeQuery("SELECT cognome FROM docente WHERE id='"+docente+"'");
             String nome_d=null;
             while(rs.next()){
-                nome_d = rs.getString("nome");
+                nome_d = rs.getString("cognome");
             }
             rs = st.executeQuery("SELECT nome FROM corso WHERE id='"+corso+"'");
             String nome_c=null;

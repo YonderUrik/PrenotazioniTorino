@@ -79,8 +79,8 @@ public class adapter2 extends BaseAdapter implements ListAdapter {
 
                 String id_docente=split[0];
                 String id_corso= split[1];
-                String giorno= split[5];
-                String ora= split[6];
+                String giorno= split[4];
+                String ora= split[5];
                 System.out.println(stringa);
                 System.out.println("id utente: "+id+ " docente: " + id_docente+" corso: "+ id_corso);
                 System.out.println("ora: "+ ora);
