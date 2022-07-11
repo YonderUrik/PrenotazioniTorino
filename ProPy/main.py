@@ -19,7 +19,6 @@ ok270 = 0
 
 
 class FindPattern():
-
     #init function
     def __init__(self):
         self.all_buttons = []

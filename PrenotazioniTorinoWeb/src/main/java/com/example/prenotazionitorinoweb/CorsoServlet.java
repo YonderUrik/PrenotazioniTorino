@@ -1,14 +1,20 @@
 package com.example.prenotazionitorinoweb;
 
-import DAO.*;
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Objects;
-import javax.servlet.ServletException;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import DAO.DAO;
+import DAO.corsi;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Objects;
 
 @WebServlet(name = "corsoservlet", value = "/corso-servlet")
 public class CorsoServlet extends HttpServlet {
@@ -21,7 +27,7 @@ public class CorsoServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         String sessione = request.getParameter("sessione");
         HttpSession s = request.getSession();
-        if(sessione.equals(s.getId())){
+        if(sessione.equals(s.getId()) && s.getAttribute("ruolo").equals("admin")){
             if (Objects.equals(post, "aggiungi")) {
                 String nome = request.getParameter("nome");
                 if (DAO.setCorso(nome)) {
@@ -55,7 +61,7 @@ public class CorsoServlet extends HttpServlet {
         String sessione = request.getParameter("sessione");
         HttpSession s = request.getSession();
         String sessionID = s.getId();
-        if(sessione.equals(sessionID)){
+        if(!s.isNew() && s.getAttribute("ruolo").equals("admin")){
             allCourses = new JsonArray();
             for (corsi value : corsi){
                 int id = value.getId();

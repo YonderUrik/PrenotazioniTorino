@@ -1,14 +1,20 @@
 package com.example.prenotazionitorinoweb;
 
-import DAO.*;
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Objects;
-import javax.servlet.ServletException;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import DAO.DAO;
+import DAO.associazioni;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Objects;
 
     @WebServlet(name = "associazioneservlet", value = "/associazione-servlet")
     public class AssociazioneServlet extends HttpServlet {
@@ -21,7 +27,7 @@ import com.google.gson.JsonObject;
             String sessione = request.getParameter("sessione");
             String post=request.getParameter("post");
             HttpSession s = request.getSession();
-            if(sessione.equals(s.getId())) {
+            if(!s.isNew() && s.getAttribute("ruolo").equals("admin")) {
                 if(Objects.equals(post, "aggiungi")){
                     int corso=Integer.parseInt(request.getParameter("corso"));
                     int docente=Integer.parseInt(request.getParameter("docente"));

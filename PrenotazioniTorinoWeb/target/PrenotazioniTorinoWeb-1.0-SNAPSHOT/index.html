@@ -435,13 +435,14 @@
                 </h2>
                 <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
+                        <input class="form-control" id="myInput2" type="text" placeholder="Search..">
                         <table class="table">
                             <thead>
                             <tr>
                                 <th>Nome Docente</th> <th>Cognome Docente</th>  <th>Corso</th><th>Giorno</th> <th>Orario</th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="myTable2">
                             <tr v-for="item in catalogoRipetizioni.resultJson" class="w-100">
                                 <td class="w-20">{{item.nome_docente}}</td>
                                 <td class="w-20">{{item.cognome_docente}}</td>
@@ -465,7 +466,6 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand">Studente</a>
-
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent2" aria-controls="navbarSupportedContent2" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -490,13 +490,14 @@
                    </h2>
                    <div id="collapseOne2" class="accordion-collapse collapse show" aria-labelledby="headingOne2" data-bs-parent="#accordionExample2">
                        <div class="accordion-body">
+                           <input class="form-control" id="myInput" type="text" placeholder="Search..">
                            <table class="table">
                                <thead>
                                <tr>
                                    <th>Nome Docente</th> <th>Cognome Docente</th>  <th>Corso</th> <th>Giorno</th> <th>Orario</th>
                                </tr>
                                </thead>
-                               <tbody>
+                               <tbody id="myTable">
                                <tr v-for="item in catalogoRipetizioni.resultJson" class="w-100">
                                    <td class="w-20">{{item.nome_docente}}</td>
                                    <td class="w-20">{{item.cognome_docente}}</td>
@@ -543,11 +544,7 @@
                </div>
            </div>
        </div>
-
-
-
    </div>
-
 </div>
 
 <!-- Guest Page -->
@@ -595,6 +592,23 @@
 </div>
 
 <script>
+    $(document).ready(function(){
+        $("#myInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+        $("#myInput2").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable2 tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
+<script>
     //LOGIN VUE
     var login= new Vue({
         el:'#login',
@@ -608,8 +622,6 @@
             show: true,
             objType: '',
             resultJson:'',
-
-
         },
         mounted: function () {
         },
